@@ -1,0 +1,1 @@
+# MMO Bookclub lootbot
