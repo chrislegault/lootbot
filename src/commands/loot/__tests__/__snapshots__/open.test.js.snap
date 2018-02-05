@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/loot/open configures properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      [MockFunction],
+      Object {
+        "args": Array [
+          Object {
+            "key": "user",
+            "prompt": "Which user would you like to open a lootbox for?",
+            "type": "member",
+          },
+        ],
+        "description": "Opens a lootbox",
+        "examples": Array [
+          "loot:open",
+        ],
+        "group": "loot",
+        "guildOnly": true,
+        "memberName": "loot:open",
+        "name": "loot:open",
+        "userPermissions": Array [
+          "MANAGE_CHANNELS",
+        ],
+      },
+    ],
+  ],
+}
+`;

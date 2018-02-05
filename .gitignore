@@ -1,0 +1,5 @@
+.env
+coverage
+node_modules
+*.sqlite
+.DS_STORE

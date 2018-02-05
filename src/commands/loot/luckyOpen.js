@@ -1,0 +1,24 @@
+const { Command } = require("discord.js-commando");
+
+module.exports = class LootOpen extends Command {
+  constructor(client) {
+    super(client, {
+      name: "luckyopen",
+      group: "loot",
+      memberName: "luckyopen",
+      description: "Opens a lucky lootbox",
+      examples: ["luckyopen"],
+      userPermissions: ["MANAGE_CHANNELS"],
+      guildOnly: true,
+      args: [
+        {
+          key: "user",
+          prompt: "Which user would you like to open a lucky lootbox for?",
+          type: "member"
+        }
+      ]
+    });
+  }
+
+  async run() {}
+};
