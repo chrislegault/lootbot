@@ -1,14 +1,17 @@
 const path = require("path");
-const { CommandoClient } = require("discord.js-commando");
+const { CommandoClient, SQLiteProvider } = require("discord.js-commando");
+const { dbPromise } = require("./database");
+
+require("dotenv").config();
 
 const client = new CommandoClient({
   owner: process.env.OWNER_ID,
   commandPrefix: "!lootbot",
-  disableEveryone: true
+  disableEveryone: true,
+  unknownCommandResponse: false
 });
 
-require("dotenv").config();
-
+client.setProvider(dbPromise.then(db => new SQLiteProvider(db)));
 client.on("ready", () => console.log(`Logged in as ${client.user.tag}!`));
 
 client.registry
