@@ -5,33 +5,28 @@ const database = require("../../database");
 module.exports = class LootOpen extends Command {
   constructor(client) {
     super(client, {
-      name: "open",
+      name: "luckyopen",
       group: "loot",
-      memberName: "reply",
-      description: "Opens a lootbox",
-      examples: ["open"],
+      memberName: "luckyopen",
+      description: "Opens a lucky lootbox",
+      examples: ["luckyopen"],
       args: [
         {
           key: "user",
-          prompt: "Which user would you like to open a lootbox for?",
+          prompt: "Which user would you like to open a lucky lootbox for?",
           type: "member"
         }
       ]
     });
   }
 
-  async run(msg) {
+  async run(msg, args) {
     const loot = await database.list();
 
-    if (loot.length === 0) {
-      return msg.say("No loot in the lootbox.");
-    }
-
     const weights = loot.reduce(
-      (memo, reward) => memo.concat(reward.weight),
+      (memo, reward) => memo.concat(reward.luckyWeight),
       []
     );
-
     const reward = chance.weighted(loot, weights);
 
     return msg.say(`Congratulations, you won ${reward.name}!`);
