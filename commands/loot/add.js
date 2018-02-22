@@ -9,6 +9,8 @@ module.exports = class LootOpen extends Command {
       memberName: "add",
       description: "Add to the lootbox",
       examples: [`add "Bottle of Maple Syrup" 25 75`, "add Syrup 50 50"],
+      userPermissions: ["MANAGE_CHANNELS"],
+      guildOnly: true,
       args: [
         {
           key: "name",
@@ -30,14 +32,19 @@ module.exports = class LootOpen extends Command {
   }
 
   async run(msg, args) {
-    let loot = await database.get(args.name);
+    const guild = msg.guild.id;
+    const { name } = args;
+    const loot = await database.get({ name, guild });
 
     if (loot) {
-      return msg.say(`Loot named ${args.name} already found.`);
+      return msg.say(`Loot named ${name} already found.`);
     }
 
-    let { name } = await database.insert(args);
-
-    return msg.say(`${name} added.`);
+    try {
+      const result = await database.insert({ ...args, guild });
+      return msg.say(`${name} added.`);
+    } catch (error) {
+      return msg.say(`An error occurred adding ${name}`);
+    }
   }
 };

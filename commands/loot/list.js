@@ -17,7 +17,8 @@ module.exports = class LootOpen extends Command {
   }
 
   async run(msg) {
-    const loot = await database.list();
+    const guild = msg.guild.id;
+    const loot = await database.list(guild);
 
     if (loot.length === 0) {
       return msg.say("No loot found.");

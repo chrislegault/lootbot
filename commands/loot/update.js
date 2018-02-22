@@ -12,6 +12,8 @@ module.exports = class LootOpen extends Command {
         `update "Maple Syrup" "New Maple Syrup" 25 75`,
         `update "Maple Syrup" "" 25 75`
       ],
+      userPermissions: ["MANAGE_CHANNELS"],
+      guildOnly: true,
       args: [
         {
           key: "name",
@@ -38,10 +40,13 @@ module.exports = class LootOpen extends Command {
   }
 
   async run(msg, { name, newName, weight, luckyWeight }) {
-    const result = await database.update(name, {
+    const guild = msg.guild.id;
+    const loot = await database.get({ name, guild });
+
+    const result = await database.update(loot.id, {
       name: newName,
-      weight: weight,
-      luckyWeight: luckyWeight
+      weight,
+      luckyWeight
     });
 
     return msg.say("Loot updated");

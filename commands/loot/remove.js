@@ -9,6 +9,8 @@ module.exports = class LootOpen extends Command {
       memberName: "remove",
       description: "Remove that loot",
       examples: [`remove "Maple Syrup"`],
+      userPermissions: ["MANAGE_CHANNELS"],
+      guildOnly: true,
       args: [
         {
           key: "name",
@@ -20,13 +22,15 @@ module.exports = class LootOpen extends Command {
   }
 
   async run(msg, { name }) {
-    // var loot = await database.get(args.name);
+    const guild = msg.guild.id;
 
-    // if (!loot) {
-    //   return msg.say(`Loot named ${args.name} not found.`);
-    // }
+    try {
+      const loot = await database.get({ name, guild });
+      const result = await database.delete(loot.id);
 
-    const result = await database.delete(name);
-    return msg.say(`${name} removed`);
+      return msg.say(`${name} removed`);
+    } catch (error) {
+      return msg.say(`An error occurred removing ${name}`);
+    }
   }
 };
