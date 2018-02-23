@@ -32,7 +32,7 @@ module.exports = {
     const db = await dbPromise;
     return db.run(
       "UPDATE loot SET name = ?, weight = ?, luckyWeight = ? WHERE id = ?",
-      [name, weight, luckyWeight, currentName]
+      [name, weight, luckyWeight, id]
     );
   },
   delete: async id => {

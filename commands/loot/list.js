@@ -1,8 +1,11 @@
+const { RichEmbed } = require("discord.js");
 const { Command } = require("discord.js-commando");
+const numeral = require("numeral");
 const database = require("../../database");
 
 function formatOdd(odd, total) {
-  return `${odd} in ${total}`;
+  const percent = numeral(odd / total).format("0.00%");
+  return `${percent} (${odd} in ${total})`;
 }
 
 module.exports = class LootOpen extends Command {
@@ -18,58 +21,32 @@ module.exports = class LootOpen extends Command {
 
   async run(msg) {
     const guild = msg.guild.id;
-    const loot = await database.list(guild);
+    let loot = await database.list(guild);
+    loot = loot.sort((lootA, lootB) => lootA.weight - lootB.weight);
 
     if (loot.length === 0) {
       return msg.say("No loot found.");
     }
 
-    let table = "";
-    let longestWord = "Loot".length;
-    let longestOdds = "Odds".length;
-    let longestLucky = "Lucky Odds".length;
     let totalOdds = 0;
     let totalLucky = 0;
+    let lootRow = "";
+    let oddsRow = "";
+    let luckyRow = "";
 
     loot.forEach(reward => {
       totalOdds += reward.weight;
       totalLucky += reward.luckyWeight;
+      lootRow += `${reward.name}\n`;
+      oddsRow += `${formatOdd(reward.weight, totalOdds)}\n`;
+      luckyRow += `${formatOdd(reward.luckyWeight, totalLucky)}\n`;
     });
 
-    loot.forEach(reward => {
-      let odd = formatOdd(reward.weight, totalOdds);
-      let luckyOdd = formatOdd(reward.luckyWeight, totalOdds);
+    const embed = new RichEmbed()
+      .addField("Loot", lootRow, true)
+      .addField("Odds", oddsRow, true)
+      .addField("Lucky Odds", luckyRow, true);
 
-      if (reward.name.length > longestWord) {
-        longestWord = reward.name.length;
-      }
-
-      if (odd.length > longestOdds) {
-        longestOdds = odd.length;
-      }
-
-      if (luckyOdd.length > longestLucky) {
-        longestLucky = luckyOdd.length;
-      }
-    });
-
-    table += `| ${"Loot".padEnd(longestWord)} | ${"Odds".padEnd(
-      longestOdds
-    )} | ${"Lucky Odds".padEnd(longestLucky)} |\n`;
-    table += `| ${"".padEnd(longestWord, "-")} | ${"".padEnd(
-      longestOdds,
-      "-"
-    )} | ${"".padEnd(longestLucky, "-")} |\n`;
-
-    loot.forEach(reward => {
-      let name = reward.name.padEnd(longestWord);
-      let odds = formatOdd(reward.weight, totalOdds).padEnd(longestOdds);
-      let lucky = formatOdd(reward.luckyWeight, totalLucky).padEnd(
-        longestLucky
-      );
-      table += `| ${name} | ${odds} | ${lucky} |\n`;
-    });
-
-    return msg.say("```" + table + "```");
+    return msg.embed(embed);
   }
 };
