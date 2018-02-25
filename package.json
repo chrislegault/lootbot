@@ -23,7 +23,7 @@
     "prettier": "1.10.2"
   },
   "scripts": {
-    "lint": "eslint --ignore-path .gitignore --fix index.js commands/**/*.js",
+    "lint": "eslint --ignore-path .gitignore --fix .",
     "precommit": "lint-staged",
     "start": "node ./index.js",
     "start:watch": "nodemon index.js",

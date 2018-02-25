@@ -33,20 +33,31 @@ module.exports = class LootOpen extends Command {
     let lootRow = "";
     let oddsRow = "";
     let luckyRow = "";
+    let tierRow = "";
+
+    let messages = {
+      Common: "__**Common**__\n",
+      Uncommon: "__**Uncommon**__\n",
+      Rare: "__**Rare**__\n",
+      Legendary: "__**Legendary**__\n"
+    };
 
     loot.forEach(reward => {
       totalOdds += reward.weight;
       totalLucky += reward.luckyWeight;
-      lootRow += `${reward.name}\n`;
-      oddsRow += `${formatOdd(reward.weight, totalOdds)}\n`;
-      luckyRow += `${formatOdd(reward.luckyWeight, totalLucky)}\n`;
     });
 
-    const embed = new RichEmbed()
-      .addField("Loot", lootRow, true)
-      .addField("Odds", oddsRow, true)
-      .addField("Lucky Odds", luckyRow, true);
+    loot.forEach(reward => {
+      messages[reward.tier] += `**${reward.name}** - ${formatOdd(
+        reward.weight,
+        totalOdds
+      )}, ${formatOdd(reward.luckyWeight, totalLucky)}\n`;
+    });
 
-    return msg.embed(embed);
+    return msg.say(
+      `${messages.Common}\n${messages.Uncommon}\n${messages.Rare}\n${
+        messages.Legendary
+      }`
+    );
   }
 };

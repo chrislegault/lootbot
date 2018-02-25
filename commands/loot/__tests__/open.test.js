@@ -27,9 +27,9 @@ describe("commands/loot/open", () => {
     expect(Command).toMatchSnapshot();
   });
 
-  xit("shows the result of the draw", () => {
-    const user = { id: 1 };
-    const command = new OpenCommand(jest.fn());
+  xit("shows the result of the draw", done => {
+    const client = jest.fn("client");
+    const command = new OpenCommand(client);
     const loot = [{ name: "Test", weight: 100 }];
     const msg = {
       say: jest.fn().mockReturnValue(Promise.resolve()),
@@ -37,23 +37,38 @@ describe("commands/loot/open", () => {
     };
 
     chance().weighted.mockReturnValue(loot[0]);
-    database.list = jest.fn().mockImplementation(() => Promise.resolve(loot));
+    database.list = () => Promise.resolve(loot);
 
-    const result = command.run(msg, { user });
+    const promise = command.run(msg, { user: { id: 1 } }).then(function() {
+      console.log("done");
+      done();
+    });
 
-    jest.runAllTimers();
-    expect(msg.say).toHaveBeenCalled();
+    // expect(setTimeout).toHaveBeenCalledTimes(1);
+    jest.advanceTimersByTime(10);
+    //jest.advanceTimersByTime(2000);
+
+    // expect(setTimeout).toHaveBeenCalledTimes(2);
+    //jest.advanceTimersByTime(5000);
+
+    //await expect(promise).resolves.toBe(true);
   });
 
   xit("shows the no loot message", async () => {
     const loot = [];
-    const msg = { say: jest.fn() };
+
+    const msg = {
+      say: jest.fn().mockReturnValue(Promise.resolve()),
+      guild: { id: 1 }
+    };
+
     const command = new OpenCommand(jest.fn());
 
     database.list = jest.fn().mockImplementation(() => Promise.resolve(loot));
-    const result = await command.run(msg);
+    const result = await command.run(msg, { user: { id: 1 } });
 
     expect(chance().weighted).not.toHaveBeenCalled();
+    expect(msg.say).toHaveBeenCalledTimes(1);
     expect(msg.say).toHaveBeenCalledWith("No loot in the lootbox.");
   });
 });

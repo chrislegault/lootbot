@@ -22,17 +22,17 @@ module.exports = {
   insert: async item => {
     const db = await dbPromise;
     const { lastID } = await db.run(
-      "INSERT INTO loot(name, weight, luckyWeight, guild) VALUES(?, ?, ?, ?)",
-      [item.name, item.weight, item.luckyWeight, item.guild]
+      "INSERT INTO loot(name, weight, luckyWeight, tier, guild) VALUES(?, ?, ?, ?, ?)",
+      [item.name, item.weight, item.luckyWeight, item.tier, item.guild]
     );
 
     return db.get("SELECT * FROM loot WHERE id = ?", [lastID]);
   },
-  update: async (id, { name, weight, luckyWeight }) => {
+  update: async (id, { name, weight, luckyWeight, tier }) => {
     const db = await dbPromise;
     return db.run(
-      "UPDATE loot SET name = ?, weight = ?, luckyWeight = ? WHERE id = ?",
-      [name, weight, luckyWeight, id]
+      "UPDATE loot SET name = ?, weight = ?, luckyWeight = ?, tier = ? WHERE id = ?",
+      [name, weight, luckyWeight, tier, id]
     );
   },
   delete: async id => {

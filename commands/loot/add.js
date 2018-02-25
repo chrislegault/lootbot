@@ -1,5 +1,6 @@
 const { Command } = require("discord.js-commando");
 const database = require("../../database");
+const { isValidTier } = require("../../support/validations");
 
 module.exports = class LootOpen extends Command {
   constructor(client) {
@@ -8,7 +9,10 @@ module.exports = class LootOpen extends Command {
       group: "loot",
       memberName: "add",
       description: "Add to the lootbox",
-      examples: [`add "Bottle of Maple Syrup" 25 75`, "add Syrup 50 50"],
+      examples: [
+        `add "Bottle of Maple Syrup" 25 75 Legendary`,
+        "add Syrup 50 50 Common"
+      ],
       userPermissions: ["MANAGE_CHANNELS"],
       guildOnly: true,
       args: [
@@ -26,6 +30,12 @@ module.exports = class LootOpen extends Command {
           key: "luckyWeight",
           prompt: "What is the lucky weight of the loot?",
           type: "float"
+        },
+        {
+          key: "tier",
+          prompt: "What is the tier? (Common, Uncommon, Rare or Legendary)",
+          type: "string",
+          validate: isValidTier
         }
       ]
     });

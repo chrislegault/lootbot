@@ -10,6 +10,7 @@ CREATE TABLE loot(
   weight REAL NOT NULL,
   luckyWeight REAL NOT NULL,
   guild TEXT NOT NULL,
+  tier TEXT NOT NULL,
   CONSTRAINT uniq_loot UNIQUE (name)
 );
 
