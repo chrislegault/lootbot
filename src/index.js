@@ -1,6 +1,7 @@
 const path = require("path");
-const { CommandoClient, SQLiteProvider } = require("discord.js-commando");
-const database = require("./database");
+const { CommandoClient } = require("discord.js-commando");
+const db = require("./models");
+//const { db, start } = require("./database");
 const SequelizeProvider = require("./providers/sequelize-provider");
 
 require("dotenv").config();
@@ -13,9 +14,8 @@ const client = new CommandoClient({
 });
 
 client.setProvider(
-  database.authenticate().then(() => new SequelizeProvider(database))
+  db.sequelize.authenticate().then(() => new SequelizeProvider(db.sequelize))
 );
-client.on("ready", () => console.log(`Logged in as ${client.user.tag}!`));
 
 client.registry
   .registerDefaults()

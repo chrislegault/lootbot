@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const database = require("../../database");
+const { Loot } = require("../../models");
 
 module.exports = class LootOpen extends Command {
   constructor(client) {
@@ -25,12 +25,17 @@ module.exports = class LootOpen extends Command {
     const guild = msg.guild.id;
 
     try {
-      const loot = await database.get({ name, guild });
-      const result = await database.delete(loot.id);
+      const result = await Loot.destroy({
+        where: { name, guild }
+      });
 
-      return msg.say(`${name} removed`);
-    } catch (error) {
-      return msg.say(`An error occurred removing ${name}`);
+      if (result === 0) {
+        msg.say(`${name} not found`);
+      } else {
+        msg.say(`${name} removed`);
+      }
+    } catch (e) {
+      msg.say(`An error occurred removing ${name}`);
     }
   }
 };

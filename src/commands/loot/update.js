@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const database = require("../../database");
+const { Loot } = require("../../models");
 const { isValidTier } = require("../../support/validations");
 
 module.exports = class LootOpen extends Command {
@@ -19,14 +19,7 @@ module.exports = class LootOpen extends Command {
         {
           key: "name",
           prompt: "What is the name of the loot?",
-          type: "string",
-          validate: async (name, msg) => {
-            const guild = msg.guild.id;
-            const loot = await database.get({ name, guild });
-
-            if (loot) return true;
-            return "Loot not found";
-          }
+          type: "string"
         },
         {
           key: "weight",
@@ -59,15 +52,36 @@ module.exports = class LootOpen extends Command {
 
   async run(msg, { name, newName, weight, luckyWeight, tier }) {
     const guild = msg.guild.id;
-    const loot = await database.get({ name, guild });
+    let updates = {};
 
-    const result = await database.update(loot.id, {
-      name: newName || loot.name,
-      weight: weight || loot.weight,
-      luckyWeight: luckyWeight || loot.luckyWeight,
-      tier: tier || loot.tier
-    });
+    if (newName) {
+      updates.name = newName;
+    }
 
-    return msg.say(`${newName || loot.name} updated`);
+    if (weight) {
+      updates.weight = weight;
+    }
+
+    if (luckyWeight) {
+      updates.luckyWeight = luckyWeight;
+    }
+
+    if (tier) {
+      updates.tier = tier;
+    }
+
+    try {
+      const [updated] = await Loot.update(updates, {
+        where: { name, guild }
+      });
+
+      if (updated === 0) {
+        msg.say(`${name} not found`);
+      } else {
+        msg.say(`${newName || name} updated`);
+      }
+    } catch (e) {
+      msg.say(`An error occurred updating ${name}`);
+    }
   }
 };

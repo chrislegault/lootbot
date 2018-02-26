@@ -1,7 +1,6 @@
-const { RichEmbed } = require("discord.js");
 const { Command } = require("discord.js-commando");
 const numeral = require("numeral");
-const database = require("../../database");
+const { Loot } = require("../../models");
 
 function formatOdd(odd, total) {
   const percent = numeral(odd / total).format("0.00%");
@@ -21,8 +20,11 @@ module.exports = class LootOpen extends Command {
 
   async run(msg) {
     const guild = msg.guild.id;
-    let loot = await database.list(guild);
-    loot = loot.sort((lootA, lootB) => lootA.weight - lootB.weight);
+
+    let loot = await Loot.findAll({
+      where: { guild },
+      order: [["weight", "DESC"]]
+    });
 
     if (loot.length === 0) {
       return msg.say("No loot found.");
@@ -30,10 +32,6 @@ module.exports = class LootOpen extends Command {
 
     let totalOdds = 0;
     let totalLucky = 0;
-    let lootRow = "";
-    let oddsRow = "";
-    let luckyRow = "";
-    let tierRow = "";
 
     let messages = {
       Common: "__**Common**__\n",

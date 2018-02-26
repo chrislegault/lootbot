@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const database = require("../../database");
+const { Loot } = require("../../models");
 const { isValidTier } = require("../../support/validations");
 
 module.exports = class LootOpen extends Command {
@@ -44,17 +44,20 @@ module.exports = class LootOpen extends Command {
   async run(msg, args) {
     const guild = msg.guild.id;
     const { name } = args;
-    const loot = await database.get({ name, guild });
-
-    if (loot) {
-      return msg.say(`Loot named ${name} already found.`);
-    }
 
     try {
-      const result = await database.insert({ ...args, guild });
-      return msg.say(`${name} added.`);
+      const [, added] = await Loot.findOrCreate({
+        where: { name, guild },
+        defaults: args
+      });
+
+      if (added) {
+        msg.say(`${name} added.`);
+      } else {
+        msg.say(`${name} already exists.`);
+      }
     } catch (error) {
-      return msg.say(`An error occurred adding ${name}`);
+      msg.say(`An error occurred adding ${name}`);
     }
   }
 };
