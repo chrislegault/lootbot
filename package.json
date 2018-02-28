@@ -25,12 +25,14 @@
     "sequelize-cli": "^4.0.0"
   },
   "scripts": {
-    "lint": "eslint --ignore-path .gitignore --fix .",
+    "lint": "eslint --ignore-path .gitignore .",
+    "lint:fix": "yarn lint --fix",
     "migrate": "sequelize db:migrate",
     "precommit": "lint-staged",
     "start": "node ./src/index.js",
     "start:watch": "nodemon ./src/index.js",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "yarn test --watch"
   },
   "lint-staged": {
     "*.js": [
@@ -38,5 +40,9 @@
       "git add",
       "jest --bail --findRelatedTests"
     ]
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   }
 }
