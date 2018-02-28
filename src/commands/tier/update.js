@@ -1,15 +1,15 @@
 const { Command } = require("discord.js-commando");
-const { Loot, Tier } = require("../../models");
+const { Tier } = require("../../models");
 
 module.exports = class LootOpen extends Command {
   constructor(client) {
     super(client, {
-      name: "update",
-      group: "loot",
-      memberName: "update",
-      description: "Update that loot",
+      name: "tier:update",
+      group: "tier",
+      memberName: "tier:update",
+      description: "Update that tier",
       examples: [
-        `update "Maple Syrup" 25 75 Legendary "New Maple Syrup"`,
+        `update Common 25 75 Legendary "New Maple Syrup"`,
         `update "Maple Syrup" 25 75 Uncommon`
       ],
       userPermissions: ["MANAGE_CHANNELS"],
@@ -17,13 +17,32 @@ module.exports = class LootOpen extends Command {
       args: [
         {
           key: "existingName",
-          prompt: "What is the name of the loot?",
+          prompt: "What is the current name of the tier?",
           type: "string"
         },
         {
-          key: "tier",
-          prompt: "What is the new tier of the loot?",
-          type: "string"
+          key: "weight",
+          prompt: "What is the new weight of the tier?",
+          type: "float",
+          default: ""
+        },
+        {
+          key: "luckyWeight",
+          prompt: "What is the new lucky weight of the tier?",
+          type: "float",
+          default: ""
+        },
+        {
+          key: "color",
+          prompt: "What is the new color of the tier?",
+          type: "string",
+          default: ""
+        },
+        {
+          key: "image",
+          prompt: "What is the new image of the tier?",
+          type: "string",
+          default: ""
         },
         {
           key: "name",
@@ -41,19 +60,13 @@ module.exports = class LootOpen extends Command {
     let name = newValues.existingName;
 
     Object.keys(newValues).forEach(key => {
-      if (newValues[key] && key !== "existingName" && key !== "tier") {
+      if (newValues[key] && key !== "existingName") {
         updates[key] = newValues[key];
       }
     });
 
     try {
-      const tier = await Tier.findOne({
-        where: { name: newValues.tier }
-      });
-
-      updates = { ...updates, tier_id: tier.id };
-
-      const [updated] = await Loot.update(updates, {
+      const [updated] = await Tier.update(updates, {
         where: { name, guild }
       });
 

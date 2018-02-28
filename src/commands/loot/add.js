@@ -1,17 +1,16 @@
 const { Command } = require("discord.js-commando");
-const { Loot } = require("../../models");
-const { isValidTier } = require("../../support/validations");
+const { Tier, Loot } = require("../../models");
 
 module.exports = class LootOpen extends Command {
   constructor(client) {
     super(client, {
-      name: "add",
+      name: "loot:add",
       group: "loot",
-      memberName: "add",
+      memberName: "loot:add",
       description: "Add to the lootbox",
       examples: [
-        `add "Bottle of Maple Syrup" 25 75 Legendary`,
-        "add Syrup 50 50 Common"
+        `loot:add "Bottle of Maple Syrup" Legendary`,
+        "loot:add Syrup Common"
       ],
       userPermissions: ["MANAGE_CHANNELS"],
       guildOnly: true,
@@ -22,20 +21,9 @@ module.exports = class LootOpen extends Command {
           type: "string"
         },
         {
-          key: "weight",
-          prompt: "What is the normal weight of the loot?",
-          type: "float"
-        },
-        {
-          key: "luckyWeight",
-          prompt: "What is the lucky weight of the loot?",
-          type: "float"
-        },
-        {
           key: "tier",
-          prompt: "What is the tier? (Common, Uncommon, Rare or Legendary)",
-          type: "string",
-          validate: isValidTier
+          prompt: "What is the tier?",
+          type: "string"
         }
       ]
     });
@@ -46,9 +34,13 @@ module.exports = class LootOpen extends Command {
     const { name } = args;
 
     try {
+      const tier = await Tier.findOne({
+        where: { name: args.tier }
+      });
+
       const [, added] = await Loot.findOrCreate({
         where: { name, guild },
-        defaults: args
+        defaults: { name, tier_id: tier.id }
       });
 
       if (added) {

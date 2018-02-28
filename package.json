@@ -26,6 +26,7 @@
   },
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --fix .",
+    "migrate": "sequelize db:migrate",
     "precommit": "lint-staged",
     "start": "node ./src/index.js",
     "start:watch": "nodemon ./src/index.js",

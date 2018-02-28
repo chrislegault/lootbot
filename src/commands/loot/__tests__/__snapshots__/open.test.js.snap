@@ -15,12 +15,12 @@ exports[`commands/loot/open configures properly 1`] = `
         ],
         "description": "Opens a lootbox",
         "examples": Array [
-          "open",
+          "loot:open",
         ],
         "group": "loot",
         "guildOnly": true,
-        "memberName": "reply",
-        "name": "open",
+        "memberName": "loot:open",
+        "name": "loot:open",
         "userPermissions": Array [
           "MANAGE_CHANNELS",
         ],

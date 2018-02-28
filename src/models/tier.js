@@ -5,13 +5,18 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       color: DataTypes.STRING,
       image: DataTypes.STRING,
+      guild: DataTypes.STRING,
       weight: DataTypes.FLOAT,
       luckyWeight: DataTypes.FLOAT
     },
     {}
   );
-  Tier.associate = function() {
-    // associations can be defined here
+
+  Tier.associate = function(models) {
+    Tier.hasMany(models.Loot, {
+      foreignKey: "tier_id"
+    });
   };
+
   return Tier;
 };

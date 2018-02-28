@@ -13,19 +13,7 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false
         },
-        weight: {
-          type: Sequelize.FLOAT,
-          allowNull: false
-        },
-        luckyWeight: {
-          type: Sequelize.FLOAT,
-          allowNull: false
-        },
         guild: {
-          type: Sequelize.STRING,
-          allowNull: false
-        },
-        tier: {
           type: Sequelize.STRING,
           allowNull: false
         },
@@ -36,6 +24,13 @@ module.exports = {
         updatedAt: {
           allowNull: false,
           type: Sequelize.DATE
+        },
+        tier_id: {
+          type: Sequelize.INTEGER,
+          references: {
+            model: "Tiers",
+            key: "id"
+          }
         }
       },
       {

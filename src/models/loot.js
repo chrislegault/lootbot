@@ -3,16 +3,15 @@ module.exports = (sequelize, Sequelize) => {
     "Loot",
     {
       name: Sequelize.STRING,
-      weight: Sequelize.FLOAT,
-      luckyWeight: Sequelize.FLOAT,
-      guild: Sequelize.STRING,
-      tier: Sequelize.STRING
+      guild: Sequelize.STRING
     },
     {}
   );
 
-  Loot.associate = function() {
-    // associations can be defined here
+  Loot.associate = function(models) {
+    Loot.belongsTo(models.Tier, {
+      foreignKey: "tier_id"
+    });
   };
 
   return Loot;

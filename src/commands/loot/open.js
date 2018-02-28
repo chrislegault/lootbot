@@ -1,20 +1,19 @@
 const { RichEmbed } = require("discord.js");
 const { Command } = require("discord.js-commando");
 const chance = require("chance")();
-const { Loot } = require("../../models");
+const { Loot, Tier } = require("../../models");
 const messages = require("../../support/messages");
-const tiers = require("../../support/tiers");
 const delay = require("../../support/delay");
 
 function sayMessage(message, msg, reward, user) {
   return msg.say(messages.formatMessage(message, reward, user));
 }
 
-function sayReward(message, msg, reward, user) {
+function sayReward(message, msg, reward, user, tier) {
   var embed = new RichEmbed()
-    .setColor(tiers[reward.tier].color)
+    .setColor(tier.color)
     .setDescription(messages.formatMessage(message, reward, user))
-    .setImage(tiers[reward.tier].image);
+    .setImage(tier.image);
 
   return msg.embed(embed);
 }
@@ -22,11 +21,11 @@ function sayReward(message, msg, reward, user) {
 module.exports = class LootOpen extends Command {
   constructor(client) {
     super(client, {
-      name: "open",
+      name: "loot:open",
       group: "loot",
-      memberName: "reply",
+      memberName: "loot:open",
       description: "Opens a lootbox",
-      examples: ["open"],
+      examples: ["loot:open"],
       userPermissions: ["MANAGE_CHANNELS"],
       guildOnly: true,
       args: [
@@ -42,17 +41,29 @@ module.exports = class LootOpen extends Command {
   async run(msg, { user }) {
     const guild = msg.guild.id;
 
-    const loot = await Loot.findAll({
+    let tiers = await Tier.findAll({
+      include: [
+        {
+          model: Loot
+        }
+      ],
       where: { guild }
     });
 
-    if (loot.length === 0) {
+    if (tiers.filter(tier => tier.Loots.length > 0).length === 0) {
       msg.say("No loot in the lootbox.");
       return null;
     }
 
-    const weights = loot.map(reward => reward.weight);
-    const reward = chance.weighted(loot, weights);
+    const weights = tiers.map(tier => tier.weight);
+    const tier = chance.weighted(tiers, weights);
+
+    if (tier.Loots.length === 0) {
+      msg.say(`${tier.name} loot won, but no prizes are registered.`);
+      return null;
+    }
+
+    const reward = chance.pickone(tier.Loots);
 
     function _sayMessage(message) {
       return sayMessage(message, msg, reward, user);
@@ -61,13 +72,13 @@ module.exports = class LootOpen extends Command {
     const introMessage = chance.pickone(messages.intro);
     const rewardMessage = chance.pickone(messages.reward);
     const drawMessage = chance.pickone(
-      messages.draw.filter(drawMessage => drawMessage.tier === reward.tier)
+      messages.draw.filter(drawMessage => drawMessage.tier === tier.name)
     );
 
     return _sayMessage(introMessage.message)
       .then(() => delay(introMessage.delay))
       .then(() => _sayMessage(drawMessage.message))
       .then(() => delay(drawMessage.delay))
-      .then(() => sayReward(rewardMessage.message, msg, reward, user));
+      .then(() => sayReward(rewardMessage.message, msg, reward, user, tier));
   }
 };

@@ -1,61 +1,40 @@
 const { Command } = require("discord.js-commando");
-const numeral = require("numeral");
-const { Loot } = require("../../models");
-
-function formatOdd(odd, total) {
-  const percent = numeral(odd / total).format("0.00%");
-  return `${percent} (${odd} in ${total})`;
-}
+const { Loot, Tier } = require("../../models");
 
 module.exports = class LootOpen extends Command {
   constructor(client) {
     super(client, {
-      name: "list",
+      name: "loot:list",
       group: "loot",
-      memberName: "list",
+      memberName: "loot:list",
       description: "List the glorious loot",
-      examples: ["list"]
+      examples: ["loot:list"]
     });
   }
 
   async run(msg) {
     const guild = msg.guild.id;
 
-    let loot = await Loot.findAll({
+    let tiers = await Tier.findAll({
+      include: [
+        {
+          model: Loot
+        }
+      ],
       where: { guild },
-      order: [["weight", "DESC"]]
+      order: [["weight", "DESC"], ["Loots", "name", "ASC"]]
     });
 
-    if (loot.length === 0) {
-      return msg.say("No loot found.");
-    }
+    let message = "";
 
-    let totalOdds = 0;
-    let totalLucky = 0;
+    tiers.forEach(tier => {
+      message += `__**${tier.name}**__\n`;
 
-    let messages = {
-      Common: "__**Common**__\n",
-      Uncommon: "__**Uncommon**__\n",
-      Rare: "__**Rare**__\n",
-      Legendary: "__**Legendary**__\n"
-    };
-
-    loot.forEach(reward => {
-      totalOdds += reward.weight;
-      totalLucky += reward.luckyWeight;
+      tier.Loots.forEach(loot => {
+        message += `${loot.name}\n`;
+      });
     });
 
-    loot.forEach(reward => {
-      messages[reward.tier] += `**${reward.name}** - ${formatOdd(
-        reward.weight,
-        totalOdds
-      )}, ${formatOdd(reward.luckyWeight, totalLucky)}\n`;
-    });
-
-    return msg.say(
-      `${messages.Common}\n${messages.Uncommon}\n${messages.Rare}\n${
-        messages.Legendary
-      }`
-    );
+    return msg.say(message);
   }
 };

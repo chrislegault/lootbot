@@ -1,20 +1,20 @@
 const { Command } = require("discord.js-commando");
-const { Loot } = require("../../models");
+const { Tier } = require("../../models");
 
 module.exports = class LootOpen extends Command {
   constructor(client) {
     super(client, {
-      name: "loot:remove",
-      group: "loot",
-      memberName: "loot:remove",
-      description: "Remove that loot",
-      examples: [`loot:remove "Maple Syrup"`, "loot:remove Syrup"],
+      name: "tier:remove",
+      group: "tier",
+      memberName: "tier:remove",
+      description: "Remove a tier",
+      examples: [`tier:remove Common`],
       userPermissions: ["MANAGE_CHANNELS"],
       guildOnly: true,
       args: [
         {
           key: "name",
-          prompt: "What is the name of the loot?",
+          prompt: "What is the name of the tier?",
           type: "string"
         }
       ]
@@ -25,7 +25,7 @@ module.exports = class LootOpen extends Command {
     const guild = msg.guild.id;
 
     try {
-      const result = await Loot.destroy({
+      const result = await Tier.destroy({
         where: { name, guild }
       });
 
