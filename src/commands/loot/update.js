@@ -1,16 +1,16 @@
 const { Command } = require("discord.js-commando");
 const { Loot, Tier } = require("../../models");
 
-module.exports = class LootOpen extends Command {
+module.exports = class LootUpdate extends Command {
   constructor(client) {
     super(client, {
-      name: "update",
+      name: "loot:update",
       group: "loot",
       memberName: "update",
       description: "Update that loot",
       examples: [
-        `update "Maple Syrup" 25 75 Legendary "New Maple Syrup"`,
-        `update "Maple Syrup" 25 75 Uncommon`
+        `loot:update "Maple Syrup" 25 75 Legendary "New Maple Syrup"`,
+        `loot:update "Maple Syrup" 25 75 Uncommon`
       ],
       userPermissions: ["MANAGE_CHANNELS"],
       guildOnly: true,

@@ -1,12 +1,12 @@
 const { Command } = require("discord.js-commando");
 const { Tier, Loot } = require("../../models");
 
-module.exports = class LootOpen extends Command {
+module.exports = class LootAdd extends Command {
   constructor(client) {
     super(client, {
       name: "loot:add",
       group: "loot",
-      memberName: "loot:add",
+      memberName: "add",
       description: "Add to the lootbox",
       examples: [
         `loot:add "Bottle of Maple Syrup" Legendary`,
@@ -35,7 +35,7 @@ module.exports = class LootOpen extends Command {
 
     try {
       const tier = await Tier.findOne({
-        where: { name: args.tier }
+        where: { name: args.tier, guild }
       });
 
       const [, added] = await Loot.findOrCreate({

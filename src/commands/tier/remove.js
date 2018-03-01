@@ -1,12 +1,12 @@
 const { Command } = require("discord.js-commando");
 const { Tier } = require("../../models");
 
-module.exports = class LootOpen extends Command {
+module.exports = class TierRemove extends Command {
   constructor(client) {
     super(client, {
       name: "tier:remove",
       group: "tier",
-      memberName: "tier:remove",
+      memberName: "remove",
       description: "Remove a tier",
       examples: [`tier:remove Common`],
       userPermissions: ["MANAGE_CHANNELS"],

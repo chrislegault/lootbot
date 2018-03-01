@@ -6,7 +6,7 @@ module.exports = class TierAdd extends Command {
     super(client, {
       name: "tier:add",
       group: "tier",
-      memberName: "tier:add",
+      memberName: "add",
       description: "Add tier to the lootbox",
       examples: ["tier:add Common #123456 pathtoimage.png 25 75"],
       userPermissions: ["MANAGE_CHANNELS"],

@@ -26,6 +26,7 @@ module.exports = {
           type: Sequelize.DATE
         },
         tier_id: {
+          allowNull: false,
           type: Sequelize.INTEGER,
           references: {
             model: "Tiers",

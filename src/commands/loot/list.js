@@ -1,12 +1,12 @@
 const { Command } = require("discord.js-commando");
 const { Loot, Tier } = require("../../models");
 
-module.exports = class LootOpen extends Command {
+module.exports = class LootList extends Command {
   constructor(client) {
     super(client, {
       name: "loot:list",
       group: "loot",
-      memberName: "loot:list",
+      memberName: "list",
       description: "List the glorious loot",
       examples: ["loot:list"]
     });

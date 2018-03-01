@@ -1,13 +1,13 @@
 const { Command } = require("discord.js-commando");
 
-module.exports = class LootOpen extends Command {
+module.exports = class LootLuckyOpen extends Command {
   constructor(client) {
     super(client, {
-      name: "luckyopen",
+      name: "loot:luckyopen",
       group: "loot",
       memberName: "luckyopen",
       description: "Opens a lucky lootbox",
-      examples: ["luckyopen"],
+      examples: ["loot:luckyopen"],
       userPermissions: ["MANAGE_CHANNELS"],
       guildOnly: true,
       args: [

@@ -1,12 +1,12 @@
 const { Command } = require("discord.js-commando");
 const { Tier } = require("../../models");
 
-module.exports = class LootOpen extends Command {
+module.exports = class TierUpdate extends Command {
   constructor(client) {
     super(client, {
       name: "tier:update",
       group: "tier",
-      memberName: "tier:update",
+      memberName: "update",
       description: "Update that tier",
       examples: [
         `update Common 25 75 Legendary "New Maple Syrup"`,
