@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
     Tier.hasMany(models.Loot, {
       foreignKey: "tier_id"
     });
+
+    Tier.hasMany(models.Message, {
+      foreignKey: "tier_id"
+    });
   };
 
   return Tier;
