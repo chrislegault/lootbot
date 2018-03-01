@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM("draw", "tier", "reward"),
       tier_id: DataTypes.INTEGER,
       user: DataTypes.STRING,
-      guild: DataTypes.STRING
+      guild: DataTypes.STRING,
+      delay: DataTypes.INTEGER
     },
     {}
   );
