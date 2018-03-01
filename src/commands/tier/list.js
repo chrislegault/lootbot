@@ -7,12 +7,12 @@ function formatOdd(odd, total) {
   return `${percent} (${odd} in ${total})`;
 }
 
-module.exports = class LootOpen extends Command {
+module.exports = class TierList extends Command {
   constructor(client) {
     super(client, {
       name: "tier:list",
       group: "tier",
-      memberName: "tier:list",
+      memberName: "list",
       description: "List the glorious tiers",
       examples: ["tier:list"]
     });

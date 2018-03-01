@@ -23,7 +23,7 @@ module.exports = class LootOpen extends Command {
     super(client, {
       name: "loot:open",
       group: "loot",
-      memberName: "loot:open",
+      memberName: "open",
       description: "Opens a lootbox",
       examples: ["loot:open"],
       userPermissions: ["MANAGE_CHANNELS"],
