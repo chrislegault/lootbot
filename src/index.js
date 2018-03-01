@@ -19,7 +19,7 @@ client.setProvider(
 
 client.registry
   .registerDefaults()
-  .registerGroups([["loot", "Loot"]])
+  .registerGroups([["loot", "Loot"], ["tier", "Tier"], ["message", "Message"]])
   .registerCommandsIn({
     dirname: path.join(__dirname, "commands"),
     excludeDirs: /^__tests__$/
