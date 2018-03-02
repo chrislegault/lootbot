@@ -1,5 +1,9 @@
 const guild = process.env.GUILD;
 
+if (!guild) {
+  throw new Error("GUILD env variable required");
+}
+
 module.exports = {
   up: queryInterface => {
     return queryInterface.bulkInsert("Tiers", [

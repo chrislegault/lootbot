@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const { Message } = require("../../models");
+const { Tier, Message } = require("../../models");
 
 module.exports = class MessageList extends Command {
   constructor(client) {
@@ -16,6 +16,11 @@ module.exports = class MessageList extends Command {
     const guild = msg.guild.id;
 
     let messages = await Message.findAll({
+      include: [
+        {
+          model: Tier
+        }
+      ],
       where: { guild }
     });
 
@@ -26,11 +31,12 @@ module.exports = class MessageList extends Command {
     let list = "";
 
     messages.forEach(message => {
+      const tier = message.Tier ? message.Tier.name : "N/A";
       list += `__**${message.name}**__\n`;
       list += `Message: ${message.message}\n`;
       list += `Type: ${message.type}\n`;
-      list += `Tier: ${message.tier_id}\n`;
-      list += `User: ${message.user}\n\n`;
+      list += `Tier: ${tier}\n`;
+      list += `User: ${message.user || "N/A"}\n\n`;
     });
 
     return msg.say(list);

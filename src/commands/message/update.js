@@ -65,41 +65,43 @@ module.exports = class MessageUpdate extends Command {
     let foundTier = null;
     let updates = {};
 
-    if (type === "tier") {
-      if (!tier) {
-        return msg.say("A tier must be provided when the type is set to tier.");
-      }
-
-      foundTier = await Tier.findOne({
-        where: { name: tier, guild }
-      });
-
-      if (!foundTier) {
-        return msg.say(
-          "A valid tier must be provided when the type is set to tier."
-        );
-      }
-
-      updates = { ...updates, tier_id: foundTier.id };
-    }
-
-    if (message) {
-      updates = { ...updates, message };
-    }
-
-    if (type) {
-      updates = { ...updates, type };
-    }
-
-    if (user) {
-      updates = { ...updates, user: user.id };
-    }
-
-    if (Number.isInteger(delay)) {
-      updates = { ...updates, delay };
-    }
-
     try {
+      if (type === "tier") {
+        if (!tier) {
+          return msg.say(
+            "A tier must be provided when the type is set to tier."
+          );
+        }
+
+        foundTier = await Tier.findOne({
+          where: { name: tier, guild }
+        });
+
+        if (!foundTier) {
+          return msg.say(
+            "A valid tier must be provided when the type is set to tier."
+          );
+        }
+
+        updates = { ...updates, tier_id: foundTier.id };
+      }
+
+      if (message) {
+        updates = { ...updates, message };
+      }
+
+      if (type) {
+        updates = { ...updates, type };
+      }
+
+      if (user) {
+        updates = { ...updates, user: user.id };
+      }
+
+      if (Number.isInteger(delay)) {
+        updates = { ...updates, delay };
+      }
+
       const [updated] = await Message.update(updates, {
         where: { name, guild }
       });
