@@ -22,7 +22,6 @@ class SequelizeProvider extends SettingProvider {
 
   async init(client) {
     this.client = client;
-    await this.db.sync();
 
     // Load all settings
     const rows = await this.model.findAll();

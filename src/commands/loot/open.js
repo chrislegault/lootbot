@@ -1,18 +1,18 @@
 const { RichEmbed } = require("discord.js");
 const { Command } = require("discord.js-commando");
 const chance = require("chance")();
-const { Loot, Tier } = require("../../models");
-const messages = require("../../support/messages");
+const { Loot, Tier, Message } = require("../../models");
+const formatMessage = require("../../support/formatMessage");
 const delay = require("../../support/delay");
 
-function sayMessage(message, msg, reward, user) {
-  return msg.say(messages.formatMessage(message, reward, user));
+function sayMessage(message, msg, reward, user, tier) {
+  return msg.say(formatMessage(message, reward, user, tier));
 }
 
 function sayReward(message, msg, reward, user, tier) {
   var embed = new RichEmbed()
     .setColor(tier.color)
-    .setDescription(messages.formatMessage(message, reward, user))
+    .setDescription(formatMessage(message, reward, user, tier))
     .setImage(tier.image);
 
   return msg.embed(embed);
@@ -41,12 +41,16 @@ module.exports = class LootOpen extends Command {
   async run(msg, { user }) {
     const guild = msg.guild.id;
 
-    let tiers = await Tier.findAll({
+    const tiers = await Tier.findAll({
       include: [
         {
           model: Loot
         }
       ],
+      where: { guild }
+    });
+
+    const myMessages = await Message.findAll({
       where: { guild }
     });
 
@@ -66,19 +70,28 @@ module.exports = class LootOpen extends Command {
     const reward = chance.pickone(tier.Loots);
 
     function _sayMessage(message) {
-      return sayMessage(message, msg, reward, user);
+      return sayMessage(message, msg, reward, user, tier);
     }
 
-    const introMessage = chance.pickone(messages.intro);
-    const rewardMessage = chance.pickone(messages.reward);
-    const drawMessage = chance.pickone(
-      messages.draw.filter(drawMessage => drawMessage.tier === tier.name)
+    const introMessage = chance.pickone(
+      myMessages.filter(myMessage => myMessage.type === "draw")
+    );
+
+    const tierMessage = chance.pickone(
+      myMessages.filter(
+        myMessage =>
+          myMessage.tier_id === reward.tier_id && myMessage.type === "tier"
+      )
+    );
+
+    const rewardMessage = chance.pickone(
+      myMessages.filter(myMessage => myMessage.type === "reward")
     );
 
     return _sayMessage(introMessage.message)
       .then(() => delay(introMessage.delay))
-      .then(() => _sayMessage(drawMessage.message))
-      .then(() => delay(drawMessage.delay))
+      .then(() => _sayMessage(tierMessage.message))
+      .then(() => delay(tierMessage.delay))
       .then(() => sayReward(rewardMessage.message, msg, reward, user, tier));
   }
 };

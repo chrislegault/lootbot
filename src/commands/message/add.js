@@ -10,8 +10,10 @@ module.exports = class MessageAdd extends Command {
       description: "Add message to the lootbox",
       examples: [
         `message:add msg1 "Drawing loot..." draw`,
-        `message:add msg2 "You have won a <tier> prize..." tier Common`,
-        `message:add msg3 "Congrats <user>, you won loot named <reward>" reward`
+        `message:add msg1 "You have won a <tier> prize..." tier 10 Common`,
+        `message:add msg1 "You have won a <tier> prize..." tier "" Common`,
+        `message:add msg1 "You have won a <tier> prize..." tier "" Common @user`,
+        `message:add msg1 "Congrats <user>, you won loot named <reward>" reward`
       ],
       userPermissions: ["MANAGE_CHANNELS"],
       guildOnly: true,
@@ -33,6 +35,12 @@ module.exports = class MessageAdd extends Command {
           validate: type => ["draw", "tier", "reward"].includes(type)
         },
         {
+          key: "delay",
+          prompt: "What is the delay until the next message is shown?",
+          type: "integer",
+          default: 0
+        },
+        {
           key: "tier",
           prompt:
             "What is the tier of the loot? (required if type is tier, blank if not needed)",
@@ -49,7 +57,7 @@ module.exports = class MessageAdd extends Command {
     });
   }
 
-  async run(msg, { name, message, type, tier, user }) {
+  async run(msg, { name, message, type, tier, user, delay }) {
     const guild = msg.guild.id;
     let foundTier = null;
 
@@ -77,7 +85,8 @@ module.exports = class MessageAdd extends Command {
         type: type,
         tier_id: foundTier ? foundTier.id : null,
         user: user ? user.id : null,
-        guild
+        guild,
+        delay
       }
     });
 

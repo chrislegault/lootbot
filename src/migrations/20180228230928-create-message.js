@@ -37,6 +37,10 @@ module.exports = {
           allowNull: false,
           type: Sequelize.STRING
         },
+        delay: {
+          type: Sequelize.INTEGER,
+          default: 0
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE

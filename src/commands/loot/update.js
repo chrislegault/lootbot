@@ -23,7 +23,8 @@ module.exports = class LootUpdate extends Command {
         {
           key: "tier",
           prompt: "What is the new tier of the loot?",
-          type: "string"
+          type: "string",
+          default: ""
         },
         {
           key: "name",
@@ -35,35 +36,40 @@ module.exports = class LootUpdate extends Command {
     });
   }
 
-  async run(msg, newValues) {
+  async run(msg, { existingName, tier, name }) {
     const guild = msg.guild.id;
     let updates = {};
-    let name = newValues.existingName;
-
-    Object.keys(newValues).forEach(key => {
-      if (newValues[key] && key !== "existingName" && key !== "tier") {
-        updates[key] = newValues[key];
-      }
-    });
 
     try {
-      const tier = await Tier.findOne({
-        where: { name: newValues.tier }
-      });
+      let foundTier = null;
 
-      updates = { ...updates, tier_id: tier.id };
+      if (tier) {
+        foundTier = await Tier.findOne({
+          where: { name: tier }
+        });
+
+        if (!foundTier) {
+          return msg.say("A valid tier must be provided.");
+        }
+
+        updates = { ...updates, tier_id: foundTier.id };
+      }
+
+      if (name) {
+        updates = { ...updates, name };
+      }
 
       const [updated] = await Loot.update(updates, {
-        where: { name, guild }
+        where: { name: existingName, guild }
       });
 
       if (updated === 0) {
-        msg.say(`${name} not found`);
+        msg.say(`${existingName} not found`);
       } else {
-        msg.say(`${newValues.name || name} updated`);
+        msg.say(`${name || existingName} updated`);
       }
     } catch (e) {
-      msg.say(`An error occurred updating ${name}`);
+      msg.say(`An error occurred updating ${existingName}`);
     }
   }
 };

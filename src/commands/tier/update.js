@@ -1,6 +1,10 @@
 const { Command } = require("discord.js-commando");
 const { Tier } = require("../../models");
 
+function isString(value) {
+  return typeof value === "string" || value instanceof String;
+}
+
 module.exports = class TierUpdate extends Command {
   constructor(client) {
     super(client, {
@@ -54,29 +58,42 @@ module.exports = class TierUpdate extends Command {
     });
   }
 
-  async run(msg, newValues) {
+  async run(msg, { existingName, weight, luckyWeight, color, image, name }) {
     const guild = msg.guild.id;
     let updates = {};
-    let name = newValues.existingName;
 
-    Object.keys(newValues).forEach(key => {
-      if (newValues[key] && key !== "existingName") {
-        updates[key] = newValues[key];
-      }
-    });
+    if (!isString(weight)) {
+      updates = { ...updates, weight };
+    }
+
+    if (!isString(luckyWeight)) {
+      updates = { ...updates, luckyWeight };
+    }
+
+    if (color) {
+      updates = { ...updates, color };
+    }
+
+    if (image) {
+      updates = { ...updates, image };
+    }
+
+    if (name) {
+      updates = { ...updates, name };
+    }
 
     try {
       const [updated] = await Tier.update(updates, {
-        where: { name, guild }
+        where: { name: existingName, guild }
       });
 
       if (updated === 0) {
-        msg.say(`${name} not found`);
+        msg.say(`${existingName} not found`);
       } else {
-        msg.say(`${newValues.name || name} updated`);
+        msg.say(`${name || existingName} updated`);
       }
     } catch (e) {
-      msg.say(`An error occurred updating ${name}`);
+      msg.say(`An error occurred updating ${existingName}`);
     }
   }
 };
