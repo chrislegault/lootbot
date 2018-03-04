@@ -15,6 +15,7 @@ module.exports = class LootAdd extends Command {
         ],
         usage: "<name> <tier>"
       },
+      split: "quoted",
       options: {
         permissions: ["MANAGE_CHANNELS"]
       },
