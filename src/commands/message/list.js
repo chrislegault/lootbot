@@ -10,6 +10,9 @@ module.exports = class MessageList extends Command {
       description: {
         content: "List the glorious messages",
         examples: ["message-list"]
+      },
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
       }
     });
   }

@@ -12,8 +12,10 @@ module.exports = class TierRemove extends Command {
         examples: ["tier-remove Common"],
         usage: "<name>"
       },
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
+      },
       split: "quoted",
-      userPermissions: ["MANAGE_CHANNELS"],
       args: [
         {
           id: "name",

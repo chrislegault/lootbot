@@ -12,11 +12,15 @@ module.exports = class LootRemove extends Command {
         examples: [`loot-remove "Maple Syrup"`, "loot-remove Syrup"],
         usage: "<name>"
       },
-      userPermissions: ["MANAGE_CHANNELS"],
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
+      },
       args: [
         {
           id: "name",
-          prompt: "What is the name of the loot?",
+          prompt: {
+            start: "What is the name of the loot?"
+          },
           type: "string"
         }
       ]
