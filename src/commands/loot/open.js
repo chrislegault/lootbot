@@ -17,6 +17,21 @@ function sayReward(message, msg, reward, user, tier) {
   return msg.channel.send({ embed });
 }
 
+const DEFAULT_MESSAGES = {
+  intro: {
+    message: "Drawing loot...",
+    delay: 0
+  },
+  draw: {
+    message: "<tier> prize won...",
+    delay: 1000
+  },
+  reward: {
+    message: "Congratulations <user>, you won <reward>",
+    delay: 0
+  }
+};
+
 module.exports = class LootOpen extends Command {
   constructor() {
     super("open", {
@@ -80,18 +95,22 @@ module.exports = class LootOpen extends Command {
     }
 
     const introMessage = chance.pickone(
-      myMessages.filter(myMessage => myMessage.type === "intro")
+      myMessages.filter(myMessage => myMessage.type === "intro") || [
+        DEFAULT_MESSAGES.intro
+      ]
     );
 
     const tierMessage = chance.pickone(
       myMessages.filter(
         myMessage =>
-          myMessage.tier_id === reward.tier_id && myMessage.type === "tier"
-      )
+          myMessage.tier_id === reward.tier_id && myMessage.type === "draw"
+      ) || [DEFAULT_MESSAGES.draw]
     );
 
     const rewardMessage = chance.pickone(
-      myMessages.filter(myMessage => myMessage.type === "reward")
+      myMessages.filter(myMessage => myMessage.type === "reward") || [
+        DEFAULT_MESSAGES.reward
+      ]
     );
 
     return _sayMessage(introMessage.message)
