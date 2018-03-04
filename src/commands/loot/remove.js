@@ -1,19 +1,21 @@
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 const { Loot } = require("../../models");
 
 module.exports = class LootRemove extends Command {
-  constructor(client) {
-    super(client, {
-      name: "loot:remove",
-      group: "loot",
-      memberName: "remove",
-      description: "Remove that loot",
-      examples: [`loot:remove "Maple Syrup"`, "loot:remove Syrup"],
+  constructor() {
+    super("loot-remove", {
+      aliases: ["loot-remove", "lr"],
+      category: "Loot",
+      channelRestriction: "guild",
+      description: {
+        content: "Remove that loot",
+        examples: [`loot-remove "Maple Syrup"`, "loot-remove Syrup"],
+        usage: "<name>"
+      },
       userPermissions: ["MANAGE_CHANNELS"],
-      guildOnly: true,
       args: [
         {
-          key: "name",
+          id: "name",
           prompt: "What is the name of the loot?",
           type: "string"
         }
@@ -21,7 +23,7 @@ module.exports = class LootRemove extends Command {
     });
   }
 
-  async run(msg, { name }) {
+  async exec(msg, { name }) {
     const guild = msg.guild.id;
 
     try {
@@ -30,12 +32,12 @@ module.exports = class LootRemove extends Command {
       });
 
       if (result === 0) {
-        msg.say(`${name} not found`);
+        return msg.channel.send(`${name} not found`);
       } else {
-        msg.say(`${name} removed`);
+        return msg.channel.send(`${name} removed`);
       }
     } catch (e) {
-      msg.say(`An error occurred removing ${name}`);
+      return msg.channel.send(`An error occurred removing ${name}`);
     }
   }
 };

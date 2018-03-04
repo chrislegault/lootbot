@@ -1,12 +1,11 @@
-const { RichEmbed } = require("discord.js");
-const { Command } = require("discord.js-commando");
 const chance = require("chance")();
+const { RichEmbed } = require("discord.js");
+const { Command } = require("discord-akairo");
 const { Loot, Tier, Message } = require("../../models");
-const formatMessage = require("../../support/formatMessage");
-const delay = require("../../support/delay");
+const { delay, formatMessage } = require("../../support");
 
 function sayMessage(message, msg, reward, user, tier) {
-  return msg.say(formatMessage(message, reward, user, tier));
+  return msg.channel.send(formatMessage(message, reward, user, tier));
 }
 
 function sayReward(message, msg, reward, user, tier) {
@@ -15,30 +14,37 @@ function sayReward(message, msg, reward, user, tier) {
     .setDescription(formatMessage(message, reward, user, tier))
     .setImage(tier.image);
 
-  return msg.embed(embed);
+  return msg.channel.send({ embed });
 }
 
 module.exports = class LootOpen extends Command {
-  constructor(client) {
-    super(client, {
-      name: "loot:open",
-      group: "loot",
-      memberName: "open",
-      description: "Opens a lootbox",
-      examples: ["loot:open"],
+  constructor() {
+    super("open", {
+      aliases: ["open", "loot-open"],
+      category: "Loot",
+      channelRestriction: "guild",
+      description: {
+        content: "Opens a lootbox",
+        examples: ["open", "loot-open"]
+      },
       userPermissions: ["MANAGE_CHANNELS"],
-      guildOnly: true,
       args: [
         {
-          key: "user",
+          id: "user",
           prompt: "Which user would you like to open a lootbox for?",
           type: "member"
+        },
+        {
+          id: "lucky",
+          match: "flag",
+          prefix: "lucky",
+          default: false
         }
       ]
     });
   }
 
-  async run(msg, { user }) {
+  async exec(msg, { user, lucky }) {
     const guild = msg.guild.id;
 
     const tiers = await Tier.findAll({
@@ -55,16 +61,16 @@ module.exports = class LootOpen extends Command {
     });
 
     if (tiers.filter(tier => tier.Loots.length > 0).length === 0) {
-      msg.say("No loot in the lootbox.");
-      return null;
+      return msg.channel.send("No loot in the lootbox.");
     }
 
-    const weights = tiers.map(tier => tier.weight);
+    const weights = tiers.map(tier => (lucky ? tier.luckyWeight : tier.weight));
     const tier = chance.weighted(tiers, weights);
 
     if (tier.Loots.length === 0) {
-      msg.say(`${tier.name} loot won, but no prizes are registered.`);
-      return null;
+      return msg.channel.send(
+        `${tier.name} loot won, but no prizes are registered.`
+      );
     }
 
     const reward = chance.pickone(tier.Loots);
@@ -74,7 +80,7 @@ module.exports = class LootOpen extends Command {
     }
 
     const introMessage = chance.pickone(
-      myMessages.filter(myMessage => myMessage.type === "draw")
+      myMessages.filter(myMessage => myMessage.type === "intro")
     );
 
     const tierMessage = chance.pickone(

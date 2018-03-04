@@ -1,99 +1,131 @@
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 const { Tier, Message } = require("../../models");
 
 module.exports = class MessageAdd extends Command {
-  constructor(client) {
-    super(client, {
-      name: "message:add",
-      group: "message",
-      memberName: "add",
-      description: "Add message to the lootbox",
-      examples: [
-        `message:add msg1 "Drawing loot..." draw`,
-        `message:add msg1 "You have won a <tier> prize..." tier 10 Common`,
-        `message:add msg1 "You have won a <tier> prize..." tier "" Common`,
-        `message:add msg1 "You have won a <tier> prize..." tier "" Common @user`,
-        `message:add msg1 "Congrats <user>, you won loot named <reward>" reward`
-      ],
+  constructor() {
+    super("message-add", {
+      aliases: ["message-add", "ma"],
+      category: "Message",
+      channelRestriction: "guild",
+      description: {
+        content:
+          "Add message to the lootbox. Messages can be targeted at specific users. Messages can also be targeted at specific tiers of loot (draw and reward types only)",
+        examples: [
+          `message-add basicintro "Some intro..." intro`,
+          `message-add basicdraw "You won a prize!" draw`,
+          `message-add drawtier "<tier> prize...womp womp" draw tier=Common`,
+          `message-add drawtierdelay "<tier> prize...womp womp. Waiting..." draw delay=10 tier=Common`,
+          `message-add drawtieruser "Specific user, you have won a <tier> prize...womp womp" draw tier=Common user=@user`,
+          `message-add basicreward "Congrats <user>, you won loot named <reward>" reward`,
+          `message-add rewardtier "Congrats on your amazing prize" reward tier=Legendary`,
+          `message-add rewardtieruser "Specific user, congrats" reward user=@user`
+        ],
+        usage: "<name> <message> <type> delay=<delay> tier=<tier> user=<user>"
+      },
+      split: "sticky",
       userPermissions: ["MANAGE_CHANNELS"],
-      guildOnly: true,
       args: [
         {
-          key: "name",
-          prompt: "What is the identier of the message?",
+          id: "name",
+          prompt: {
+            start: "What is the identier of the message?"
+          },
           type: "string"
         },
         {
-          key: "message",
-          prompt: "What is the message?",
+          id: "message",
+          prompt: { start: "What is the message?" },
           type: "string"
         },
         {
-          key: "type",
-          prompt: "What is the type of the message? (draw, tier, or reward)",
+          id: "type",
+          prompt: {
+            start: "What is the type of the message? (intro, draw, or reward)"
+          },
           type: "string",
-          validate: type => ["draw", "tier", "reward"].includes(type)
+          validate: type => ["intro", "draw", "reward"].includes(type)
         },
         {
-          key: "delay",
-          prompt: "What is the delay until the next message is shown?",
+          id: "delay",
+          prompt: {
+            start: "What is the delay until the next message is shown?",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "delay=",
           type: "integer",
-          default: 0
+          default: null
         },
         {
-          key: "tier",
-          prompt:
-            "What is the tier of the loot? (required if type is tier, blank if not needed)",
+          id: "tier",
+          prompt: {
+            start:
+              "What is the tier of the loot? (blank will be included in all tiers of loot)",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "tier=",
           type: "string",
-          default: ""
+          default: null
         },
         {
-          key: "user",
-          prompt: "What user should receive this message? (blank if all users)",
-          type: "user",
-          default: ""
+          id: "user",
+          prompt: {
+            start:
+              "What user should receive this message? (blank will be all users)",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "user=",
+          type: "member",
+          default: null
         }
       ]
     });
   }
 
-  async run(msg, { name, message, type, tier, user, delay }) {
+  async exec(msg, { tier, user, ...fields }) {
     const guild = msg.guild.id;
-    let foundTier = null;
 
-    if (type === "tier") {
-      if (!tier) {
-        return msg.say("A tier must be provided when the type is set to tier.");
+    fields = Object.keys(fields).reduce((memo, key) => {
+      if (fields[key] !== null) {
+        memo[key] = fields[key];
       }
 
-      foundTier = await Tier.findOne({
-        where: { name: tier, guild }
+      return memo;
+    }, {});
+
+    try {
+      if (tier) {
+        let foundTier = null;
+
+        foundTier = await Tier.findOne({
+          where: { name: tier, guild }
+        });
+
+        if (!foundTier) {
+          return msg.channel.send("A valid tier must be provided.");
+        }
+
+        fields.tier_id = foundTier.id;
+      }
+
+      if (user) {
+        fields.user_id = user.id;
+      }
+
+      const [, added] = await Message.findOrCreate({
+        where: { name: fields.name, guild },
+        defaults: { ...fields, guild }
       });
 
-      if (!foundTier) {
-        return msg.say(
-          "A valid tier must be provided when the type is set to tier."
-        );
+      if (added) {
+        return msg.channel.send(`${fields.name} added.`);
       }
-    }
 
-    const [, added] = await Message.findOrCreate({
-      where: { name, guild },
-      defaults: {
-        name,
-        message,
-        type: type,
-        tier_id: foundTier ? foundTier.id : null,
-        user: user ? user.id : null,
-        guild,
-        delay
-      }
-    });
-
-    if (added) {
-      msg.say(`${name} added.`);
-    } else {
-      msg.say(`${name} already exists.`);
+      return msg.channel.send(`${fields.name} already exists.`);
+    } catch (error) {
+      return msg.channel.send(`An error occurred adding ${fields.name}`);
     }
   }
 };

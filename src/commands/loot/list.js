@@ -1,18 +1,20 @@
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 const { Loot, Tier } = require("../../models");
 
 module.exports = class LootList extends Command {
-  constructor(client) {
-    super(client, {
-      name: "loot:list",
-      group: "loot",
-      memberName: "list",
-      description: "List the glorious loot",
-      examples: ["loot:list"]
+  constructor() {
+    super("loot-list", {
+      aliases: ["loot-list", "ll"],
+      category: "Loot",
+      channelRestriction: "guild",
+      description: {
+        content: "List the glorious loot",
+        examples: ["loot-list"]
+      }
     });
   }
 
-  async run(msg) {
+  async exec(msg) {
     const guild = msg.guild.id;
 
     let tiers = await Tier.findAll({
@@ -33,8 +35,10 @@ module.exports = class LootList extends Command {
       tier.Loots.forEach(loot => {
         message += `${loot.name}\n`;
       });
+
+      message += "\n";
     });
 
-    return msg.say(message);
+    return msg.channel.send(message);
   }
 };

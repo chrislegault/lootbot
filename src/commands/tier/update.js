@@ -1,85 +1,101 @@
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 const { Tier } = require("../../models");
 
-function isString(value) {
-  return typeof value === "string" || value instanceof String;
-}
-
 module.exports = class TierUpdate extends Command {
-  constructor(client) {
-    super(client, {
-      name: "tier:update",
-      group: "tier",
-      memberName: "update",
-      description: "Update that tier",
-      examples: [
-        `update Common 25 75 Legendary "New Maple Syrup"`,
-        `update "Maple Syrup" 25 75 Uncommon`
-      ],
+  constructor() {
+    super("tier-update", {
+      aliases: ["tier-update", "tu"],
+      category: "Tier",
+      channelRestriction: "guild",
+      description: {
+        content: "Update that tier",
+        examples: [
+          `tier-update Common name="New Common" color=#555555 image=https://some.pathtoimage.png weight=25 luckyWeight=75`,
+          `tier-update "Super Common" weight=10`
+        ],
+        usage:
+          "<existingName> name=<name> color=<color> image=<image> weight=<weight> luckyWeight=<luckyWeight>"
+      },
+      split: "sticky",
       userPermissions: ["MANAGE_CHANNELS"],
-      guildOnly: true,
       args: [
         {
-          key: "existingName",
-          prompt: "What is the current name of the tier?",
+          id: "existingName",
+          prompt: { start: "What is the current name of the tier?" },
           type: "string"
         },
         {
-          key: "weight",
-          prompt: "What is the new weight of the tier?",
-          type: "float",
-          default: ""
-        },
-        {
-          key: "luckyWeight",
-          prompt: "What is the new lucky weight of the tier?",
-          type: "float",
-          default: ""
-        },
-        {
-          key: "color",
-          prompt: "What is the new color of the tier?",
+          id: "name",
+          prompt: {
+            start: "What is the new name of the tier?",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "name=",
           type: "string",
-          default: ""
+          default: null
         },
         {
-          key: "image",
-          prompt: "What is the new image of the tier?",
-          type: "string",
-          default: ""
+          id: "color",
+          prompt: {
+            start: "What is the new color of the tier?",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "color=",
+          type: "color",
+          default: null
         },
         {
-          key: "name",
-          prompt: "What is the new name of the loot?",
-          type: "string",
-          default: ""
+          id: "image",
+          prompt: {
+            start: "What is the new image of the tier?",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "image=",
+          type: "url",
+          default: null
+        },
+        {
+          id: "weight",
+          prompt: {
+            start: "What is the new weight of the tier?",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "weight=",
+          type: "number",
+          default: null
+        },
+        {
+          id: "luckyWeight",
+          prompt: {
+            start: "What is the new lucky weight of the tier?",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "luckyWeight=",
+          type: "number",
+          default: null
         }
       ]
     });
   }
 
-  async run(msg, { existingName, weight, luckyWeight, color, image, name }) {
+  async exec(msg, { existingName, ...updates }) {
     const guild = msg.guild.id;
-    let updates = {};
 
-    if (!isString(weight)) {
-      updates = { ...updates, weight };
-    }
+    updates = Object.keys(updates).reduce((memo, key) => {
+      if (updates[key] !== null) {
+        memo[key] = updates[key];
+      }
 
-    if (!isString(luckyWeight)) {
-      updates = { ...updates, luckyWeight };
-    }
+      return memo;
+    }, {});
 
-    if (color) {
-      updates = { ...updates, color };
-    }
-
-    if (image) {
-      updates = { ...updates, image };
-    }
-
-    if (name) {
-      updates = { ...updates, name };
+    if (updates.image) {
+      updates.image = updates.image.href;
     }
 
     try {
@@ -88,12 +104,12 @@ module.exports = class TierUpdate extends Command {
       });
 
       if (updated === 0) {
-        msg.say(`${existingName} not found`);
+        return msg.channel.send(`${existingName} not found`);
       } else {
-        msg.say(`${name || existingName} updated`);
+        return msg.channel.send(`${updates.name || existingName} updated`);
       }
     } catch (e) {
-      msg.say(`An error occurred updating ${existingName}`);
+      return msg.channel.send(`An error occurred updating ${existingName}`);
     }
   }
 };
