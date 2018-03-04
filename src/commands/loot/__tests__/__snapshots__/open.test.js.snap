@@ -4,23 +4,34 @@ exports[`commands/loot/open configures properly 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
-      [MockFunction],
+      "open",
       Object {
+        "aliases": Array [
+          "open",
+          "loot-open",
+        ],
         "args": Array [
           Object {
-            "key": "user",
+            "id": "user",
             "prompt": "Which user would you like to open a lootbox for?",
             "type": "member",
           },
+          Object {
+            "default": false,
+            "id": "lucky",
+            "match": "flag",
+            "prefix": "lucky",
+          },
         ],
-        "description": "Opens a lootbox",
-        "examples": Array [
-          "loot:open",
-        ],
-        "group": "loot",
-        "guildOnly": true,
-        "memberName": "open",
-        "name": "loot:open",
+        "category": "Loot",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Opens a lootbox",
+          "examples": Array [
+            "open",
+            "loot-open",
+          ],
+        },
         "userPermissions": Array [
           "MANAGE_CHANNELS",
         ],

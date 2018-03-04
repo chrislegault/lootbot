@@ -1,63 +1,77 @@
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 const { Tier } = require("../../models");
 
 module.exports = class TierAdd extends Command {
-  constructor(client) {
-    super(client, {
-      name: "tier:add",
-      group: "tier",
-      memberName: "add",
-      description: "Add tier to the lootbox",
-      examples: ["tier:add Common #123456 pathtoimage.png 25 75"],
+  constructor() {
+    super("tier-add", {
+      aliases: ["tier-add", "ta"],
+      category: "Tier",
+      channelRestriction: "guild",
+      description: {
+        content: "Add tier to the lootbox",
+        examples: [
+          "tier:add Common #123456 https://some.pathtoimage.png 25 75"
+        ],
+        usage: "<name> <color> <image> <weight> <luckyWeight>"
+      },
+      split: "quoted",
       userPermissions: ["MANAGE_CHANNELS"],
-      guildOnly: true,
       args: [
         {
-          key: "name",
-          prompt: "What is the name of the tier?",
+          id: "name",
+          prompt: {
+            start: "What is the name of the tier?"
+          },
           type: "string"
         },
         {
-          key: "color",
-          prompt: "What is the color of the tier?",
-          type: "string"
+          id: "color",
+          prompt: {
+            start: "What is the color of the tier?"
+          },
+          type: "color"
         },
         {
-          key: "image",
-          prompt: "What is the image of the tier?",
-          type: "string"
+          id: "image",
+          prompt: {
+            start: "What is the image of the tier?"
+          },
+          type: "url"
         },
         {
-          key: "weight",
-          prompt: "What is the weight of the loot?",
-          type: "float"
+          id: "weight",
+          prompt: {
+            start: "What is the weight of the loot?"
+          },
+          type: "number"
         },
         {
-          key: "luckyWeight",
-          prompt: "What is the lucky weight of the loot?",
-          type: "float"
+          id: "luckyWeight",
+          prompt: {
+            start: "What is the lucky weight of the loot?"
+          },
+          type: "number"
         }
       ]
     });
   }
 
-  async run(msg, args) {
+  async exec(msg, { name, color, image, weight, luckyWeight }) {
     const guild = msg.guild.id;
-    const { name } = args;
 
     try {
       const [, added] = await Tier.findOrCreate({
         where: { name, guild },
-        defaults: { ...args, guild }
+        defaults: { name, image: image.href, color, weight, luckyWeight, guild }
       });
 
       if (added) {
-        msg.say(`Tier ${name} added.`);
+        return msg.channel.send(`Tier ${name} added.`);
       } else {
-        msg.say(`Tier ${name} already exists.`);
+        return msg.channel.send(`Tier ${name} already exists.`);
       }
     } catch (error) {
-      msg.say(`An error occurred adding Tier ${name}`);
+      return msg.channel.send(`An error occurred adding Tier ${name}`);
     }
   }
 };

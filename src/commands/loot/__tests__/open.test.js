@@ -1,11 +1,11 @@
-jest.mock("discord.js-commando");
+jest.mock("discord-akairo");
 jest.mock("chance");
 jest.mock("../../../models", () => {
   return { Loot: { findAll: jest.fn("findAll") } };
 });
 
 const chance = require("chance");
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 
 chance.mockReturnValue({ weighted: jest.fn() });
 

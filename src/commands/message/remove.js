@@ -1,19 +1,20 @@
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 const { Message } = require("../../models");
 
 module.exports = class MessageRemove extends Command {
-  constructor(client) {
-    super(client, {
-      name: "message:remove",
-      group: "message",
-      memberName: "remove",
-      description: "Remove a message",
-      examples: [`message:remove msg1`],
+  constructor() {
+    super("message-remove", {
+      aliases: ["message-remove", "mr"],
+      category: "Message",
+      channelRestriction: "guild",
+      description: {
+        description: "Remove a message",
+        examples: [`message:remove msg1`]
+      },
       userPermissions: ["MANAGE_CHANNELS"],
-      guildOnly: true,
       args: [
         {
-          key: "name",
+          id: "name",
           prompt: "What is the name of the message?",
           type: "string"
         }
@@ -21,7 +22,7 @@ module.exports = class MessageRemove extends Command {
     });
   }
 
-  async run(msg, { name }) {
+  async exec(msg, { name }) {
     const guild = msg.guild.id;
 
     try {
@@ -30,12 +31,12 @@ module.exports = class MessageRemove extends Command {
       });
 
       if (result === 0) {
-        msg.say(`${name} not found`);
+        return msg.channel.send(`${name} not found`);
       } else {
-        msg.say(`${name} removed`);
+        return msg.channel.send(`${name} removed`);
       }
     } catch (e) {
-      msg.say(`An error occurred removing ${name}`);
+      return msg.channel.send(`An error occurred removing ${name}`);
     }
   }
 };

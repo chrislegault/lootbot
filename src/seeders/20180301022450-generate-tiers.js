@@ -9,7 +9,7 @@ module.exports = {
     return queryInterface.bulkInsert("Tiers", [
       {
         name: "Common",
-        color: "#AAAAAA",
+        color: 4737096,
         image:
           "https://media.discordapp.net/attachments/342426492371992576/417019496109441024/common.png",
         guild,
@@ -20,7 +20,7 @@ module.exports = {
       },
       {
         name: "Uncommon",
-        color: "#3FA535",
+        color: 4171061,
         image:
           "https://media.discordapp.net/attachments/342426492371992576/417019515893710858/uncommon.png",
         guild,
@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         name: "Rare",
-        color: "#BA4E97",
+        color: 12209815,
         image:
           "https://media.discordapp.net/attachments/342426492371992576/417019531018633216/rare.png",
         guild,
@@ -42,7 +42,7 @@ module.exports = {
       },
       {
         name: "Legendary",
-        color: "#E74011",
+        color: 15155217,
         image:
           "https://media.discordapp.net/attachments/342426492371992576/417019544675024916/legendary.png",
         guild,

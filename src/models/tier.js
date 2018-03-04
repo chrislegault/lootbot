@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "Tier",
     {
       name: DataTypes.STRING,
-      color: DataTypes.STRING,
+      color: DataTypes.INTEGER,
       image: DataTypes.STRING,
       guild: DataTypes.STRING,
       weight: DataTypes.FLOAT,

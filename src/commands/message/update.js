@@ -1,105 +1,122 @@
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 const { Tier, Message } = require("../../models");
 
 module.exports = class MessageUpdate extends Command {
-  constructor(client) {
-    super(client, {
-      name: "message:update",
-      group: "message",
-      memberName: "update",
-      description: "Update message in the lootbox",
-      examples: [
-        `message:update msg1 "New exciting message"`,
-        `message:update msg1 "Drawing loot..." draw`,
-        `message:update msg1 "You have won a <tier> prize..." tier 10 Common`,
-        `message:update msg1 "You have won a <tier> prize..." tier "" Common`,
-        `message:update msg1 "You have won a <tier> prize..." tier "" Common @user`,
-        `message:update msg1 "Congrats <user>, you won loot named <reward>" reward`
-      ],
-      userPermissions: ["MANAGE_CHANNELS"],
-      guildOnly: true,
+  constructor() {
+    super("message-update", {
+      aliases: ["message-update", "mu"],
+      category: "Message",
+      channelRestriction: "guild",
+      description: {
+        description: "Update message in the lootbox",
+        examples: [
+          `message:update msg1 message="New exciting message"`,
+          `message:update msg1 type=draw`,
+          `message:update msg1 delay=10 tier=Common`,
+          `message:update msg1 message="You have won a <tier> prize..." user=@user`
+        ],
+        usage:
+          "<name> message=<message> type=<type> delay=<delay> tier=<tier> user=<user>"
+      },
+      split: "sticky",
       args: [
         {
-          key: "name",
-          prompt: "What is the identier of the message?",
+          id: "name",
+          prompt: {
+            start: "What is the identier of the message?"
+          },
           type: "string"
         },
         {
-          key: "message",
-          prompt: "What is the message?",
+          id: "message",
+          prompt: {
+            start: "What is the message?",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "message=",
           type: "string",
-          default: ""
+          default: null
         },
         {
-          key: "type",
-          prompt: "What is the type of the message? (draw, tier, or reward)",
+          id: "type",
+          prompt: {
+            start: "What is the type of the message? (intro, draw, or reward)",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "type=",
           type: "string",
-          default: "",
-          validate: type => ["draw", "tier", "reward"].includes(type)
+          validate: type => ["intro", "draw", "reward"].includes(type),
+          default: null
         },
         {
-          key: "delay",
-          prompt: "What is the delay until the next message is shown?",
+          id: "delay",
+          prompt: {
+            start: "What is the delay until the next message is shown?",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "delay=",
           type: "integer",
-          default: ""
+          default: null
         },
         {
-          key: "tier",
-          prompt:
-            "What is the tier of the loot? (required if type is tier, blank if not needed)",
+          id: "tier",
+          prompt: {
+            start:
+              "What is the tier of the loot? (blank will be included in all tiers of loot)",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "tier=",
           type: "string",
-          default: ""
+          default: null
         },
         {
-          key: "user",
-          prompt: "What user should receive this message? (blank if all users)",
-          type: "user",
-          default: ""
+          id: "user",
+          prompt: {
+            start:
+              "What user should receive this message? (blank will be all users)",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "user=",
+          type: "member",
+          default: null
         }
       ]
     });
   }
 
-  async run(msg, { name, message, type, tier, user, delay }) {
+  async exec(msg, { name, user, tier, ...updates }) {
     const guild = msg.guild.id;
-    let foundTier = null;
-    let updates = {};
+
+    updates = Object.keys(updates).reduce((memo, key) => {
+      if (updates[key] !== null) {
+        memo[key] = updates[key];
+      }
+
+      return memo;
+    }, {});
 
     try {
-      if (type === "tier") {
-        if (!tier) {
-          return msg.say(
-            "A tier must be provided when the type is set to tier."
-          );
-        }
+      if (tier) {
+        let foundTier = null;
 
         foundTier = await Tier.findOne({
           where: { name: tier, guild }
         });
 
         if (!foundTier) {
-          return msg.say(
-            "A valid tier must be provided when the type is set to tier."
-          );
+          return msg.channel.send("A valid tier must be provided.");
         }
 
         updates = { ...updates, tier_id: foundTier.id };
       }
 
-      if (message) {
-        updates = { ...updates, message };
-      }
-
-      if (type) {
-        updates = { ...updates, type };
-      }
-
       if (user) {
-        updates = { ...updates, user: user.id };
-      }
-
-      if (Number.isInteger(delay)) {
-        updates = { ...updates, delay };
+        updates = { ...updates, user_id: user.id };
       }
 
       const [updated] = await Message.update(updates, {
@@ -107,12 +124,12 @@ module.exports = class MessageUpdate extends Command {
       });
 
       if (updated === 0) {
-        msg.say(`${name} not found`);
-      } else {
-        msg.say(`${name} updated`);
+        return msg.channel.send(`${name} not found`);
       }
+
+      return msg.channel.send(`${name} updated`);
     } catch (e) {
-      msg.say(`An error occurred updating ${name}`);
+      return msg.channel.send(`An error occurred updating ${name}`);
     }
   }
 };

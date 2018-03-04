@@ -29,7 +29,7 @@ module.exports = {
             key: "id"
           }
         },
-        user: {
+        user_id: {
           allowNull: true,
           type: Sequelize.STRING
         },
@@ -39,7 +39,7 @@ module.exports = {
         },
         delay: {
           type: Sequelize.INTEGER,
-          default: 0
+          defaultValue: 0
         },
         createdAt: {
           allowNull: false,

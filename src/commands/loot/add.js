@@ -1,27 +1,29 @@
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 const { Tier, Loot } = require("../../models");
 
 module.exports = class LootAdd extends Command {
-  constructor(client) {
-    super(client, {
-      name: "loot:add",
-      group: "loot",
-      memberName: "add",
-      description: "Add to the lootbox",
-      examples: [
-        `loot:add "Bottle of Maple Syrup" Legendary`,
-        "loot:add Syrup Common"
-      ],
+  constructor() {
+    super("loot-add", {
+      aliases: ["loot-add", "la"],
+      category: "Loot",
+      channelRestriction: "guild",
+      description: {
+        description: "Add to the lootbox",
+        examples: [
+          `loot:add "Bottle of Maple Syrup" Legendary`,
+          "loot:add Syrup Common"
+        ],
+        usage: "<name> <tier>"
+      },
       userPermissions: ["MANAGE_CHANNELS"],
-      guildOnly: true,
       args: [
         {
-          key: "name",
+          id: "name",
           prompt: "What is the name of the loot?",
           type: "string"
         },
         {
-          key: "tier",
+          id: "tier",
           prompt: "What is the tier?",
           type: "string"
         }
@@ -29,27 +31,32 @@ module.exports = class LootAdd extends Command {
     });
   }
 
-  async run(msg, args) {
+  async exec(msg, { name, tier }) {
     const guild = msg.guild.id;
-    const { name } = args;
 
     try {
-      const tier = await Tier.findOne({
-        where: { name: args.tier, guild }
+      const { id: tier_id } = await Tier.findOne({
+        where: { name: tier, guild }
       });
 
+      if (!tier_id) {
+        return msg.channel.send(
+          "A valid tier must be provided when the type is set to tier."
+        );
+      }
+
       const [, added] = await Loot.findOrCreate({
-        where: { name, guild },
-        defaults: { name, tier_id: tier.id }
+        where: { name: tier.name, guild },
+        defaults: { name, tier_id }
       });
 
       if (added) {
-        msg.say(`${name} added.`);
+        return msg.channel.send(`${name} added.`);
       } else {
-        msg.say(`${name} already exists.`);
+        return msg.channel.send(`${name} already exists.`);
       }
     } catch (error) {
-      msg.say(`An error occurred adding ${name}`);
+      return msg.channel.send(`An error occurred adding ${name}`);
     }
   }
 };

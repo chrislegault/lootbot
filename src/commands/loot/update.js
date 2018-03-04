@@ -1,62 +1,81 @@
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 const { Loot, Tier } = require("../../models");
 
 module.exports = class LootUpdate extends Command {
-  constructor(client) {
-    super(client, {
-      name: "loot:update",
-      group: "loot",
-      memberName: "update",
-      description: "Update that loot",
-      examples: [
-        `loot:update "Maple Syrup" 25 75 Legendary "New Maple Syrup"`,
-        `loot:update "Maple Syrup" 25 75 Uncommon`
-      ],
+  constructor() {
+    super("loot-update", {
+      aliases: ["loot-update", "lu"],
+      category: "Loot",
+      channelRestriction: "guild",
+      description: {
+        description: "Update that loot",
+        examples: [
+          `loot-update "Maple Syrup" name="New Maple Syrup" tier=Legendary`,
+          `loot-update Syrup tier=Legendary`
+        ],
+        usage: "<existingName> name=<name> tier=<tier>"
+      },
+      split: "sticky",
       userPermissions: ["MANAGE_CHANNELS"],
       guildOnly: true,
       args: [
         {
-          key: "existingName",
-          prompt: "What is the name of the loot?",
+          id: "existingName",
+          prompt: {
+            start: "What is the name of the loot?"
+          },
           type: "string"
         },
         {
-          key: "tier",
-          prompt: "What is the new tier of the loot?",
+          id: "name",
+          prompt: {
+            start: "What is the new name of the loot?",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "name=",
           type: "string",
-          default: ""
+          default: null
         },
         {
-          key: "name",
-          prompt: "What is the new name of the loot?",
+          id: "tier",
+          prompt: {
+            start: "What is the new tier of the loot?",
+            optional: true
+          },
+          match: "prefix",
+          prefix: "tier=",
           type: "string",
-          default: ""
+          default: null
         }
       ]
     });
   }
 
-  async run(msg, { existingName, tier, name }) {
+  async exec(msg, { existingName, tier, ...updates }) {
     const guild = msg.guild.id;
-    let updates = {};
+
+    updates = Object.keys(updates).reduce((memo, key) => {
+      if (updates[key] !== null) {
+        memo[key] = updates[key];
+      }
+
+      return memo;
+    }, {});
 
     try {
       let foundTier = null;
 
       if (tier) {
         foundTier = await Tier.findOne({
-          where: { name: tier }
+          where: { guild, name: tier }
         });
 
         if (!foundTier) {
-          return msg.say("A valid tier must be provided.");
+          return msg.channel.send(`No tier named ${tier} found.`);
         }
 
         updates = { ...updates, tier_id: foundTier.id };
-      }
-
-      if (name) {
-        updates = { ...updates, name };
       }
 
       const [updated] = await Loot.update(updates, {
@@ -64,12 +83,12 @@ module.exports = class LootUpdate extends Command {
       });
 
       if (updated === 0) {
-        msg.say(`${existingName} not found`);
+        return msg.channel.send(`${existingName} not found`);
       } else {
-        msg.say(`${name || existingName} updated`);
+        return msg.channel.send(`${updates.name || existingName} updated`);
       }
     } catch (e) {
-      msg.say(`An error occurred updating ${existingName}`);
+      return msg.channel.send(`An error occurred updating ${existingName}`);
     }
   }
 };

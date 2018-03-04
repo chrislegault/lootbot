@@ -1,27 +1,32 @@
-const { Command } = require("discord.js-commando");
+const { Command } = require("discord-akairo");
 const { Tier } = require("../../models");
 
 module.exports = class TierRemove extends Command {
-  constructor(client) {
-    super(client, {
-      name: "tier:remove",
-      group: "tier",
-      memberName: "remove",
-      description: "Remove a tier",
-      examples: [`tier:remove Common`],
+  constructor() {
+    super("tier-remove", {
+      aliases: ["tier-remove", "tr"],
+      category: "Tier",
+      channelRestriction: "guild",
+      description: {
+        content: "Remove a tier",
+        examples: ["tier-remove Common"],
+        usage: "<name>"
+      },
+      split: "quoted",
       userPermissions: ["MANAGE_CHANNELS"],
-      guildOnly: true,
       args: [
         {
-          key: "name",
-          prompt: "What is the name of the tier?",
+          id: "name",
+          prompt: {
+            start: "What is the name of the tier?"
+          },
           type: "string"
         }
       ]
     });
   }
 
-  async run(msg, { name }) {
+  async exec(msg, { name }) {
     const guild = msg.guild.id;
 
     try {
@@ -30,12 +35,12 @@ module.exports = class TierRemove extends Command {
       });
 
       if (result === 0) {
-        msg.say(`${name} not found`);
+        return msg.channel.send(`${name} not found`);
       } else {
-        msg.say(`${name} removed`);
+        return msg.channel.send(`${name} removed`);
       }
     } catch (e) {
-      msg.say(`An error occurred removing ${name}`);
+      return msg.channel.send(`An error occurred removing ${name}`);
     }
   }
 };

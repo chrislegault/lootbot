@@ -1,24 +1,21 @@
-const { Command } = require("discord.js-commando");
-const numeral = require("numeral");
+const { Command } = require("discord-akairo");
 const { Tier } = require("../../models");
-
-function formatOdd(odd, total) {
-  const percent = numeral(odd / total).format("0.00%");
-  return `${percent} (${odd} in ${total})`;
-}
+const { formatOdd } = require("../../support");
 
 module.exports = class TierList extends Command {
-  constructor(client) {
-    super(client, {
-      name: "tier:list",
-      group: "tier",
-      memberName: "list",
-      description: "List the glorious tiers",
-      examples: ["tier:list"]
+  constructor() {
+    super("tier-list", {
+      aliases: ["tier-list", "tl"],
+      category: "Tier",
+      channelRestriction: "guild",
+      description: {
+        content: "List the glorious tiers",
+        examples: ["tier-list"]
+      }
     });
   }
 
-  async run(msg) {
+  async exec(msg) {
     const guild = msg.guild.id;
 
     let tiers = await Tier.findAll({
@@ -27,7 +24,7 @@ module.exports = class TierList extends Command {
     });
 
     if (tiers.length === 0) {
-      return msg.say("No loot found.");
+      return msg.say("No tiers found.");
     }
 
     let totalOdds = 0;
@@ -40,13 +37,15 @@ module.exports = class TierList extends Command {
     });
 
     tiers.forEach(tier => {
-      message += `__**${tier.name}**__\n`;
-      message += `Color: ${tier.color}\n`;
-      message += `Image: <${tier.image}>\n`;
-      message += `Weight: ${formatOdd(tier.weight, totalOdds)}\n`;
-      message += `Lucky Weight: ${formatOdd(tier.luckyWeight, totalLucky)}\n\n`;
+      message += `
+__**${tier.name}**__
+Color: #${tier.color.toString(16)}
+Image: <${tier.image}>
+Weight: ${formatOdd(tier.weight, totalOdds)}
+Lucky Weight: ${formatOdd(tier.luckyWeight, totalLucky)}
+`;
     });
 
-    return msg.say(message);
+    return msg.channel.send(message);
   }
 };

@@ -24,7 +24,7 @@ module.exports = {
         name: "intro1",
         message:
           "Plucky Bookwyrm <user> has opened an MMO Bookclub Lootbox! Let's see what's inside...",
-        type: "draw",
+        type: "intro",
         guild,
         delay: 1000,
         createdAt: new Date(),
@@ -34,7 +34,7 @@ module.exports = {
         name: "intro2",
         message:
           "<user>, my MMO Bookclub Lootboxes are GUARANTEED to give you a sense of pride and accomplishment. Let's see what you've won...",
-        type: "draw",
+        type: "intro",
         guild,
         delay: 1000,
         createdAt: new Date(),
@@ -44,7 +44,7 @@ module.exports = {
         name: "intro3",
         message:
           "Knowing that one day they might win a Legendary prize from a MMO Bookclub Lootbox...it fills <user> with determination.",
-        type: "draw",
+        type: "intro",
         guild,
         delay: 1000,
         createdAt: new Date(),
@@ -54,7 +54,7 @@ module.exports = {
         name: "intro4",
         message:
           "I used to be a bookwyrm like you <user>. And then I took a lootbox to the knee.",
-        type: "draw",
+        type: "intro",
         guild,
         delay: 1000,
         createdAt: new Date(),
@@ -64,7 +64,7 @@ module.exports = {
         name: "intro5",
         message:
           "<user> used a bookmark to open an MMO Bookclub Lootbox...it's super effective!",
-        type: "draw",
+        type: "intro",
         guild,
         delay: 1000,
         createdAt: new Date(),
@@ -73,7 +73,7 @@ module.exports = {
       {
         name: "intro6",
         message: "<user>, triangulating...",
-        type: "draw",
+        type: "intro",
         guild,
         delay: 1000,
         createdAt: new Date(),
@@ -82,7 +82,7 @@ module.exports = {
       {
         name: "common1",
         message: "Item, get! You've won a <tier> prize!",
-        type: "tier",
+        type: "draw",
         tier_id: common.id,
         guild,
         delay: 2000,
@@ -93,7 +93,7 @@ module.exports = {
         name: "uncommon1",
         message:
           "It's dangerous to go alone, take this <user>! You've won an <tier> prize!",
-        type: "tier",
+        type: "draw",
         tier_id: uncommon.id,
         guild,
         delay: 2000,
@@ -104,7 +104,7 @@ module.exports = {
         name: "rare1",
         message:
           "Oh my, it looks like you've won a <tier> prize. I will now pause for eight seconds to build some unbearable tension before the big reveal...",
-        type: "tier",
+        type: "draw",
         tier_id: rare.id,
         guild,
         delay: 8000,
@@ -115,7 +115,7 @@ module.exports = {
         name: "legendary1",
         message:
           "Holy smokes, you've only gone and won a frickin' Legendary prize! I will now pause for an excruciating NINE SECONDS to build tension before the big reveal...",
-        type: "tier",
+        type: "draw",
         tier_id: legendary.id,
         guild,
         delay: 9000,

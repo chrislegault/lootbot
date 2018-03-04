@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       message: DataTypes.TEXT,
       type: DataTypes.ENUM("draw", "tier", "reward"),
       tier_id: DataTypes.INTEGER,
-      user: DataTypes.STRING,
+      user_id: DataTypes.STRING,
       guild: DataTypes.STRING,
       delay: DataTypes.INTEGER
     },
