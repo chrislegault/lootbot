@@ -15,16 +15,22 @@ module.exports = class LootAdd extends Command {
         ],
         usage: "<name> <tier>"
       },
-      userPermissions: ["MANAGE_CHANNELS"],
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
+      },
       args: [
         {
           id: "name",
-          prompt: "What is the name of the loot?",
+          prompt: {
+            start: "What is the name of the loot?"
+          },
           type: "string"
         },
         {
           id: "tier",
-          prompt: "What is the tier?",
+          prompt: {
+            start: "What is the tier?"
+          },
           type: "string"
         }
       ]

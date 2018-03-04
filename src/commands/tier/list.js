@@ -11,6 +11,9 @@ module.exports = class TierList extends Command {
       description: {
         content: "List the glorious tiers",
         examples: ["tier-list"]
+      },
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
       }
     });
   }

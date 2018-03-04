@@ -11,11 +11,15 @@ module.exports = class MessageRemove extends Command {
         description: "Remove a message",
         examples: [`message:remove msg1`]
       },
-      userPermissions: ["MANAGE_CHANNELS"],
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
+      },
       args: [
         {
           id: "name",
-          prompt: "What is the name of the message?",
+          prompt: {
+            prompt: "What is the name of the message?"
+          },
           type: "string"
         }
       ]

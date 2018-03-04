@@ -4,7 +4,8 @@ const path = require("path");
 const {
   AkairoClient,
   SequelizeProvider,
-  CommandHandler
+  CommandHandler,
+  InhibitorHandler
 } = require("discord-akairo");
 
 const { Settings } = require("./models");
@@ -33,12 +34,19 @@ class CustomCommandHandler extends CommandHandler {
   }
 }
 
+class CustomInhibitorHandler extends InhibitorHandler {
+  static readdirRecursive(directory) {
+    return read(directory);
+  }
+}
+
 class CustomClient extends AkairoClient {
   constructor() {
     super({
       ownerID: process.env.OWNER_ID,
       prefix: "!lootbot",
       commandDirectory: "./src/commands",
+      inhibitorDirectory: "./src/inhibitors",
       allowMention: true,
       disableEveryone: true
     });
@@ -50,6 +58,12 @@ class CustomClient extends AkairoClient {
 
   build() {
     this.commandHandler = new CustomCommandHandler(this, this.akairoOptions);
+
+    this.inhibitorHandler = new CustomInhibitorHandler(
+      this,
+      this.akairoOptions
+    );
+
     return super.build();
   }
 

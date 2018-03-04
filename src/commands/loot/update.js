@@ -16,8 +16,9 @@ module.exports = class LootUpdate extends Command {
         usage: "<existingName> name=<name> tier=<tier>"
       },
       split: "sticky",
-      userPermissions: ["MANAGE_CHANNELS"],
-      guildOnly: true,
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
+      },
       args: [
         {
           id: "existingName",

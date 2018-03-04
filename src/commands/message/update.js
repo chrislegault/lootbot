@@ -18,6 +18,9 @@ module.exports = class MessageUpdate extends Command {
         usage:
           "<name> message=<message> type=<type> delay=<delay> tier=<tier> user=<user>"
       },
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
+      },
       split: "sticky",
       args: [
         {

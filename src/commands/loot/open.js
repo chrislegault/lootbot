@@ -42,11 +42,15 @@ module.exports = class LootOpen extends Command {
         content: "Opens a lootbox",
         examples: ["open", "loot-open"]
       },
-      userPermissions: ["MANAGE_CHANNELS"],
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
+      },
       args: [
         {
           id: "user",
-          prompt: "Which user would you like to open a lootbox for?",
+          prompt: {
+            start: "Which user would you like to open a lootbox for?"
+          },
           type: "member"
         },
         {

@@ -22,8 +22,10 @@ module.exports = class MessageAdd extends Command {
         ],
         usage: "<name> <message> <type> delay=<delay> tier=<tier> user=<user>"
       },
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
+      },
       split: "sticky",
-      userPermissions: ["MANAGE_CHANNELS"],
       args: [
         {
           id: "name",
@@ -34,7 +36,9 @@ module.exports = class MessageAdd extends Command {
         },
         {
           id: "message",
-          prompt: { start: "What is the message?" },
+          prompt: {
+            start: "What is the message?"
+          },
           type: "string"
         },
         {

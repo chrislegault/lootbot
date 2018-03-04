@@ -13,7 +13,9 @@ exports[`commands/loot/open configures properly 1`] = `
         "args": Array [
           Object {
             "id": "user",
-            "prompt": "Which user would you like to open a lootbox for?",
+            "prompt": Object {
+              "start": "Which user would you like to open a lootbox for?",
+            },
             "type": "member",
           },
           Object {
@@ -32,9 +34,11 @@ exports[`commands/loot/open configures properly 1`] = `
             "loot-open",
           ],
         },
-        "userPermissions": Array [
-          "MANAGE_CHANNELS",
-        ],
+        "options": Object {
+          "permissions": Array [
+            "MANAGE_CHANNELS",
+          ],
+        },
       },
     ],
   ],

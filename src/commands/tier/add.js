@@ -14,8 +14,10 @@ module.exports = class TierAdd extends Command {
         ],
         usage: "<name> <color> <image> <weight> <luckyWeight>"
       },
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
+      },
       split: "quoted",
-      userPermissions: ["MANAGE_CHANNELS"],
       args: [
         {
           id: "name",

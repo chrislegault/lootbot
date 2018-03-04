@@ -16,8 +16,10 @@ module.exports = class TierUpdate extends Command {
         usage:
           "<existingName> name=<name> color=<color> image=<image> weight=<weight> luckyWeight=<luckyWeight>"
       },
+      options: {
+        permissions: ["MANAGE_CHANNELS"]
+      },
       split: "sticky",
-      userPermissions: ["MANAGE_CHANNELS"],
       args: [
         {
           id: "existingName",
