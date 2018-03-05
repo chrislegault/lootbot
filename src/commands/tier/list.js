@@ -1,6 +1,6 @@
 const { Command } = require("discord-akairo");
 const { Tier } = require("../../models");
-const { formatOdd } = require("../../support");
+const { formatOdd, checkManagePermissions } = require("../../support");
 
 module.exports = class TierList extends Command {
   constructor() {
@@ -13,7 +13,7 @@ module.exports = class TierList extends Command {
         examples: ["tier-list"]
       },
       options: {
-        permissions: ["MANAGE_CHANNELS"]
+        permissions: checkManagePermissions
       }
     });
   }

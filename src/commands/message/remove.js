@@ -1,5 +1,6 @@
 const { Command } = require("discord-akairo");
 const { Message } = require("../../models");
+const { checkManagePermissions } = require("../../support");
 
 module.exports = class MessageRemove extends Command {
   constructor() {
@@ -12,7 +13,7 @@ module.exports = class MessageRemove extends Command {
         examples: [`message:remove msg1`]
       },
       options: {
-        permissions: ["MANAGE_CHANNELS"]
+        permissions: checkManagePermissions
       },
       args: [
         {

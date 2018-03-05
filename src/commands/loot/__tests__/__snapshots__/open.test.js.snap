@@ -35,9 +35,7 @@ exports[`commands/loot/open configures properly 1`] = `
           ],
         },
         "options": Object {
-          "permissions": Array [
-            "MANAGE_CHANNELS",
-          ],
+          "permissions": [Function],
         },
       },
     ],

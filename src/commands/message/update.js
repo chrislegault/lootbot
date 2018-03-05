@@ -1,5 +1,6 @@
 const { Command } = require("discord-akairo");
 const { Tier, Message } = require("../../models");
+const { checkManagePermissions } = require("../../support");
 
 module.exports = class MessageUpdate extends Command {
   constructor() {
@@ -19,7 +20,7 @@ module.exports = class MessageUpdate extends Command {
           "<name> message=<message> type=<type> delay=<delay> tier=<tier> user=<user>"
       },
       options: {
-        permissions: ["MANAGE_CHANNELS"]
+        permissions: checkManagePermissions
       },
       split: "sticky",
       args: [

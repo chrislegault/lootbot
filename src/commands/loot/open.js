@@ -2,7 +2,12 @@ const chance = require("chance")();
 const { RichEmbed } = require("discord.js");
 const { Command } = require("discord-akairo");
 const { Loot, Tier, Message } = require("../../models");
-const { delay, formatMessage } = require("../../support");
+
+const {
+  delay,
+  formatMessage,
+  checkManagePermissions
+} = require("../../support");
 
 function sayMessage(message, msg, reward, user, tier) {
   return msg.channel.send(formatMessage(message, reward, user, tier));
@@ -15,6 +20,16 @@ function sayReward(message, msg, reward, user, tier) {
     .setImage(tier.image);
 
   return msg.channel.send({ embed });
+}
+
+function randomMessage(messages, filter, defaultMessage) {
+  const filtered = messages.filter(message => filter(message));
+
+  if (filtered.length === 0) {
+    return [defaultMessage];
+  }
+
+  return filtered;
 }
 
 const DEFAULT_MESSAGES = {
@@ -43,7 +58,7 @@ module.exports = class LootOpen extends Command {
         examples: ["open", "loot-open"]
       },
       options: {
-        permissions: ["MANAGE_CHANNELS"]
+        permissions: checkManagePermissions
       },
       args: [
         {
@@ -98,23 +113,23 @@ module.exports = class LootOpen extends Command {
       return sayMessage(message, msg, reward, user, tier);
     }
 
-    const introMessage = chance.pickone(
-      myMessages.filter(myMessage => myMessage.type === "intro") || [
-        DEFAULT_MESSAGES.intro
-      ]
+    const introMessage = randomMessage(
+      myMessages,
+      myMessage => myMessage.type === "intro",
+      DEFAULT_MESSAGES.intro
     );
 
-    const tierMessage = chance.pickone(
-      myMessages.filter(
-        myMessage =>
-          myMessage.tier_id === reward.tier_id && myMessage.type === "draw"
-      ) || [DEFAULT_MESSAGES.draw]
+    const tierMessage = randomMessage(
+      myMessages,
+      myMessage =>
+        myMessage.tier_id === reward.tier_id && myMessage.type === "draw",
+      DEFAULT_MESSAGES.draw
     );
 
-    const rewardMessage = chance.pickone(
-      myMessages.filter(myMessage => myMessage.type === "reward") || [
-        DEFAULT_MESSAGES.reward
-      ]
+    const rewardMessage = formatMessage(
+      myMessages,
+      myMessage => myMessage.type === "reward",
+      DEFAULT_MESSAGES.reward
     );
 
     return _sayMessage(introMessage.message)
