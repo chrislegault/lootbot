@@ -35,19 +35,5 @@
     "start:watch": "nodemon ./src/index.js",
     "test": "jest",
     "test:watch": "yarn test --watch"
-  },
-  "lint-staged": {
-    "*.js": [
-      "lint",
-      "git add",
-      "jest --bail --findRelatedTests"
-    ]
-  },
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ],
-    "testEnvironment": "node"
   }
 }
