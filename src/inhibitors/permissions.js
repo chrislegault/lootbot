@@ -7,26 +7,30 @@ class PermissionsInhibitor extends Inhibitor {
     });
   }
 
-  exec(message, command) {
+  async exec(message, command) {
     // Bot owner can run every command
     if (message.client.ownerID === message.author.id) {
-      return false;
+      return Promise.resolve();
     }
 
-    let permissions = command.options.permissions;
+    const permissions = command.options.permissions;
 
-    if (typeof permissions === "function") {
-      if (!permissions(message)) {
-        return true;
+    if (permissions) {
+      if (typeof permissions === "function") {
+        const permitted = await permissions(message);
+
+        if (!permitted) {
+          return Promise.reject();
+        }
+      } else if (
+        message.guild &&
+        !message.channel.permissionsFor(message.author).has(permissions)
+      ) {
+        return Promise.reject();
       }
-    } else if (
-      message.guild &&
-      !message.channel.permissionsFor(message.author).has(permissions)
-    ) {
-      return true;
     }
 
-    return false;
+    return Promise.resolve();
   }
 }
 

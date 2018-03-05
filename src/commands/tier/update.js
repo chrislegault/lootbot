@@ -1,5 +1,6 @@
 const { Command } = require("discord-akairo");
 const { Tier } = require("../../models");
+const { checkManagePermissions } = require("../../support");
 
 module.exports = class TierUpdate extends Command {
   constructor() {
@@ -17,7 +18,7 @@ module.exports = class TierUpdate extends Command {
           "<existingName> name=<name> color=<color> image=<image> weight=<weight> luckyWeight=<luckyWeight>"
       },
       options: {
-        permissions: ["MANAGE_CHANNELS"]
+        permissions: checkManagePermissions
       },
       split: "sticky",
       args: [

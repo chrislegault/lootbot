@@ -1,5 +1,6 @@
 const { Command } = require("discord-akairo");
 const { Loot } = require("../../models");
+const { checkManagePermissions } = require("../../support");
 
 module.exports = class LootRemove extends Command {
   constructor() {
@@ -13,7 +14,7 @@ module.exports = class LootRemove extends Command {
         usage: "<name>"
       },
       options: {
-        permissions: ["MANAGE_CHANNELS"]
+        permissions: checkManagePermissions
       },
       args: [
         {
