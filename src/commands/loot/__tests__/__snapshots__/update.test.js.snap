@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/loot/update should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "loot-update",
+      Object {
+        "aliases": Array [
+          "loot-update",
+          "lu",
+        ],
+        "args": Array [
+          Object {
+            "id": "existingName",
+            "prompt": Object {
+              "start": "What is the name of the loot?",
+            },
+            "type": "string",
+          },
+          Object {
+            "default": null,
+            "id": "name",
+            "match": "prefix",
+            "prefix": "name=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the new name of the loot?",
+            },
+            "type": "string",
+          },
+          Object {
+            "default": null,
+            "id": "tier",
+            "match": "prefix",
+            "prefix": "tier=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the new tier of the loot?",
+            },
+            "type": "string",
+          },
+        ],
+        "category": "Loot",
+        "channelRestriction": "guild",
+        "description": Object {
+          "description": "Update that loot",
+          "examples": Array [
+            "loot-update \\"Maple Syrup\\" name=\\"New Maple Syrup\\" tier=Legendary",
+            "loot-update Syrup tier=Legendary",
+          ],
+          "usage": "<existingName> name=<name> tier=<tier>",
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+        "split": "sticky",
+      },
+    ],
+  ],
+}
+`;

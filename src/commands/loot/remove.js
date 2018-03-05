@@ -38,9 +38,9 @@ module.exports = class LootRemove extends Command {
 
       if (result === 0) {
         return msg.channel.send(`${name} not found`);
-      } else {
-        return msg.channel.send(`${name} removed`);
       }
+
+      return msg.channel.send(`${name} removed`);
     } catch (e) {
       return msg.channel.send(`An error occurred removing ${name}`);
     }

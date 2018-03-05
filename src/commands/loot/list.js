@@ -17,28 +17,36 @@ module.exports = class LootList extends Command {
   async exec(msg) {
     const guild = msg.guild.id;
 
-    let tiers = await Tier.findAll({
-      include: [
-        {
-          model: Loot
-        }
-      ],
-      where: { guild },
-      order: [["weight", "DESC"], ["Loots", "name", "ASC"]]
-    });
-
-    let message = "";
-
-    tiers.forEach(tier => {
-      message += `__**${tier.name}**__\n`;
-
-      tier.Loots.forEach(loot => {
-        message += `${loot.name}\n`;
+    try {
+      let tiers = await Tier.findAll({
+        include: [{ model: Loot }],
+        where: { guild },
+        order: [["weight", "DESC"], ["Loots", "name", "ASC"]]
       });
 
-      message += "\n";
-    });
+      if (tiers.length === 0) {
+        return msg.channel.send("No loot found.");
+      }
 
-    return msg.channel.send(message);
+      let message = "";
+
+      tiers.forEach(tier => {
+        message += `__**${tier.name}**__\n`;
+
+        if (tier.Loots.length === 0) {
+          message += "N/A\n";
+        }
+
+        tier.Loots.forEach(loot => {
+          message += `${loot.name}\n`;
+        });
+
+        message += "\n";
+      });
+
+      return msg.channel.send(message);
+    } catch (error) {
+      return msg.channel.send("An error occurred listing loot.");
+    }
   }
 };

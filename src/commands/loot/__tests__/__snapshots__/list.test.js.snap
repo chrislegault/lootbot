@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/loot/list should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "loot-list",
+      Object {
+        "aliases": Array [
+          "loot-list",
+          "ll",
+        ],
+        "category": "Loot",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "List the glorious loot",
+          "examples": Array [
+            "loot-list",
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`commands/loot/list should list the loot 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "__**Common**__
+N/A
+
+__**Uncommon**__
+Test Loot 1
+Test Loot 2
+
+",
+    ],
+  ],
+}
+`;

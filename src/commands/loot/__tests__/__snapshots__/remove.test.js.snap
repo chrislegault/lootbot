@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/loot/remove should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "loot-remove",
+      Object {
+        "aliases": Array [
+          "loot-remove",
+          "lr",
+        ],
+        "args": Array [
+          Object {
+            "id": "name",
+            "prompt": Object {
+              "start": "What is the name of the loot?",
+            },
+            "type": "string",
+          },
+        ],
+        "category": "Loot",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Remove that loot",
+          "examples": Array [
+            "loot-remove \\"Maple Syrup\\"",
+            "loot-remove Syrup",
+          ],
+          "usage": "<name>",
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+      },
+    ],
+  ],
+}
+`;

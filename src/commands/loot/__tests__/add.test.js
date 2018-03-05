@@ -37,7 +37,7 @@ describe("commands/loot/add", () => {
 
   it("should query for the passed in tier", () => {
     this.command.exec(this.msg, {
-      name: "Loot",
+      name: this.name,
       tier: this.tier.name
     });
 
@@ -48,7 +48,7 @@ describe("commands/loot/add", () => {
 
   it("should notify when a tier isn't found", async () => {
     await this.command.exec(this.msg, {
-      name: "Loot",
+      name: this.name,
       tier: this.tier.name
     });
 
@@ -62,7 +62,7 @@ describe("commands/loot/add", () => {
     Loot.findOrCreate.mockReturnValue([{}, true]);
 
     await this.command.exec(this.msg, {
-      name: "Loot",
+      name: this.name,
       tier: this.tier.name
     });
 
@@ -79,7 +79,7 @@ describe("commands/loot/add", () => {
     Loot.findOrCreate.mockReturnValue([{}, false]);
 
     await this.command.exec(this.msg, {
-      name: "Loot",
+      name: this.name,
       tier: this.tier.name
     });
 
@@ -99,7 +99,7 @@ describe("commands/loot/add", () => {
     });
 
     await this.command.exec(this.msg, {
-      name: "Loot",
+      name: this.name,
       tier: this.tier.name
     });
 
