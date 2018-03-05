@@ -86,10 +86,10 @@ module.exports = class LootUpdate extends Command {
 
       if (updated === 0) {
         return msg.channel.send(`${existingName} not found`);
-      } else {
-        return msg.channel.send(`${updates.name || existingName} updated`);
       }
-    } catch (e) {
+
+      return msg.channel.send(`${updates.name || existingName} updated`);
+    } catch (error) {
       return msg.channel.send(`An error occurred updating ${existingName}`);
     }
   }
