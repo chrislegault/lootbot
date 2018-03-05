@@ -43,19 +43,17 @@ module.exports = class LootAdd extends Command {
     const guild = msg.guild.id;
 
     try {
-      const { id: tier_id } = await Tier.findOne({
+      const foundTier = await Tier.findOne({
         where: { name: tier, guild }
       });
 
-      if (!tier_id) {
-        return msg.channel.send(
-          "A valid tier must be provided when the type is set to tier."
-        );
+      if (!foundTier) {
+        return msg.channel.send("A valid tier must be provided.");
       }
 
       const [, added] = await Loot.findOrCreate({
-        where: { name: tier.name, guild },
-        defaults: { name, tier_id }
+        where: { name: foundTier.name, guild },
+        defaults: { name, tier_id: foundTier.id }
       });
 
       if (added) {

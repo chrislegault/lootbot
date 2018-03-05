@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`commands/loot/open configures properly 1`] = `
+exports[`commands/loot/open should configure properly 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
