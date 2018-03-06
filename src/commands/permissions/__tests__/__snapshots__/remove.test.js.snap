@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/permissions/remove should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "permissions-remove",
+      Object {
+        "aliases": Array [
+          "permissions-remove",
+          "pr",
+        ],
+        "args": Array [
+          Object {
+            "id": "permission",
+            "prompt": Object {
+              "start": "What is the name of the permission? (manage)",
+            },
+            "type": "string",
+          },
+          Object {
+            "id": "role",
+            "prompt": Object {
+              "start": "What is the role to remove from permission?",
+            },
+            "type": "role",
+          },
+        ],
+        "category": "Permissions",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Remove role from lootbot",
+          "examples": Array [
+            "permissions-remove manage \\"Loot Manager\\"",
+          ],
+          "usage": "<permission> <role>",
+        },
+        "options": Object {
+          "permissions": Array [
+            "MANAGE_CHANNELS",
+          ],
+        },
+        "split": "quoted",
+      },
+    ],
+  ],
+}
+`;
