@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/loot/list should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "message:list",
+      Object {
+        "aliases": Array [
+          "message-list",
+          "ml",
+        ],
+        "category": "Message",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "List the glorious messages",
+          "examples": Array [
+            "message-list",
+          ],
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`commands/loot/list should list the messages 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "
+__**msg1**__
+Message: this is a message
+Type: intro
+Tier: N/A
+User: N/A
+
+__**msg1**__
+Message: this is a message
+Type: intro
+Tier: Common
+User: 1234
+",
+    ],
+  ],
+}
+`;

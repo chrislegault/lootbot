@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/message/add should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "message-add",
+      Object {
+        "aliases": Array [
+          "message-add",
+          "ma",
+        ],
+        "args": Array [
+          Object {
+            "id": "name",
+            "prompt": Object {
+              "start": "What is the identier of the message?",
+            },
+            "type": "string",
+          },
+          Object {
+            "id": "message",
+            "prompt": Object {
+              "start": "What is the message?",
+            },
+            "type": "string",
+          },
+          Object {
+            "id": "type",
+            "prompt": Object {
+              "start": "What is the type of the message? (intro, draw, or reward)",
+            },
+            "type": "string",
+            "validate": [Function],
+          },
+          Object {
+            "default": null,
+            "id": "delay",
+            "match": "prefix",
+            "prefix": "delay=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the delay until the next message is shown?",
+            },
+            "type": "integer",
+          },
+          Object {
+            "default": null,
+            "id": "tier",
+            "match": "prefix",
+            "prefix": "tier=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the tier of the loot? (blank will be included in all tiers of loot)",
+            },
+            "type": "string",
+          },
+          Object {
+            "default": null,
+            "id": "user",
+            "match": "prefix",
+            "prefix": "user=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What user should receive this message? (blank will be all users)",
+            },
+            "type": "member",
+          },
+        ],
+        "category": "Message",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Add message to the lootbox. Messages can be targeted at specific users. Messages can also be targeted at specific tiers of loot (draw and reward types only)",
+          "examples": Array [
+            "message-add basicintro \\"Some intro...\\" intro",
+            "message-add basicdraw \\"You won a prize!\\" draw",
+            "message-add drawtier \\"<tier> prize...womp womp\\" draw tier=Common",
+            "message-add drawtierdelay \\"<tier> prize...womp womp. Waiting...\\" draw delay=10 tier=Common",
+            "message-add drawtieruser \\"Specific user, you have won a <tier> prize...womp womp\\" draw tier=Common user=@user",
+            "message-add basicreward \\"Congrats <user>, you won loot named <reward>\\" reward",
+            "message-add rewardtier \\"Congrats on your amazing prize\\" reward tier=Legendary",
+            "message-add rewardtieruser \\"Specific user, congrats\\" reward user=@user",
+          ],
+          "usage": "<name> <message> <type> delay=<delay> tier=<tier> user=<user>",
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+        "split": "sticky",
+      },
+    ],
+  ],
+}
+`;
