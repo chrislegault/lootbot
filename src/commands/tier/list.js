@@ -21,34 +21,38 @@ module.exports = class TierList extends Command {
   async exec(msg) {
     const guild = msg.guild.id;
 
-    let tiers = await Tier.findAll({
-      where: { guild },
-      order: [["weight", "DESC"]]
-    });
+    try {
+      let tiers = await Tier.findAll({
+        where: { guild },
+        order: [["weight", "DESC"]]
+      });
 
-    if (tiers.length === 0) {
-      return msg.say("No tiers found.");
-    }
+      if (tiers.length === 0) {
+        return msg.channel.send("No tiers found");
+      }
 
-    let totalOdds = 0;
-    let totalLucky = 0;
-    let message = "";
+      let totalOdds = 0;
+      let totalLucky = 0;
+      let message = "";
 
-    tiers.forEach(reward => {
-      totalOdds += reward.weight;
-      totalLucky += reward.luckyWeight;
-    });
+      tiers.forEach(reward => {
+        totalOdds += reward.weight;
+        totalLucky += reward.luckyWeight;
+      });
 
-    tiers.forEach(tier => {
-      message += `
+      tiers.forEach(tier => {
+        message += `
 __**${tier.name}**__
 Color: #${tier.color.toString(16)}
 Image: <${tier.image}>
 Weight: ${formatOdd(tier.weight, totalOdds)}
 Lucky Weight: ${formatOdd(tier.luckyWeight, totalLucky)}
 `;
-    });
+      });
 
-    return msg.channel.send(message);
+      return msg.channel.send(message);
+    } catch (error) {
+      return msg.channel.send("An error occurred listing tiers");
+    }
   }
 };
