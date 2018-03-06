@@ -21,31 +21,35 @@ module.exports = class MessageList extends Command {
   async exec(msg) {
     const guild = msg.guild.id;
 
-    let messages = await Message.findAll({
-      include: [
-        {
-          model: Tier
-        }
-      ],
-      where: { guild }
-    });
+    try {
+      let messages = await Message.findAll({
+        include: [
+          {
+            model: Tier
+          }
+        ],
+        where: { guild }
+      });
 
-    if (messages.length === 0) {
-      return msg.channel.send("No messages found.");
-    }
+      if (messages.length === 0) {
+        return msg.channel.send("No messages found");
+      }
 
-    let list = "";
+      let list = "";
 
-    messages.forEach(message => {
-      list += `
+      messages.forEach(message => {
+        list += `
 __**${message.name}**__
 Message: ${message.message}
 Type: ${message.type}
 Tier: ${message.Tier ? message.Tier.name : "N/A"}
-User: ${message.user || "N/A"}
+User: ${message.user_id || "N/A"}
 `;
-    });
+      });
 
-    return msg.channel.send(list);
+      return msg.channel.send(list);
+    } catch (error) {
+      return msg.channel.send("An error occurred listing messages");
+    }
   }
 };

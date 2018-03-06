@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/message/update should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "message-update",
+      Object {
+        "aliases": Array [
+          "message-update",
+          "mu",
+        ],
+        "args": Array [
+          Object {
+            "id": "name",
+            "prompt": Object {
+              "start": "What is the identier of the message?",
+            },
+            "type": "string",
+          },
+          Object {
+            "default": null,
+            "id": "message",
+            "match": "prefix",
+            "prefix": "message=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the message?",
+            },
+            "type": "string",
+          },
+          Object {
+            "default": null,
+            "id": "type",
+            "match": "prefix",
+            "prefix": "type=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the type of the message? (intro, draw, or reward)",
+            },
+            "type": "string",
+            "validate": [Function],
+          },
+          Object {
+            "default": null,
+            "id": "delay",
+            "match": "prefix",
+            "prefix": "delay=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the delay until the next message is shown?",
+            },
+            "type": "integer",
+          },
+          Object {
+            "default": null,
+            "id": "tier",
+            "match": "prefix",
+            "prefix": "tier=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the tier of the loot? (blank will be included in all tiers of loot)",
+            },
+            "type": "string",
+          },
+          Object {
+            "default": null,
+            "id": "user",
+            "match": "prefix",
+            "prefix": "user=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What user should receive this message? (blank will be all users)",
+            },
+            "type": "member",
+          },
+        ],
+        "category": "Message",
+        "channelRestriction": "guild",
+        "description": Object {
+          "description": "Update message in the lootbox",
+          "examples": Array [
+            "message:update msg1 message=\\"New exciting message\\"",
+            "message:update msg1 type=draw",
+            "message:update msg1 delay=10 tier=Common",
+            "message:update msg1 message=\\"You have won a <tier> prize...\\" user=@user",
+          ],
+          "usage": "<name> message=<message> type=<type> delay=<delay> tier=<tier> user=<user>",
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+        "split": "sticky",
+      },
+    ],
+  ],
+}
+`;

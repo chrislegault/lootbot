@@ -125,10 +125,10 @@ module.exports = class MessageAdd extends Command {
       });
 
       if (added) {
-        return msg.channel.send(`${fields.name} added.`);
+        return msg.channel.send(`${fields.name} added`);
       }
 
-      return msg.channel.send(`${fields.name} already exists.`);
+      return msg.channel.send(`${fields.name} already exists`);
     } catch (error) {
       return msg.channel.send(`An error occurred adding ${fields.name}`);
     }

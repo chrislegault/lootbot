@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/message/remove should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "message-remove",
+      Object {
+        "aliases": Array [
+          "message-remove",
+          "mr",
+        ],
+        "args": Array [
+          Object {
+            "id": "name",
+            "prompt": Object {
+              "prompt": "What is the name of the message?",
+            },
+            "type": "string",
+          },
+        ],
+        "category": "Message",
+        "channelRestriction": "guild",
+        "description": Object {
+          "description": "Remove a message",
+          "examples": Array [
+            "message:remove msg1",
+          ],
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+      },
+    ],
+  ],
+}
+`;
