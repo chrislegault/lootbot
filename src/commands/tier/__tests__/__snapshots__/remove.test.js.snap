@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/loot/remove should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "tier-remove",
+      Object {
+        "aliases": Array [
+          "tier-remove",
+          "tr",
+        ],
+        "args": Array [
+          Object {
+            "id": "name",
+            "prompt": Object {
+              "start": "What is the name of the tier?",
+            },
+            "type": "string",
+          },
+        ],
+        "category": "Tier",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Remove a tier",
+          "examples": Array [
+            "tier-remove Common",
+          ],
+          "usage": "<name>",
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+        "split": "quoted",
+      },
+    ],
+  ],
+}
+`;

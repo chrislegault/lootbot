@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/tier/add should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "tier-add",
+      Object {
+        "aliases": Array [
+          "tier-add",
+          "ta",
+        ],
+        "args": Array [
+          Object {
+            "id": "name",
+            "prompt": Object {
+              "start": "What is the name of the tier?",
+            },
+            "type": "string",
+          },
+          Object {
+            "id": "color",
+            "prompt": Object {
+              "start": "What is the color of the tier?",
+            },
+            "type": "color",
+          },
+          Object {
+            "id": "image",
+            "prompt": Object {
+              "start": "What is the image of the tier?",
+            },
+            "type": "url",
+          },
+          Object {
+            "id": "weight",
+            "prompt": Object {
+              "start": "What is the weight of the loot?",
+            },
+            "type": "number",
+          },
+          Object {
+            "id": "luckyWeight",
+            "prompt": Object {
+              "start": "What is the lucky weight of the loot?",
+            },
+            "type": "number",
+          },
+        ],
+        "category": "Tier",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Add tier to the lootbox",
+          "examples": Array [
+            "tier:add Common #123456 https://some.pathtoimage.png 25 75",
+          ],
+          "usage": "<name> <color> <image> <weight> <luckyWeight>",
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+        "split": "quoted",
+      },
+    ],
+  ],
+}
+`;

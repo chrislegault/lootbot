@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/tier/add should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "tier-update",
+      Object {
+        "aliases": Array [
+          "tier-update",
+          "tu",
+        ],
+        "args": Array [
+          Object {
+            "id": "existingName",
+            "prompt": Object {
+              "start": "What is the current name of the tier?",
+            },
+            "type": "string",
+          },
+          Object {
+            "default": null,
+            "id": "name",
+            "match": "prefix",
+            "prefix": "name=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the new name of the tier?",
+            },
+            "type": "string",
+          },
+          Object {
+            "default": null,
+            "id": "color",
+            "match": "prefix",
+            "prefix": "color=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the new color of the tier?",
+            },
+            "type": "color",
+          },
+          Object {
+            "default": null,
+            "id": "image",
+            "match": "prefix",
+            "prefix": "image=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the new image of the tier?",
+            },
+            "type": "url",
+          },
+          Object {
+            "default": null,
+            "id": "weight",
+            "match": "prefix",
+            "prefix": "weight=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the new weight of the tier?",
+            },
+            "type": "number",
+          },
+          Object {
+            "default": null,
+            "id": "luckyWeight",
+            "match": "prefix",
+            "prefix": "luckyWeight=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the new lucky weight of the tier?",
+            },
+            "type": "number",
+          },
+        ],
+        "category": "Tier",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Update that tier",
+          "examples": Array [
+            "tier-update Common name=\\"New Common\\" color=#555555 image=https://some.pathtoimage.png weight=25 luckyWeight=75",
+            "tier-update \\"Super Common\\" weight=10",
+          ],
+          "usage": "<existingName> name=<name> color=<color> image=<image> weight=<weight> luckyWeight=<luckyWeight>",
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+        "split": "sticky",
+      },
+    ],
+  ],
+}
+`;

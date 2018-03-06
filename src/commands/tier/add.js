@@ -59,22 +59,23 @@ module.exports = class TierAdd extends Command {
     });
   }
 
-  async exec(msg, { name, color, image, weight, luckyWeight }) {
+  async exec(msg, { image, ...args }) {
     const guild = msg.guild.id;
+    args = { ...args, image: image.href, guild };
 
     try {
       const [, added] = await Tier.findOrCreate({
-        where: { name, guild },
-        defaults: { name, image: image.href, color, weight, luckyWeight, guild }
+        where: { name: args.name, guild },
+        defaults: args
       });
 
       if (added) {
-        return msg.channel.send(`Tier ${name} added.`);
+        return msg.channel.send(`${args.name} added`);
       } else {
-        return msg.channel.send(`Tier ${name} already exists.`);
+        return msg.channel.send(`${args.name} already exists`);
       }
     } catch (error) {
-      return msg.channel.send(`An error occurred adding Tier ${name}`);
+      return msg.channel.send(`An error occurred adding ${args.name}`);
     }
   }
 };

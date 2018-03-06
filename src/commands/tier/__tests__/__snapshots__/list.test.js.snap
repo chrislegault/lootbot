@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/tier/list should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "tier-list",
+      Object {
+        "aliases": Array [
+          "tier-list",
+          "tl",
+        ],
+        "category": "Tier",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "List the glorious tiers",
+          "examples": Array [
+            "tier-list",
+          ],
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`commands/tier/list should list the tiers 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "
+__**Common**__
+Color: #484848
+Image: <test.png>
+Weight: 50.00% (10 in 20)
+Lucky Weight: 50.00% (20 in 40)
+
+__**Uncommon**__
+Color: #3fa535
+Image: <test2.png>
+Weight: 50.00% (10 in 20)
+Lucky Weight: 50.00% (20 in 40)
+",
+    ],
+  ],
+}
+`;
