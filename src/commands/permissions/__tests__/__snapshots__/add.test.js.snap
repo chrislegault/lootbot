@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/permissions/add should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "permissions-add",
+      Object {
+        "aliases": Array [
+          "permissions-add",
+          "pa",
+        ],
+        "args": Array [
+          Object {
+            "id": "permission",
+            "prompt": Object {
+              "start": "What is the name of the permission? (manage)",
+            },
+            "type": "string",
+          },
+          Object {
+            "id": "role",
+            "prompt": Object {
+              "start": "What is the role to assign the permission?",
+            },
+            "type": "role",
+          },
+        ],
+        "category": "Permissions",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Add role to lootbot",
+          "examples": Array [
+            "permissions-add manage \\"Loot Manager\\"",
+          ],
+          "usage": "<permission> <role>",
+        },
+        "options": Object {
+          "permissions": Array [
+            "MANAGE_CHANNELS",
+          ],
+        },
+        "split": "quoted",
+      },
+    ],
+  ],
+}
+`;
