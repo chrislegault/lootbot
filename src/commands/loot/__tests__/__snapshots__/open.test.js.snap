@@ -35,7 +35,217 @@ exports[`commands/loot/open should configure properly 1`] = `
           ],
         },
         "options": Object {
-          "permissions": [Function],
+          "permissions": [MockFunction],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`commands/loot/open should have proper default messages 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Drawing loot...",
+      Object {
+        "id": 1,
+      },
+      Object {
+        "id": "1234",
+      },
+      Object {
+        "Loots": Array [
+          Object {
+            "id": 1,
+          },
+        ],
+        "color": 1234,
+        "id": 1,
+        "image": "tier1.png",
+        "luckyWeight": 30,
+        "name": "Tier 1",
+        "weight": 15,
+      },
+    ],
+    Array [
+      "<tier> prize won...",
+      Object {
+        "id": 1,
+      },
+      Object {
+        "id": "1234",
+      },
+      Object {
+        "Loots": Array [
+          Object {
+            "id": 1,
+          },
+        ],
+        "color": 1234,
+        "id": 1,
+        "image": "tier1.png",
+        "luckyWeight": 30,
+        "name": "Tier 1",
+        "weight": 15,
+      },
+    ],
+    Array [
+      "Congratulations <user>, you won <reward>",
+      Object {
+        "id": 1,
+      },
+      Object {
+        "id": "1234",
+      },
+      Object {
+        "Loots": Array [
+          Object {
+            "id": 1,
+          },
+        ],
+        "color": 1234,
+        "id": 1,
+        "image": "tier1.png",
+        "luckyWeight": 30,
+        "name": "Tier 1",
+        "weight": 15,
+      },
+    ],
+  ],
+}
+`;
+
+exports[`commands/loot/open should have proper default messages 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Drawing loot...",
+    ],
+    Array [
+      "<tier> prize won...",
+    ],
+    Array [
+      Object {
+        "embed": RichEmbed {
+          "author": undefined,
+          "color": 1234,
+          "description": "Congratulations <user>, you won <reward>",
+          "fields": Array [],
+          "file": undefined,
+          "footer": undefined,
+          "image": Object {
+            "url": "tier1.png",
+          },
+          "thumbnail": undefined,
+          "timestamp": undefined,
+          "title": undefined,
+          "url": undefined,
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`commands/loot/open should use found matching messages 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "intro message",
+      Object {
+        "id": 1,
+      },
+      Object {
+        "id": "1234",
+      },
+      Object {
+        "Loots": Array [
+          Object {
+            "id": 1,
+          },
+        ],
+        "color": 1234,
+        "id": 1,
+        "image": "tier1.png",
+        "luckyWeight": 30,
+        "name": "Tier 1",
+        "weight": 15,
+      },
+    ],
+    Array [
+      "draw message",
+      Object {
+        "id": 1,
+      },
+      Object {
+        "id": "1234",
+      },
+      Object {
+        "Loots": Array [
+          Object {
+            "id": 1,
+          },
+        ],
+        "color": 1234,
+        "id": 1,
+        "image": "tier1.png",
+        "luckyWeight": 30,
+        "name": "Tier 1",
+        "weight": 15,
+      },
+    ],
+    Array [
+      "reward message",
+      Object {
+        "id": 1,
+      },
+      Object {
+        "id": "1234",
+      },
+      Object {
+        "Loots": Array [
+          Object {
+            "id": 1,
+          },
+        ],
+        "color": 1234,
+        "id": 1,
+        "image": "tier1.png",
+        "luckyWeight": 30,
+        "name": "Tier 1",
+        "weight": 15,
+      },
+    ],
+  ],
+}
+`;
+
+exports[`commands/loot/open should use found matching messages 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "intro message",
+    ],
+    Array [
+      "draw message",
+    ],
+    Array [
+      Object {
+        "embed": RichEmbed {
+          "author": undefined,
+          "color": 1234,
+          "description": "reward message",
+          "fields": Array [],
+          "file": undefined,
+          "footer": undefined,
+          "image": Object {
+            "url": "tier1.png",
+          },
+          "thumbnail": undefined,
+          "timestamp": undefined,
+          "title": undefined,
+          "url": undefined,
         },
       },
     ],

@@ -1,6 +1,6 @@
 const { Command } = require("discord-akairo");
 const { stripIndent } = require("common-tags");
-const { capitalize, formatUsage } = require("../../support");
+const { formatUsage } = require("../../support");
 
 class HelpCommand extends Command {
   constructor() {
@@ -43,7 +43,7 @@ class HelpCommand extends Command {
 
     msg.client.commandHandler.categories.forEach(category => {
       message += `
-__${capitalize(category.id)}__\n`;
+__${category.id}__\n`;
 
       const commandText = category
         .map(command => {
@@ -79,7 +79,7 @@ __${capitalize(category.id)}__\n`;
 __Command **${command.aliases[0]}**__: ${description.content}
 
 **Format:** ${format}
-**Group:** ${capitalize(command.category.id)}`;
+**Group:** ${command.category.id}`;
 
     if (command.aliases.length > 1) {
       help += `\n**Aliases:** ${command.aliases.join(", ")}`;

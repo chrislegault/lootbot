@@ -23,13 +23,13 @@ function sayReward(message, msg, reward, user, tier) {
 }
 
 function randomMessage(messages, filter, defaultMessage) {
-  const filtered = messages.filter(message => filter(message));
+  let filtered = messages.filter(message => filter(message));
 
   if (filtered.length === 0) {
-    return [defaultMessage];
+    filtered = [defaultMessage];
   }
 
-  return filtered;
+  return chance.pickone(filtered);
 }
 
 const DEFAULT_MESSAGES = {
@@ -90,12 +90,8 @@ module.exports = class LootOpen extends Command {
       where: { guild }
     });
 
-    const myMessages = await Message.findAll({
-      where: { guild }
-    });
-
     if (tiers.filter(tier => tier.Loots.length > 0).length === 0) {
-      return msg.channel.send("No loot in the lootbox.");
+      return msg.channel.send("No loot in the lootbox");
     }
 
     const weights = tiers.map(tier => (lucky ? tier.luckyWeight : tier.weight));
@@ -103,15 +99,15 @@ module.exports = class LootOpen extends Command {
 
     if (tier.Loots.length === 0) {
       return msg.channel.send(
-        `${tier.name} loot won, but no prizes are registered.`
+        `${tier.name} loot won, but no prizes are registered`
       );
     }
 
     const reward = chance.pickone(tier.Loots);
 
-    function _sayMessage(message) {
-      return sayMessage(message, msg, reward, user, tier);
-    }
+    const myMessages = await Message.findAll({
+      where: { guild }
+    });
 
     const introMessage = randomMessage(
       myMessages,
@@ -121,16 +117,19 @@ module.exports = class LootOpen extends Command {
 
     const tierMessage = randomMessage(
       myMessages,
-      myMessage =>
-        myMessage.tier_id === reward.tier_id && myMessage.type === "draw",
+      myMessage => myMessage.tier_id === tier.id && myMessage.type === "draw",
       DEFAULT_MESSAGES.draw
     );
 
-    const rewardMessage = formatMessage(
+    const rewardMessage = randomMessage(
       myMessages,
       myMessage => myMessage.type === "reward",
       DEFAULT_MESSAGES.reward
     );
+
+    function _sayMessage(message) {
+      return sayMessage(message, msg, reward, user, tier);
+    }
 
     return _sayMessage(introMessage.message)
       .then(() => delay(introMessage.delay))
