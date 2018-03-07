@@ -1,12 +1,14 @@
 const { Tier } = require("../models");
 
-const guild = process.env.GUILD;
+function getGuild() {
+  if (!process.env.GUILD) {
+    throw new Error("GUILD env variable required");
+  }
 
-if (!guild) {
-  throw new Error("GUILD env variable required");
+  return process.env.GUILD;
 }
 
-function getTier(name) {
+function getTier(name, guild) {
   return Tier.findOne({
     where: { guild, name }
   });
@@ -14,10 +16,11 @@ function getTier(name) {
 
 module.exports = {
   up: async queryInterface => {
-    const common = await getTier("Common");
-    const uncommon = await getTier("Uncommon");
-    const rare = await getTier("Rare");
-    const legendary = await getTier("Legendary");
+    const guild = getGuild();
+    const common = await getTier("Common", guild);
+    const uncommon = await getTier("Uncommon", guild);
+    const rare = await getTier("Rare", guild);
+    const legendary = await getTier("Legendary", guild);
 
     return queryInterface.bulkInsert("Messages", [
       {
@@ -136,6 +139,8 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
+    const guild = getGuild();
+
     return queryInterface.bulkDelete("Messages", {
       guild,
       name: {

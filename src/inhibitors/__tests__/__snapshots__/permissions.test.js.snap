@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`inhibitors should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "permissions",
+      Object {
+        "reason": "permissions",
+      },
+    ],
+  ],
+}
+`;

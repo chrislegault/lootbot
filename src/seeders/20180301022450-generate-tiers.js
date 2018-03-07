@@ -1,11 +1,15 @@
-const guild = process.env.GUILD;
+function getGuild() {
+  if (!process.env.GUILD) {
+    throw new Error("GUILD env variable required");
+  }
 
-if (!guild) {
-  throw new Error("GUILD env variable required");
+  return process.env.GUILD;
 }
 
 module.exports = {
   up: queryInterface => {
+    const guild = getGuild();
+
     return queryInterface.bulkInsert("Tiers", [
       {
         name: "Common",
@@ -55,6 +59,8 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
+    const guild = getGuild();
+
     return queryInterface.bulkDelete("Tiers", {
       guild,
       name: {

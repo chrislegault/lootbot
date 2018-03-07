@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-  var settings = sequelize.define("Settings", {
+  var Settings = sequelize.define("Settings", {
     settings: DataTypes.JSON
   });
 
-  settings.associate = function() {};
+  Settings.associate = function() {};
 
-  return settings;
+  return Settings;
 };

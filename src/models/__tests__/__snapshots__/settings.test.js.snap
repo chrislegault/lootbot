@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`models/settings should create the model definition 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Settings",
+      Object {
+        "settings": "json",
+      },
+    ],
+  ],
+}
+`;

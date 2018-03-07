@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`migrations/20180225193522-create-tier should apply migration on up 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Tiers",
+      Object {
+        "color": Object {
+          "allowNull": false,
+          "type": "integer",
+        },
+        "createdAt": Object {
+          "allowNull": false,
+          "type": "date",
+        },
+        "guild": Object {
+          "allowNull": false,
+          "type": "string",
+        },
+        "id": Object {
+          "allowNull": false,
+          "autoIncrement": true,
+          "primaryKey": true,
+          "type": "integer",
+        },
+        "image": Object {
+          "allowNull": false,
+          "type": "string",
+        },
+        "luckyWeight": Object {
+          "allowNull": false,
+          "type": "float",
+        },
+        "name": Object {
+          "allowNull": false,
+          "type": "string",
+        },
+        "updatedAt": Object {
+          "allowNull": false,
+          "type": "date",
+        },
+        "weight": Object {
+          "allowNull": false,
+          "type": "float",
+        },
+      },
+      Object {
+        "uniqueKeys": Object {
+          "message_unique": Object {
+            "fields": Array [
+              "name",
+              "guild",
+            ],
+          },
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`migrations/20180225193522-create-tier should rollback migration on down 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Tiers",
+    ],
+  ],
+}
+`;

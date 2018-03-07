@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`migrations/20180228230928-create-message should apply migration on up 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Messages",
+      Object {
+        "createdAt": Object {
+          "allowNull": false,
+          "type": "date",
+        },
+        "delay": Object {
+          "defaultValue": 0,
+          "type": "integer",
+        },
+        "guild": Object {
+          "allowNull": false,
+          "type": "string",
+        },
+        "id": Object {
+          "allowNull": false,
+          "autoIncrement": true,
+          "primaryKey": true,
+          "type": "integer",
+        },
+        "message": Object {
+          "allowNull": false,
+          "type": undefined,
+        },
+        "name": Object {
+          "allowNull": false,
+          "type": "string",
+        },
+        "tier_id": Object {
+          "allowNull": true,
+          "references": Object {
+            "key": "id",
+            "model": "Tiers",
+          },
+          "type": "integer",
+        },
+        "type": Object {
+          "allowNull": false,
+          "type": undefined,
+        },
+        "updatedAt": Object {
+          "allowNull": false,
+          "type": "date",
+        },
+        "user_id": Object {
+          "allowNull": true,
+          "type": "string",
+        },
+      },
+      Object {
+        "uniqueKeys": Object {
+          "message_unique": Object {
+            "fields": Array [
+              "name",
+              "guild",
+            ],
+          },
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`migrations/20180228230928-create-message should rollback migration on down 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Messages",
+    ],
+  ],
+}
+`;
