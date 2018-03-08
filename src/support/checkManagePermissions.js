@@ -1,12 +1,8 @@
 const MANAGE = "manage";
 
-module.exports = async function checkManagePermissions(msg) {
+module.exports = msg => {
   try {
-    let permissions = await msg.client.settings.get(
-      msg.guild.id,
-      "permissions",
-      {}
-    );
+    let permissions = msg.client.settings.get(msg.guild.id, "permissions", {});
 
     if (permissions[MANAGE]) {
       const matchingRole = permissions[MANAGE].find(permittedRole =>
