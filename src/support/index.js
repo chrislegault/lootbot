@@ -3,5 +3,6 @@ module.exports = {
   formatMessage: require("./formatMessage"),
   formatOdd: require("./formatOdd"),
   formatUsage: require("./formatUsage"),
-  checkManagePermissions: require("./checkManagePermissions")
+  checkManagePermissions: require("./checkManagePermissions"),
+  hasPermission: require("./hasPermission")
 };

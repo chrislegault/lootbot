@@ -1,4 +1,5 @@
 const { Inhibitor } = require("discord-akairo");
+const { hasPermission } = require("../support");
 
 class PermissionsInhibitor extends Inhibitor {
   constructor() {
@@ -7,31 +8,15 @@ class PermissionsInhibitor extends Inhibitor {
     });
   }
 
-  async exec(msg, command) {
-    // Bot owner can run every command
-    if (msg.client.ownerID === msg.author.id) {
-      return Promise.resolve();
-    }
-
+  exec(msg, command) {
     try {
-      const permissions = command.options.permissions;
+      const permitted = hasPermission(msg, command);
 
-      if (permissions) {
-        if (typeof permissions === "function") {
-          const permitted = await permissions(msg);
-
-          if (!permitted) {
-            return Promise.reject();
-          }
-        } else if (
-          msg.guild &&
-          !msg.channel.permissionsFor(msg.author).has(permissions)
-        ) {
-          return Promise.reject();
-        }
+      if (permitted) {
+        return Promise.resolve();
       }
 
-      return Promise.resolve();
+      return Promise.reject();
     } catch (error) {
       return Promise.reject(error);
     }

@@ -1,6 +1,6 @@
 const { Command } = require("discord-akairo");
 const { stripIndent } = require("common-tags");
-const { formatUsage } = require("../../support");
+const { hasPermission, formatUsage } = require("../../support");
 
 class HelpCommand extends Command {
   constructor() {
@@ -42,23 +42,32 @@ class HelpCommand extends Command {
       ` + "\n";
 
     msg.client.commandHandler.categories.forEach(category => {
-      message += `
-__${category.id}__\n`;
+      let permittedCommands = category.map(command => command);
 
-      const commandText = category
-        .map(command => {
+      if (msg.guild) {
+        permittedCommands = permittedCommands.filter(command =>
+          hasPermission(msg, command)
+        );
+      }
+
+      if (permittedCommands.length > 0) {
+        message += `\n__${category.id}__\n`;
+
+        permittedCommands.forEach(command => {
           const description = command.description.content || "No Description";
-          return `**${command.aliases[0]}:** ${description}`;
-        })
-        .join("\n");
-
-      message += commandText + "\n";
+          message += `**${command.aliases[0]}:** ${description}\n`;
+        });
+      }
     });
 
     return message;
   }
 
   showCommand(msg, command) {
+    if (msg.guild && !hasPermission(msg, command)) {
+      return "No permission for this command";
+    }
+
     let help = "";
 
     const description = {
@@ -93,11 +102,19 @@ __Command **${command.aliases[0]}**__: ${description.content}
   }
 
   async exec(msg, { command }) {
+    let messages = [];
+
     if (command) {
-      return msg.channel.send(this.showCommand(msg, command));
+      messages.push(await msg.author.send(this.showCommand(msg, command)));
+    } else {
+      messages.push(await msg.author.send(this.showAll(msg)));
     }
 
-    return msg.channel.send(this.showAll(msg));
+    if (msg.channel.type !== "dm") {
+      messages.push(await msg.reply("Sent you a DM with information."));
+    }
+
+    return messages;
   }
 }
 
