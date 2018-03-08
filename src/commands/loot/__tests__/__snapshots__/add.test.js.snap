@@ -31,8 +31,8 @@ exports[`commands/loot/add should configure properly 1`] = `
         "description": Object {
           "description": "Add to the lootbox",
           "examples": Array [
-            "loot:add \\"Bottle of Maple Syrup\\" Legendary",
-            "loot:add Syrup Common",
+            "loot-add \\"Bottle of Maple Syrup\\" Legendary",
+            "loot-add Syrup Common",
           ],
           "usage": "<name> <tier>",
         },

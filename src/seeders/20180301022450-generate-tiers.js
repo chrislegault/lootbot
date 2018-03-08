@@ -19,8 +19,8 @@ module.exports = {
         guild,
         weight: 80.0,
         luckyWeight: 80.0,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "Uncommon",
@@ -30,8 +30,8 @@ module.exports = {
         guild,
         weight: 10.0,
         luckyWeight: 10.0,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "Rare",
@@ -41,8 +41,8 @@ module.exports = {
         guild,
         weight: 9.0,
         luckyWeight: 9.0,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "Legendary",
@@ -52,8 +52,8 @@ module.exports = {
         guild,
         weight: 1.0,
         luckyWeight: 1.0,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       }
     ]);
   },

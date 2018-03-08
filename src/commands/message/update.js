@@ -11,10 +11,10 @@ module.exports = class MessageUpdate extends Command {
       description: {
         description: "Update message in the lootbox",
         examples: [
-          `message:update msg1 message="New exciting message"`,
-          `message:update msg1 type=draw`,
-          `message:update msg1 delay=10 tier=Common`,
-          `message:update msg1 message="You have won a <tier> prize..." user=@user`
+          `message-update msg1 message="New exciting message"`,
+          `message-update msg1 type=draw`,
+          `message-update msg1 delay=10 tier=Common`,
+          `message-update msg1 message="You have won a <tier> prize..." user=@user`
         ],
         usage:
           "<name> message=<message> type=<type> delay=<delay> tier=<tier> user=<user>"
