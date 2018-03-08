@@ -1,12 +1,14 @@
 const { Tier } = require("../models");
 
-const guild = process.env.GUILD;
+function getGuild() {
+  if (!process.env.GUILD) {
+    throw new Error("GUILD env variable required");
+  }
 
-if (!guild) {
-  throw new Error("GUILD env variable required");
+  return process.env.GUILD;
 }
 
-function getTier(name) {
+function getTier(name, guild) {
   return Tier.findOne({
     where: { guild, name }
   });
@@ -14,10 +16,11 @@ function getTier(name) {
 
 module.exports = {
   up: async queryInterface => {
-    const common = await getTier("Common");
-    const uncommon = await getTier("Uncommon");
-    const rare = await getTier("Rare");
-    const legendary = await getTier("Legendary");
+    const guild = getGuild();
+    const common = await getTier("Common", guild);
+    const uncommon = await getTier("Uncommon", guild);
+    const rare = await getTier("Rare", guild);
+    const legendary = await getTier("Legendary", guild);
 
     return queryInterface.bulkInsert("Messages", [
       {
@@ -27,8 +30,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "intro2",
@@ -37,8 +40,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "intro3",
@@ -47,8 +50,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "intro4",
@@ -57,8 +60,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "intro5",
@@ -67,8 +70,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "intro6",
@@ -76,8 +79,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "common1",
@@ -86,8 +89,8 @@ module.exports = {
         tier_id: common.id,
         guild,
         delay: 2000,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "uncommon1",
@@ -97,8 +100,8 @@ module.exports = {
         tier_id: uncommon.id,
         guild,
         delay: 2000,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "rare1",
@@ -108,8 +111,8 @@ module.exports = {
         tier_id: rare.id,
         guild,
         delay: 8000,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "legendary1",
@@ -119,8 +122,8 @@ module.exports = {
         tier_id: legendary.id,
         guild,
         delay: 9000,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       },
       {
         name: "reward1",
@@ -129,13 +132,15 @@ module.exports = {
         type: "reward",
         guild,
         delay: 0,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       }
     ]);
   },
 
   down: (queryInterface, Sequelize) => {
+    const guild = getGuild();
+
     return queryInterface.bulkDelete("Messages", {
       guild,
       name: {

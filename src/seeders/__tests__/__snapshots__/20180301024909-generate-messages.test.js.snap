@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`seeders/20180301024909-generate-messages should seed when a guild is provided 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Messages",
+      Object {
+        "guild": "1",
+        "name": Object {
+          "or": Array [
+            "intro1",
+            "intro2",
+            "intro3",
+            "intro4",
+            "intro5",
+            "intro6",
+            "common1",
+            "uncommon1",
+            "rare1",
+            "legendary1",
+            "reward1",
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`seeders/20180301024909-generate-messages should seed when guild is provided 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Messages",
+      Array [
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 1000,
+          "guild": "1",
+          "message": "Plucky Bookwyrm <user> has opened an MMO Bookclub Lootbox! Let's see what's inside...",
+          "name": "intro1",
+          "type": "intro",
+          "updatedAt": 1487076708000,
+        },
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 1000,
+          "guild": "1",
+          "message": "<user>, my MMO Bookclub Lootboxes are GUARANTEED to give you a sense of pride and accomplishment. Let's see what you've won...",
+          "name": "intro2",
+          "type": "intro",
+          "updatedAt": 1487076708000,
+        },
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 1000,
+          "guild": "1",
+          "message": "Knowing that one day they might win a Legendary prize from a MMO Bookclub Lootbox...it fills <user> with determination.",
+          "name": "intro3",
+          "type": "intro",
+          "updatedAt": 1487076708000,
+        },
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 1000,
+          "guild": "1",
+          "message": "I used to be a bookwyrm like you <user>. And then I took a lootbox to the knee.",
+          "name": "intro4",
+          "type": "intro",
+          "updatedAt": 1487076708000,
+        },
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 1000,
+          "guild": "1",
+          "message": "<user> used a bookmark to open an MMO Bookclub Lootbox...it's super effective!",
+          "name": "intro5",
+          "type": "intro",
+          "updatedAt": 1487076708000,
+        },
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 1000,
+          "guild": "1",
+          "message": "<user>, triangulating...",
+          "name": "intro6",
+          "type": "intro",
+          "updatedAt": 1487076708000,
+        },
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 2000,
+          "guild": "1",
+          "message": "Item, get! You've won a <tier> prize!",
+          "name": "common1",
+          "tier_id": 1,
+          "type": "draw",
+          "updatedAt": 1487076708000,
+        },
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 2000,
+          "guild": "1",
+          "message": "It's dangerous to go alone, take this <user>! You've won an <tier> prize!",
+          "name": "uncommon1",
+          "tier_id": 2,
+          "type": "draw",
+          "updatedAt": 1487076708000,
+        },
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 8000,
+          "guild": "1",
+          "message": "Oh my, it looks like you've won a <tier> prize. I will now pause for eight seconds to build some unbearable tension before the big reveal...",
+          "name": "rare1",
+          "tier_id": 3,
+          "type": "draw",
+          "updatedAt": 1487076708000,
+        },
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 9000,
+          "guild": "1",
+          "message": "Holy smokes, you've only gone and won a frickin' Legendary prize! I will now pause for an excruciating NINE SECONDS to build tension before the big reveal...",
+          "name": "legendary1",
+          "tier_id": 4,
+          "type": "draw",
+          "updatedAt": 1487076708000,
+        },
+        Object {
+          "createdAt": 1487076708000,
+          "delay": 0,
+          "guild": "1",
+          "message": "Congratulations <user>, you won <reward>! One of your mod overlords will be along shortly to hook you up.",
+          "name": "reward1",
+          "type": "reward",
+          "updatedAt": 1487076708000,
+        },
+      ],
+    ],
+  ],
+}
+`;

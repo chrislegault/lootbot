@@ -11,7 +11,7 @@ module.exports = class TierAdd extends Command {
       description: {
         content: "Add tier to the lootbox",
         examples: [
-          "tier:add Common #123456 https://some.pathtoimage.png 25 75"
+          "tier-add Common #123456 https://some.pathtoimage.png 25 75"
         ],
         usage: "<name> <color> <image> <weight> <luckyWeight>"
       },

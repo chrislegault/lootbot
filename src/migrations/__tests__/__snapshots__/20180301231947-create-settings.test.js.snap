@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`migrations/20180301231947-create-settings should apply migration on up 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Settings",
+      Object {
+        "createdAt": Object {
+          "allowNull": false,
+          "type": "date",
+        },
+        "id": Object {
+          "allowNull": false,
+          "primaryKey": true,
+          "type": "string",
+        },
+        "settings": Object {
+          "type": undefined,
+        },
+        "updatedAt": Object {
+          "allowNull": false,
+          "type": "date",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`migrations/20180301231947-create-settings should rollback migration on down 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Settings",
+    ],
+  ],
+}
+`;

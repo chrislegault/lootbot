@@ -11,8 +11,8 @@ module.exports = class LootAdd extends Command {
       description: {
         description: "Add to the lootbox",
         examples: [
-          `loot:add "Bottle of Maple Syrup" Legendary`,
-          "loot:add Syrup Common"
+          `loot-add "Bottle of Maple Syrup" Legendary`,
+          "loot-add Syrup Common"
         ],
         usage: "<name> <tier>"
       },

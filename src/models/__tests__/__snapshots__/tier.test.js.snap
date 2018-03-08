@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`models/tier should create the model definition 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Tier",
+      Object {
+        "color": "integer",
+        "guild": "string",
+        "image": "string",
+        "luckyWeight": "float",
+        "name": "string",
+        "weight": "float",
+      },
+      Object {},
+    ],
+  ],
+}
+`;

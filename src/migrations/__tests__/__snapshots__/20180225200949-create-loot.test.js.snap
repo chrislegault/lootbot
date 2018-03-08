@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`migrations/20180225200949-create-loot should apply migration on up 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Loots",
+      Object {
+        "createdAt": Object {
+          "allowNull": false,
+          "type": "date",
+        },
+        "guild": Object {
+          "allowNull": false,
+          "type": "string",
+        },
+        "id": Object {
+          "allowNull": false,
+          "autoIncrement": true,
+          "primaryKey": true,
+          "type": "integer",
+        },
+        "name": Object {
+          "allowNull": false,
+          "type": "string",
+        },
+        "tier_id": Object {
+          "allowNull": false,
+          "references": Object {
+            "key": "id",
+            "model": "Tiers",
+          },
+          "type": "integer",
+        },
+        "updatedAt": Object {
+          "allowNull": false,
+          "type": "date",
+        },
+      },
+      Object {
+        "uniqueKeys": Object {
+          "name_unique": Object {
+            "fields": Array [
+              "name",
+              "guild",
+            ],
+          },
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`migrations/20180225200949-create-loot should rollback migration on down 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Loots",
+    ],
+  ],
+}
+`;

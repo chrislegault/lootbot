@@ -10,7 +10,7 @@ module.exports = class MessageRemove extends Command {
       channelRestriction: "guild",
       description: {
         description: "Remove a message",
-        examples: [`message:remove msg1`]
+        examples: [`message-remove msg1`]
       },
       options: {
         permissions: checkManagePermissions

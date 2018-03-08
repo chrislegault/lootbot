@@ -1,9 +1,9 @@
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   var Loot = sequelize.define(
     "Loot",
     {
-      name: Sequelize.STRING,
-      guild: Sequelize.STRING
+      name: DataTypes.STRING,
+      guild: DataTypes.STRING
     },
     {}
   );

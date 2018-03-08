@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`models/message should create the model definition 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Message",
+      Object {
+        "delay": "integer",
+        "guild": "string",
+        "message": "test",
+        "name": "string",
+        "tier_id": "integer",
+        "type": "draw,tier,reward",
+        "user_id": "string",
+      },
+      Object {},
+    ],
+  ],
+}
+`;
