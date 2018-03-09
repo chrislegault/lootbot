@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/administration/disable should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "disable",
+      Object {
+        "aliases": Array [
+          "disable",
+        ],
+        "category": "Administration",
+        "channelRestriction": "guild",
+        "description": Object {
+          "description": "Disable all commands",
+          "examples": Array [
+            "disable",
+          ],
+        },
+        "options": Object {
+          "permissions": Array [
+            "ADMINISTRATOR",
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
