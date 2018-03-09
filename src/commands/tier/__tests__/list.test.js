@@ -80,4 +80,20 @@ describe("commands/tier/list", () => {
       "An error occurred listing tiers"
     );
   });
+
+  it("should properly format a color that would contain 0s in hex", async () => {
+    Tier.findAll.mockReturnValue([
+      {
+        name: "Common",
+        color: 17, // #000001
+        image: "test.png",
+        weight: 10,
+        luckyWeight: 20
+      }
+    ]);
+
+    await this.command.exec(this.msg);
+
+    expect(this.msg.channel.send).toMatchSnapshot();
+  });
 });

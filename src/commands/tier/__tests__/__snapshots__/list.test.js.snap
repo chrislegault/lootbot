@@ -48,3 +48,19 @@ Lucky Weight: 50.00% (20 in 40)
   ],
 }
 `;
+
+exports[`commands/tier/list should properly format a color that would contain 0s in hex 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "
+__**Common**__
+Color: #000011
+Image: <test.png>
+Weight: 100.00% (10 in 10)
+Lucky Weight: 100.00% (20 in 20)
+",
+    ],
+  ],
+}
+`;
