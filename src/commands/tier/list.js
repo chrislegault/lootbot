@@ -41,9 +41,10 @@ module.exports = class TierList extends Command {
       });
 
       tiers.forEach(tier => {
+        let color = tier.color.toString(16);
         message += `
 __**${tier.name}**__
-Color: #${tier.color.toString(16)}
+Color: #${"0".repeat(6 - color.length) + color}
 Image: <${tier.image}>
 Weight: ${formatOdd(tier.weight, totalOdds)}
 Lucky Weight: ${formatOdd(tier.luckyWeight, totalLucky)}
