@@ -1,3 +1,3 @@
 module.exports = {
-  "*.js": ["lint", "git add", "jest --bail --findRelatedTests"]
+  "*.js": ["yarn lint", "git add", "yarn test --bail --findRelatedTests"]
 };
