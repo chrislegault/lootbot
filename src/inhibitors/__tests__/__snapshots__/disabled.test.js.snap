@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`inhibitors/disabled should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "disabled",
+      Object {
+        "reason": "disabled",
+      },
+    ],
+  ],
+}
+`;

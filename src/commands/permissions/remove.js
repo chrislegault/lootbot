@@ -12,7 +12,7 @@ module.exports = class PermissionsAdd extends Command {
         usage: "<permission> <role>"
       },
       options: {
-        permissions: ["MANAGE_CHANNELS"]
+        permissions: ["ADMINISTRATOR"]
       },
       split: "quoted",
       args: [
