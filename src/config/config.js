@@ -2,7 +2,8 @@ module.exports = {
   development: {
     dialect: "sqlite",
     storage: "lootbot.sqlite",
-    operatorsAliases: false
+    operatorsAliases: false,
+    seederStorage: "sequelize"
   },
   production: {
     dialect: "sqlite",

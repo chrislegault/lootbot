@@ -25,6 +25,9 @@ module.exports = {
           allowNull: false,
           type: Sequelize.DATE
         },
+        deletedAt: {
+          type: Sequelize.DATE
+        },
         tier_id: {
           allowNull: false,
           type: Sequelize.INTEGER,
@@ -36,8 +39,9 @@ module.exports = {
       },
       {
         uniqueKeys: {
-          name_unique: {
-            fields: ["name", "guild"]
+          loot_unique: {
+            fields: ["name", "guild", "deletedAt"],
+            customIndex: true
           }
         }
       }

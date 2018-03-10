@@ -5,6 +5,7 @@ Object {
   "development": Object {
     "dialect": "sqlite",
     "operatorsAliases": false,
+    "seederStorage": "sequelize",
     "storage": "lootbot.sqlite",
   },
   "production": Object {

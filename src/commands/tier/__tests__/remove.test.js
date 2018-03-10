@@ -1,7 +1,7 @@
 jest.mock("discord-akairo");
 
 jest.mock("../../../models", () => ({
-  Tier: { destroy: jest.fn("destroy") }
+  Tier: { findOne: jest.fn("findOne") }
 }));
 
 const { Tier } = require("../../../models");
@@ -33,12 +33,16 @@ describe("commands/loot/remove", () => {
   });
 
   it("should destroy the passed in tier", async () => {
-    Tier.destroy.mockReturnValue(1);
+    const tier = { destroy: jest.fn("destroy") };
+    tier.destroy.mockReturnValue(tier);
+    Tier.findOne.mockReturnValue(tier);
     await this.command.exec(this.msg, this.args);
 
-    expect(Tier.destroy).toHaveBeenCalledWith({
+    expect(Tier.findOne).toHaveBeenCalledWith({
       where: { name: this.args.name, guild: this.msg.guild.id }
     });
+
+    expect(tier.destroy).toHaveBeenCalled();
 
     expect(this.msg.channel.send).toHaveBeenCalledWith(
       `${this.args.name} removed`
@@ -46,7 +50,7 @@ describe("commands/loot/remove", () => {
   });
 
   it("should notify when the passed in loot does not exist", async () => {
-    Tier.destroy.mockReturnValue(0);
+    Tier.findOne.mockReturnValue(null);
     await this.command.exec(this.msg, this.args);
 
     expect(this.msg.channel.send).toHaveBeenCalledWith(
@@ -55,7 +59,7 @@ describe("commands/loot/remove", () => {
   });
 
   it("should notify if any errors occur", async () => {
-    Tier.destroy.mockImplementation(() => {
+    Tier.findOne.mockImplementation(() => {
       throw new Error("test");
     });
 

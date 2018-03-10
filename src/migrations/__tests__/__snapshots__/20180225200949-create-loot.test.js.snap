@@ -10,6 +10,9 @@ exports[`migrations/20180225200949-create-loot should apply migration on up 1`] 
           "allowNull": false,
           "type": "date",
         },
+        "deletedAt": Object {
+          "type": "date",
+        },
         "guild": Object {
           "allowNull": false,
           "type": "string",
@@ -39,10 +42,12 @@ exports[`migrations/20180225200949-create-loot should apply migration on up 1`] 
       },
       Object {
         "uniqueKeys": Object {
-          "name_unique": Object {
+          "loot_unique": Object {
+            "customIndex": true,
             "fields": Array [
               "name",
               "guild",
+              "deletedAt",
             ],
           },
         },

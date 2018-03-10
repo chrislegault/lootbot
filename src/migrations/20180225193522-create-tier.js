@@ -40,12 +40,16 @@ module.exports = {
         updatedAt: {
           allowNull: false,
           type: Sequelize.DATE
+        },
+        deletedAt: {
+          type: Sequelize.DATE
         }
       },
       {
         uniqueKeys: {
-          message_unique: {
-            fields: ["name", "guild"]
+          tier_unique: {
+            fields: ["name", "guild", "deletedAt"],
+            customIndex: true
           }
         }
       }
