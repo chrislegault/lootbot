@@ -63,8 +63,15 @@ describe("commands/loot/open", () => {
     };
 
     this.msg = {
-      guild: { id: 1 },
+      guild: { id: "1" },
+      client: {
+        settings: {
+          get: jest.fn("get").mockReturnValue([]),
+          set: jest.fn("set").mockReturnValue(true)
+        }
+      },
       channel: {
+        id: "2",
         send: jest.fn("send").mockReturnValue(Promise.resolve())
       }
     };
@@ -78,6 +85,19 @@ describe("commands/loot/open", () => {
     expect(Command.mock.calls[0][1].options.permissions).toBe(
       checkManagePermissions
     );
+  });
+
+  it("should not open if there is already a running game in the channel", async () => {
+    this.msg.client.settings.get.mockReturnValue([this.msg.channel.id]);
+    await this.command.exec(this.msg, this.args);
+
+    expect(this.msg.client.settings.get).toHaveBeenCalledWith(
+      this.msg.guild.id,
+      "runningGames",
+      []
+    );
+
+    expect(Tier.findAll).toHaveBeenCalledTimes(0);
   });
 
   it("should notify if no loot is found", async () => {
@@ -120,6 +140,29 @@ describe("commands/loot/open", () => {
     expect(this.msg.channel.send).toHaveBeenCalledWith(
       `${this.tiers[1].name} loot won, but no prizes are registered`
     );
+  });
+
+  it("should maintain the state of the running game in the channel", async () => {
+    const expectedCalls = [
+      [this.msg.guild.id, "runningGames", [this.msg.channel.id]],
+      [this.msg.guild.id, "runningGames", []]
+    ];
+
+    expect.assertions(2);
+
+    this.msg.client.settings.set.mockImplementation((...args) => {
+      expect(args).toEqual(
+        expectedCalls[this.msg.client.settings.set.mock.calls.length - 1]
+      );
+
+      return Promise.resolve();
+    });
+
+    Tier.findAll.mockReturnValue(this.tiers);
+    Message.findAll.mockReturnValue([]);
+    chanceSpy.weighted.mockReturnValue(this.tiers[0]);
+    chanceSpy.pickone.mockReturnValue(this.tiers[0].Loots[0]);
+    await this.command.exec(this.msg, this.args);
   });
 
   it("should properly choose a reward", async () => {
@@ -202,5 +245,49 @@ describe("commands/loot/open", () => {
     expect(delay).toHaveBeenCalledTimes(2);
     expect(delay.mock.calls[0][0]).toBe(10);
     expect(delay.mock.calls[1][0]).toBe(20);
+  });
+
+  it("should properly handle an error", async () => {
+    const expectedCalls = [
+      [this.msg.guild.id, "runningGames", [this.msg.channel.id]],
+      [this.msg.guild.id, "runningGames", []]
+    ];
+
+    expect.assertions(3);
+
+    this.msg.client.settings.set.mockImplementation((...args) => {
+      expect(args).toEqual(
+        expectedCalls[this.msg.client.settings.set.mock.calls.length - 1]
+      );
+
+      return Promise.resolve();
+    });
+
+    Tier.findAll.mockReturnValue(this.tiers);
+
+    Message.findAll.mockImplementation(() => {
+      throw new Error("error!");
+    });
+
+    chanceSpy.weighted.mockReturnValue(this.tiers[0]);
+    chanceSpy.pickone.mockReturnValue(this.tiers[0].Loots[0]);
+    await this.command.exec(this.msg, this.args);
+
+    expect(this.msg.channel.send).toHaveBeenCalledWith(
+      "An error occurred opening a lootbox"
+    );
+  });
+
+  it("should handle an immediate error", async () => {
+    this.msg.client.settings.get.mockImplementation(() => {
+      throw new Error("error!");
+    });
+
+    await this.command.exec(this.msg, this.args);
+
+    expect(this.msg.client.settings.set).toHaveBeenCalledTimes(0);
+    expect(this.msg.channel.send).toHaveBeenCalledWith(
+      "An error occurred opening a lootbox"
+    );
   });
 });
