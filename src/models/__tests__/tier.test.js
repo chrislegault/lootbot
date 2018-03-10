@@ -46,7 +46,7 @@ describe("models/tier", () => {
     });
   });
 
-  it("should cascade destroy all related messages", () => {
+  it("should cascade destroy all related models", () => {
     const transaction = jest.fn("transaction");
     this.sequelize.models.Loot.destroy.mockReturnValue(true);
     this.sequelize.models.Message.destroy.mockReturnValue(true);
