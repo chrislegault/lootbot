@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/loot/simulate should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "simulate",
+      Object {
+        "aliases": Array [
+          "simulate",
+        ],
+        "args": Array [
+          Object {
+            "default": 1000,
+            "id": "draws",
+            "prompt": Object {
+              "optional": true,
+              "retry": "How many draws to simulate?",
+            },
+            "type": "integer",
+          },
+          Object {
+            "default": false,
+            "id": "lucky",
+            "match": "flag",
+            "prefix": "lucky",
+          },
+        ],
+        "category": "Loot",
+        "channelRestriction": "guild",
+        "description": Object {
+          "description": "Simulate opening a lootbox",
+          "examples": Array [
+            "simulate",
+            "simulate 10000",
+          ],
+          "usage": "<draws>",
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`commands/loot/simulate should display the results 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Tier 2: 10
+",
+    ],
+  ],
+}
+`;
