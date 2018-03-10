@@ -14,7 +14,9 @@ exports[`models/message should create the model definition 1`] = `
         "type": "draw,tier,reward",
         "user_id": "string",
       },
-      Object {},
+      Object {
+        "paranoid": true,
+      },
     ],
   ],
 }

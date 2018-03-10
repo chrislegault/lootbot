@@ -33,15 +33,16 @@ module.exports = class TierRemove extends Command {
     const guild = msg.guild.id;
 
     try {
-      const result = await Tier.destroy({
+      const tier = await Tier.findOne({
         where: { name, guild }
       });
 
-      if (result === 0) {
+      if (!tier) {
         return msg.channel.send(`${name} not found`);
-      } else {
-        return msg.channel.send(`${name} removed`);
       }
+
+      await tier.destroy();
+      return msg.channel.send(`${name} removed`);
     } catch (e) {
       return msg.channel.send(`An error occurred removing ${name}`);
     }

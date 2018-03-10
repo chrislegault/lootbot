@@ -5,7 +5,9 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       guild: DataTypes.STRING
     },
-    {}
+    {
+      paranoid: true
+    }
   );
 
   Loot.associate = function(models) {

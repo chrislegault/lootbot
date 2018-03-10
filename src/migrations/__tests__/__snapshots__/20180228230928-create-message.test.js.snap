@@ -14,6 +14,9 @@ exports[`migrations/20180228230928-create-message should apply migration on up 1
           "defaultValue": 0,
           "type": "integer",
         },
+        "deletedAt": Object {
+          "type": "date",
+        },
         "guild": Object {
           "allowNull": false,
           "type": "string",
@@ -56,9 +59,11 @@ exports[`migrations/20180228230928-create-message should apply migration on up 1
       Object {
         "uniqueKeys": Object {
           "message_unique": Object {
+            "customIndex": true,
             "fields": Array [
               "name",
               "guild",
+              "deletedAt",
             ],
           },
         },

@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       guild: DataTypes.STRING,
       delay: DataTypes.INTEGER
     },
-    {}
+    {
+      paranoid: true
+    }
   );
 
   Message.associate = function(models) {

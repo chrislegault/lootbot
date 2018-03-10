@@ -30,8 +30,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       },
       {
         name: "intro2",
@@ -40,8 +40,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       },
       {
         name: "intro3",
@@ -50,8 +50,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       },
       {
         name: "intro4",
@@ -60,8 +60,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       },
       {
         name: "intro5",
@@ -70,8 +70,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       },
       {
         name: "intro6",
@@ -79,8 +79,8 @@ module.exports = {
         type: "intro",
         guild,
         delay: 1000,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       },
       {
         name: "common1",
@@ -89,8 +89,8 @@ module.exports = {
         tier_id: common.id,
         guild,
         delay: 2000,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       },
       {
         name: "uncommon1",
@@ -100,8 +100,8 @@ module.exports = {
         tier_id: uncommon.id,
         guild,
         delay: 2000,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       },
       {
         name: "rare1",
@@ -111,8 +111,8 @@ module.exports = {
         tier_id: rare.id,
         guild,
         delay: 8000,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       },
       {
         name: "legendary1",
@@ -122,8 +122,8 @@ module.exports = {
         tier_id: legendary.id,
         guild,
         delay: 9000,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       },
       {
         name: "reward1",
@@ -132,8 +132,8 @@ module.exports = {
         type: "reward",
         guild,
         delay: 0,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now())
       }
     ]);
   },
