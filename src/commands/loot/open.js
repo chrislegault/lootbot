@@ -32,6 +32,15 @@ function randomMessage(messages, filter, defaultMessage) {
   return chance.pickone(filtered);
 }
 
+function removeRunningGame(guild, msg, runningGames) {
+  if (runningGames) {
+    runningGames.splice(runningGames.indexOf(msg.channel.id, 1));
+    return msg.client.settings.set(guild, "runningGames", runningGames);
+  }
+
+  return null;
+}
+
 const DEFAULT_MESSAGES = {
   intro: {
     message: "Drawing loot...",
@@ -80,61 +89,74 @@ module.exports = class LootOpen extends Command {
 
   async exec(msg, { user, lucky }) {
     const guild = msg.guild.id;
+    let runningGames = null;
 
-    const tiers = await Tier.findAll({
-      include: [
-        {
-          model: Loot
-        }
-      ],
-      where: { guild }
-    });
+    try {
+      runningGames = msg.client.settings.get(guild, "runningGames", []).slice();
 
-    if (tiers.filter(tier => tier.Loots.length > 0).length === 0) {
-      return msg.channel.send("No loot in the lootbox");
-    }
+      if (runningGames.includes(msg.channel.id)) {
+        return null;
+      }
 
-    const weights = tiers.map(tier => (lucky ? tier.luckyWeight : tier.weight));
-    const tier = chance.weighted(tiers, weights);
+      const tiers = await Tier.findAll({
+        include: [
+          {
+            model: Loot
+          }
+        ],
+        where: { guild }
+      });
 
-    if (tier.Loots.length === 0) {
-      return msg.channel.send(
-        `${tier.name} loot won, but no prizes are registered`
+      if (tiers.filter(tier => tier.Loots.length > 0).length === 0) {
+        return msg.channel.send("No loot in the lootbox");
+      }
+
+      const weights = tiers.map(
+        tier => (lucky ? tier.luckyWeight : tier.weight)
       );
+      const tier = chance.weighted(tiers, weights);
+
+      if (tier.Loots.length === 0) {
+        return msg.channel.send(
+          `${tier.name} loot won, but no prizes are registered`
+        );
+      }
+
+      runningGames.push(msg.channel.id);
+      await msg.client.settings.set(guild, "runningGames", runningGames);
+
+      const reward = chance.pickone(tier.Loots);
+      const myMessages = await Message.findAll({
+        where: { guild }
+      });
+
+      const introMessage = randomMessage(
+        myMessages,
+        myMessage => myMessage.type === "intro",
+        DEFAULT_MESSAGES.intro
+      );
+
+      const tierMessage = randomMessage(
+        myMessages,
+        myMessage => myMessage.tier_id === tier.id && myMessage.type === "draw",
+        DEFAULT_MESSAGES.draw
+      );
+
+      const rewardMessage = randomMessage(
+        myMessages,
+        myMessage => myMessage.type === "reward",
+        DEFAULT_MESSAGES.reward
+      );
+
+      return sayMessage(introMessage.message, msg, reward, user, tier)
+        .then(() => delay(introMessage.delay))
+        .then(() => sayMessage(tierMessage.message, msg, reward, user, tier))
+        .then(() => delay(tierMessage.delay))
+        .then(() => sayReward(rewardMessage.message, msg, reward, user, tier))
+        .then(() => removeRunningGame(guild, msg, runningGames));
+    } catch (error) {
+      await removeRunningGame(guild, msg, runningGames);
+      return msg.channel.send("An error occurred opening a lootbox");
     }
-
-    const reward = chance.pickone(tier.Loots);
-
-    const myMessages = await Message.findAll({
-      where: { guild }
-    });
-
-    const introMessage = randomMessage(
-      myMessages,
-      myMessage => myMessage.type === "intro",
-      DEFAULT_MESSAGES.intro
-    );
-
-    const tierMessage = randomMessage(
-      myMessages,
-      myMessage => myMessage.tier_id === tier.id && myMessage.type === "draw",
-      DEFAULT_MESSAGES.draw
-    );
-
-    const rewardMessage = randomMessage(
-      myMessages,
-      myMessage => myMessage.type === "reward",
-      DEFAULT_MESSAGES.reward
-    );
-
-    function _sayMessage(message) {
-      return sayMessage(message, msg, reward, user, tier);
-    }
-
-    return _sayMessage(introMessage.message)
-      .then(() => delay(introMessage.delay))
-      .then(() => _sayMessage(tierMessage.message))
-      .then(() => delay(tierMessage.delay))
-      .then(() => sayReward(rewardMessage.message, msg, reward, user, tier));
   }
 };
