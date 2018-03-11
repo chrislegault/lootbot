@@ -9,7 +9,7 @@ module.exports = class LootAdd extends Command {
       category: "Loot",
       channelRestriction: "guild",
       description: {
-        description: "Add to the lootbox",
+        content: "Add loot to the lootbox",
         examples: [
           `loot-add "Bottle of Maple Syrup" Legendary`,
           "loot-add Syrup Common"

@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const { Tier } = require("../models");
 
 function getGuild() {

@@ -29,7 +29,7 @@ exports[`commands/loot/add should configure properly 1`] = `
         "category": "Loot",
         "channelRestriction": "guild",
         "description": Object {
-          "description": "Add to the lootbox",
+          "content": "Add loot to the lootbox",
           "examples": Array [
             "loot-add \\"Bottle of Maple Syrup\\" Legendary",
             "loot-add Syrup Common",

@@ -7,8 +7,10 @@ class HelpCommand extends Command {
     super("help", {
       aliases: ["help"],
       category: "Utility",
-      description:
-        "Displays a list of available commands, or detailed information for a specified command.",
+      description: {
+        content:
+          "Displays a list of available commands, or detailed information for a specified command."
+      },
       args: [
         {
           id: "command",

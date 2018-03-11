@@ -16,7 +16,7 @@ module.exports = class LootAdd extends Command {
       category: "Loot",
       channelRestriction: "guild",
       description: {
-        description: "Simulate opening a lootbox",
+        content: "Simulate opening a lootbox",
         examples: ["simulate", "simulate 10000"],
         usage: "<draws>"
       },

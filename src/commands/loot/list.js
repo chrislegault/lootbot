@@ -8,7 +8,7 @@ module.exports = class LootList extends Command {
       category: "Loot",
       channelRestriction: "guild",
       description: {
-        content: "List the glorious loot",
+        content: "List all loot in the lootbox",
         examples: ["loot-list"]
       }
     });

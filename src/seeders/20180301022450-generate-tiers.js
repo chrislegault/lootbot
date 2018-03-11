@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 function getGuild() {
   if (!process.env.GUILD) {
     throw new Error("GUILD env variable required");

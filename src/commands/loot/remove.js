@@ -9,7 +9,7 @@ module.exports = class LootRemove extends Command {
       category: "Loot",
       channelRestriction: "guild",
       description: {
-        content: "Remove that loot",
+        content: "Remove a piece of loot from the lootbox",
         examples: [`loot-remove "Maple Syrup"`, "loot-remove Syrup"],
         usage: "<name>"
       },
