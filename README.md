@@ -9,8 +9,8 @@ A discord bot for everyone's favorite video game feature...lootboxes! Manage and
 
 # Prerequisites / Getting Started
 
-- Latest Node
-- Yarn
+- [Latest Node](https://nodejs.org/en/download/package-manager/)
+- [Yarn](https://yarnpkg.com/en/docs/install)
 - Discord Bot User Account
 
 ## Create bot account
