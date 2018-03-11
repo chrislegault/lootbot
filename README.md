@@ -47,6 +47,10 @@ yarn seed # optional if you want to pre-seed some sample data, requires the GUIL
 yarn start # or yarn start:watch, starts the project
 ```
 
+## Bot usage
+
+See [Usage](USAGE.md)
+
 # Contributing
 
 When contributing a feature or bug fix make sure to run the tests and stylechecks and you should be good to go!
