@@ -44,7 +44,7 @@ exports[`commands/loot/update should configure properly 1`] = `
         "category": "Loot",
         "channelRestriction": "guild",
         "description": Object {
-          "description": "Update that loot",
+          "content": "Update a piece of loot in the lootbox",
           "examples": Array [
             "loot-update \\"Maple Syrup\\" name=\\"New Maple Syrup\\" tier=Legendary",
             "loot-update Syrup tier=Legendary",

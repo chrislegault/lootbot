@@ -1,3 +1,7 @@
+jest.mock("dotenv", () => ({
+  config: jest.fn("config").mockReturnValue(null)
+}));
+
 const migration = require("../20180301022450-generate-tiers");
 
 describe("seeders/20180301022450-generate-tiers", () => {

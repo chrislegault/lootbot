@@ -9,7 +9,7 @@ module.exports = class LootUpdate extends Command {
       category: "Loot",
       channelRestriction: "guild",
       description: {
-        description: "Update that loot",
+        content: "Update a piece of loot in the lootbox",
         examples: [
           `loot-update "Maple Syrup" name="New Maple Syrup" tier=Legendary`,
           `loot-update Syrup tier=Legendary`

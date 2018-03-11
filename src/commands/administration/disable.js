@@ -7,7 +7,7 @@ module.exports = class LootAdd extends Command {
       category: "Administration",
       channelRestriction: "guild",
       description: {
-        description: "Disable all commands",
+        content: "Disable all commands",
         examples: ["disable"]
       },
       options: {

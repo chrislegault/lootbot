@@ -9,7 +9,7 @@ module.exports = class MessageUpdate extends Command {
       category: "Message",
       channelRestriction: "guild",
       description: {
-        description: "Update message in the lootbox",
+        content: "Update message in the lootbox",
         examples: [
           `message-update msg1 message="New exciting message"`,
           `message-update msg1 type=draw`,

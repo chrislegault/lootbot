@@ -1,3 +1,7 @@
+jest.mock("dotenv", () => ({
+  config: jest.fn("config").mockReturnValue(null)
+}));
+
 jest.mock("../../models", () => {
   return {
     Tier: { findOne: jest.fn("findOne") }
