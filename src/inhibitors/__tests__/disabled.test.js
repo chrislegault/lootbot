@@ -5,10 +5,15 @@ const DisabledInhibitor = require("../disabled");
 
 describe("inhibitors/disabled", () => {
   beforeEach(() => {
-    this.inhibitor = new DisabledInhibitor();
+    this.hasSpy = jest.fn("has").mockReturnValue(false);
 
     this.msg = {
       guild: { id: "1" },
+      channel: {
+        permissionsFor: jest
+          .fn("permissionsFor")
+          .mockReturnValue({ has: this.hasSpy })
+      },
       client: {
         ownerID: "2",
         settings: {
@@ -19,6 +24,7 @@ describe("inhibitors/disabled", () => {
     };
 
     this.command = { id: "test" };
+    this.inhibitor = new DisabledInhibitor();
   });
 
   it("should configure properly", () => {
@@ -28,11 +34,25 @@ describe("inhibitors/disabled", () => {
   it("should resolve if owner issued command", () => {
     this.msg.author.id = this.msg.client.ownerID;
     expect(this.inhibitor.exec(this.msg, this.command)).resolves.toEqual();
+    expect(this.msg.client.settings.get).toHaveBeenCalledTimes(0);
+  });
+
+  it("should resolve if administrator issued command", () => {
+    this.hasSpy.mockReturnValue(true);
+
+    expect(this.inhibitor.exec(this.msg, this.command)).resolves.toEqual();
+    expect(this.msg.channel.permissionsFor).toHaveBeenCalledWith(
+      this.msg.author
+    );
+
+    expect(this.hasSpy).toHaveBeenCalledWith(["ADMINISTRATOR"]);
+    expect(this.msg.client.settings.get).toHaveBeenCalledTimes(0);
   });
 
   it("should resolve if command being run is enable", () => {
     this.command.id = "enable";
     expect(this.inhibitor.exec(this.msg, this.command)).resolves.toEqual();
+    expect(this.msg.client.settings.get).toHaveBeenCalledTimes(0);
   });
 
   it("should get the current disabled state", () => {

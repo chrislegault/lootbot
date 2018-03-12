@@ -8,7 +8,11 @@ class DisabledInhibitor extends Inhibitor {
   }
 
   exec(msg, command) {
-    if (msg.client.ownerID === msg.author.id) {
+    const isAdmin =
+      msg.guild &&
+      msg.channel.permissionsFor(msg.author).has(["ADMINISTRATOR"]);
+
+    if (msg.client.ownerID === msg.author.id || isAdmin) {
       return Promise.resolve();
     }
 
