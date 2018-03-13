@@ -6,8 +6,9 @@ module.exports = {
     seederStorage: "sequelize"
   },
   production: {
-    dialect: "sqlite",
-    storage: "./lootbot.sqlite",
-    operatorsAliases: false
+    use_env_variable: "DATABASE_URL",
+    dialect: "postgres",
+    operatorsAliases: false,
+    seederStorage: "sequelize"
   }
 };
