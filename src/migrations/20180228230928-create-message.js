@@ -19,7 +19,7 @@ module.exports = {
         },
         type: {
           allowNull: false,
-          type: Sequelize.ENUM("draw", "tier", "reward")
+          type: Sequelize.ENUM("intro", "draw", "reward")
         },
         tier_id: {
           allowNull: true,
