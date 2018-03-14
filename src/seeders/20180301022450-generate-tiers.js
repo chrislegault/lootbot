@@ -19,8 +19,8 @@ module.exports = {
         image:
           "https://media.discordapp.net/attachments/342426492371992576/417019496109441024/common.png",
         guild,
-        weight: 80.0,
-        luckyWeight: 80.0,
+        weight: 50.0,
+        luckyWeight: 40.0,
         createdAt: new Date(Date.now()),
         updatedAt: new Date(Date.now())
       },
@@ -30,8 +30,8 @@ module.exports = {
         image:
           "https://media.discordapp.net/attachments/342426492371992576/417019515893710858/uncommon.png",
         guild,
-        weight: 10.0,
-        luckyWeight: 10.0,
+        weight: 37.0,
+        luckyWeight: 30.0,
         createdAt: new Date(Date.now()),
         updatedAt: new Date(Date.now())
       },
@@ -41,8 +41,8 @@ module.exports = {
         image:
           "https://media.discordapp.net/attachments/342426492371992576/417019531018633216/rare.png",
         guild,
-        weight: 9.0,
-        luckyWeight: 9.0,
+        weight: 10.0,
+        luckyWeight: 25.0,
         createdAt: new Date(Date.now()),
         updatedAt: new Date(Date.now())
       },
@@ -52,8 +52,8 @@ module.exports = {
         image:
           "https://media.discordapp.net/attachments/342426492371992576/417019544675024916/legendary.png",
         guild,
-        weight: 1.0,
-        luckyWeight: 1.0,
+        weight: 3.0,
+        luckyWeight: 5.0,
         createdAt: new Date(Date.now()),
         updatedAt: new Date(Date.now())
       }
