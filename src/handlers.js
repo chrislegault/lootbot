@@ -34,6 +34,6 @@ class CustomInhibitorHandler extends InhibitorHandler {
 }
 
 module.exports = {
-  CommanderHandler: CustomCommandHandler,
+  CommandHandler: CustomCommandHandler,
   InhibitorHandler: CustomInhibitorHandler
 };
