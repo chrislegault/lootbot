@@ -1,44 +1,6 @@
-const fs = require("fs");
-const path = require("path");
-
-const {
-  AkairoClient,
-  SequelizeProvider,
-  CommandHandler,
-  InhibitorHandler
-} = require("discord-akairo");
-
+const { AkairoClient, SequelizeProvider } = require("discord-akairo");
+const { CommandHandler, InhibitorHandler } = require("./handlers");
 const { Settings } = require("./models");
-
-function read(dir, result = []) {
-  const files = fs.readdirSync(dir);
-
-  for (const file of files) {
-    if (file !== "__tests__" && file !== "__mocks__") {
-      const filepath = path.join(dir, file);
-
-      if (fs.statSync(filepath).isDirectory()) {
-        read(filepath, result);
-      } else {
-        result.push(filepath);
-      }
-    }
-  }
-
-  return result;
-}
-
-class CustomCommandHandler extends CommandHandler {
-  static readdirRecursive(directory) {
-    return read(directory);
-  }
-}
-
-class CustomInhibitorHandler extends InhibitorHandler {
-  static readdirRecursive(directory) {
-    return read(directory);
-  }
-}
 
 class CustomClient extends AkairoClient {
   constructor() {
@@ -57,13 +19,8 @@ class CustomClient extends AkairoClient {
   }
 
   build() {
-    this.commandHandler = new CustomCommandHandler(this, this.akairoOptions);
-
-    this.inhibitorHandler = new CustomInhibitorHandler(
-      this,
-      this.akairoOptions
-    );
-
+    this.commandHandler = new CommandHandler(this, this.akairoOptions);
+    this.inhibitorHandler = new InhibitorHandler(this, this.akairoOptions);
     return super.build();
   }
 
