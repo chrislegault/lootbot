@@ -42,8 +42,8 @@ GUILD=<optional guild id>
 Install dependencies and bootstrap the project
 ```bash
 yarn # install dependencies
-yarn migrate # create dev database
-yarn seed # optional if you want to pre-seed some sample data, requires the GUILD option in .env or as an environment variable
+yarn db:migrate # create dev database
+yarn db:seed # optional if you want to pre-seed some sample data, requires the GUILD option in .env or as an environment variable
 yarn start # or yarn start:watch, starts the project
 ```
 
