@@ -9,9 +9,10 @@ Object {
     "storage": "lootbot.sqlite",
   },
   "production": Object {
-    "dialect": "sqlite",
+    "dialect": "postgres",
     "operatorsAliases": false,
-    "storage": "./lootbot.sqlite",
+    "seederStorage": "sequelize",
+    "use_env_variable": "DATABASE_URL",
   },
 }
 `;

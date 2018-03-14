@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: DataTypes.STRING,
       message: DataTypes.TEXT,
-      type: DataTypes.ENUM("draw", "tier", "reward"),
+      type: DataTypes.ENUM("intro", "draw", "reward"),
       tier_id: DataTypes.INTEGER,
       user_id: DataTypes.STRING,
       guild: DataTypes.STRING,
