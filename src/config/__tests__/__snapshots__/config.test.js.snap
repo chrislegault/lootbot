@@ -4,12 +4,14 @@ exports[`config/config should have the proper database config 1`] = `
 Object {
   "development": Object {
     "dialect": "sqlite",
+    "logging": [Function],
     "operatorsAliases": false,
     "seederStorage": "sequelize",
     "storage": "lootbot.sqlite",
   },
   "production": Object {
     "dialect": "postgres",
+    "logging": [Function],
     "operatorsAliases": false,
     "seederStorage": "sequelize",
     "use_env_variable": "DATABASE_URL",
