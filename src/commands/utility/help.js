@@ -29,7 +29,7 @@ class HelpCommand extends Command {
   }
 
   showAll(msg) {
-    const prefix = this.handler.prefix(msg);
+    const prefix = this.handler.prefix(msg)[0];
     const target = msg.guild || "any server";
     const example = formatUsage("command", prefix, msg.client.user);
     const sample = formatUsage("prefix", prefix, msg.client.user);
@@ -83,7 +83,7 @@ class HelpCommand extends Command {
       ? `${command.aliases[0]} ${description.usage}`
       : command.aliases[0];
 
-    const prefix = this.handler.prefix(msg);
+    const prefix = this.handler.prefix(msg)[0];
     const format = formatUsage(usage, prefix, msg.client.user);
 
     help += `
@@ -97,26 +97,32 @@ __Command **${command.aliases[0]}**__: ${description.content}
     }
 
     if (description.examples && description.examples.length > 0) {
-      help += `\n**Examples:**\n${description.examples.join("\n")}`;
+      help += `\n**Examples:**\n${description.examples
+        .map(example => formatUsage(example, prefix))
+        .join("\n")}`;
     }
 
     return help;
   }
 
   async exec(msg, { command }) {
-    let messages = [];
+    try {
+      let messages = [];
 
-    if (command) {
-      messages.push(await msg.author.send(this.showCommand(msg, command)));
-    } else {
-      messages.push(await msg.author.send(this.showAll(msg)));
+      if (command) {
+        messages.push(await msg.author.send(this.showCommand(msg, command)));
+      } else {
+        messages.push(await msg.author.send(this.showAll(msg)));
+      }
+
+      if (msg.channel.type !== "dm") {
+        messages.push(await msg.reply("Sent you a DM with information."));
+      }
+
+      return messages;
+    } catch (error) {
+      return msg.channel.send("An error occurred listing help");
     }
-
-    if (msg.channel.type !== "dm") {
-      messages.push(await msg.reply("Sent you a DM with information."));
-    }
-
-    return messages;
   }
 }
 

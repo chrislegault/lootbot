@@ -7,10 +7,15 @@ exports[`client should configure properly 1`] = `
       Object {
         "allowMention": true,
         "commandDirectory": "./src/commands",
-        "disableEveryone": true,
         "inhibitorDirectory": "./src/inhibitors",
         "ownerID": undefined,
-        "prefix": "!lootbot",
+        "prefix": Array [
+          "!lootbot",
+          "!lb",
+        ],
+      },
+      Object {
+        "disableEveryone": true,
       },
     ],
   ],
