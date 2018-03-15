@@ -4,14 +4,18 @@ const { Settings } = require("./models");
 
 class CustomClient extends AkairoClient {
   constructor() {
-    super({
-      ownerID: process.env.OWNER_ID,
-      prefix: "!lootbot",
-      commandDirectory: "./src/commands",
-      inhibitorDirectory: "./src/inhibitors",
-      allowMention: true,
-      disableEveryone: true
-    });
+    super(
+      {
+        ownerID: process.env.OWNER_ID,
+        prefix: ["!lootbot", "!lb"],
+        commandDirectory: "./src/commands",
+        inhibitorDirectory: "./src/inhibitors",
+        allowMention: true
+      },
+      {
+        disableEveryone: true
+      }
+    );
 
     this.settings = new SequelizeProvider(Settings, {
       dataColumn: "settings"
