@@ -16,6 +16,7 @@ module.exports = class LootRemove extends Command {
       options: {
         permissions: checkManagePermissions
       },
+      split: "quoted",
       args: [
         {
           id: "name",
