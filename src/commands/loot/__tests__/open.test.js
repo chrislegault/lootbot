@@ -186,11 +186,35 @@ describe("commands/loot/open", () => {
     expect(this.msg.channel.send).toMatchSnapshot();
   });
 
+  it("should fetch messages", async () => {
+    formatMessage.mockImplementation(message => message);
+    Tier.findAll.mockReturnValue(this.tiers);
+    Message.findAll.mockReturnValue([]);
+    chanceSpy.weighted.mockReturnValue(this.tiers[0]);
+    chanceSpy.pickone.mockImplementation(items => items[0]);
+
+    await this.command.exec(this.msg, this.args);
+
+    expect(Message.findAll).toHaveBeenCalledWith({
+      where: { guild: this.msg.guild.id, user_id: null }
+    });
+
+    expect(Message.findAll).toHaveBeenLastCalledWith({
+      where: { guild: this.msg.guild.id, user_id: this.args.user.id }
+    });
+  });
+
+  it("should fetch personal messages", () => {
+    formatMessage.mockImplementation(message => message);
+    Tier.findAll.mockReturnValue(this.tiers);
+    Message.findAll.mockReturnValue([]);
+  });
+
   it("should use found matching messages", async () => {
     formatMessage.mockImplementation(message => message);
     Tier.findAll.mockReturnValue(this.tiers);
 
-    Message.findAll.mockReturnValue([
+    Message.findAll.mockReturnValueOnce([
       {
         type: "intro",
         message: "intro message",
@@ -205,6 +229,56 @@ describe("commands/loot/open", () => {
       {
         type: "reward",
         message: "reward message"
+      }
+    ]);
+
+    Message.findAll.mockReturnValueOnce([]);
+
+    chanceSpy.weighted.mockReturnValue(this.tiers[0]);
+    chanceSpy.pickone.mockImplementation(items => items[0]);
+    await this.command.exec(this.msg, this.args);
+    jest.runAllTimers();
+    expect(formatMessage).toMatchSnapshot();
+    expect(this.msg.channel.send).toMatchSnapshot();
+  });
+
+  it("should use personal messages if found", async () => {
+    formatMessage.mockImplementation(message => message);
+    Tier.findAll.mockReturnValue(this.tiers);
+
+    Message.findAll.mockReturnValueOnce([
+      {
+        type: "intro",
+        message: "intro message",
+        delay: 10
+      },
+      {
+        type: "draw",
+        message: "draw message",
+        tier_id: this.tiers[0].id,
+        delay: 20
+      },
+      {
+        type: "reward",
+        message: "reward message"
+      }
+    ]);
+
+    Message.findAll.mockReturnValueOnce([
+      {
+        type: "intro",
+        message: "personal intro message",
+        delay: 10
+      },
+      {
+        type: "draw",
+        message: "personal draw message",
+        tier_id: this.tiers[0].id,
+        delay: 20
+      },
+      {
+        type: "reward",
+        message: "personal reward message"
       }
     ]);
 
@@ -220,7 +294,7 @@ describe("commands/loot/open", () => {
     formatMessage.mockImplementation(message => message);
     Tier.findAll.mockReturnValue(this.tiers);
 
-    Message.findAll.mockReturnValue([
+    Message.findAll.mockReturnValueOnce([
       {
         type: "intro",
         message: "intro message",
@@ -237,6 +311,8 @@ describe("commands/loot/open", () => {
         message: "reward message"
       }
     ]);
+
+    Message.findAll.mockReturnValueOnce([]);
 
     chanceSpy.weighted.mockReturnValue(this.tiers[0]);
     chanceSpy.pickone.mockImplementation(items => items[0]);
