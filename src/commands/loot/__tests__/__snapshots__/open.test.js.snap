@@ -252,3 +252,108 @@ exports[`commands/loot/open should use found matching messages 2`] = `
   ],
 }
 `;
+
+exports[`commands/loot/open should use personal messages if found 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "personal intro message",
+      Object {
+        "id": 1,
+      },
+      Object {
+        "id": "1234",
+      },
+      Object {
+        "Loots": Array [
+          Object {
+            "id": 1,
+          },
+        ],
+        "color": 1234,
+        "id": 1,
+        "image": "tier1.png",
+        "luckyWeight": 30,
+        "name": "Tier 1",
+        "weight": 15,
+      },
+    ],
+    Array [
+      "personal draw message",
+      Object {
+        "id": 1,
+      },
+      Object {
+        "id": "1234",
+      },
+      Object {
+        "Loots": Array [
+          Object {
+            "id": 1,
+          },
+        ],
+        "color": 1234,
+        "id": 1,
+        "image": "tier1.png",
+        "luckyWeight": 30,
+        "name": "Tier 1",
+        "weight": 15,
+      },
+    ],
+    Array [
+      "personal reward message",
+      Object {
+        "id": 1,
+      },
+      Object {
+        "id": "1234",
+      },
+      Object {
+        "Loots": Array [
+          Object {
+            "id": 1,
+          },
+        ],
+        "color": 1234,
+        "id": 1,
+        "image": "tier1.png",
+        "luckyWeight": 30,
+        "name": "Tier 1",
+        "weight": 15,
+      },
+    ],
+  ],
+}
+`;
+
+exports[`commands/loot/open should use personal messages if found 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "personal intro message",
+    ],
+    Array [
+      "personal draw message",
+    ],
+    Array [
+      Object {
+        "embed": RichEmbed {
+          "author": undefined,
+          "color": 1234,
+          "description": "personal reward message",
+          "fields": Array [],
+          "file": undefined,
+          "footer": undefined,
+          "image": Object {
+            "url": "tier1.png",
+          },
+          "thumbnail": undefined,
+          "timestamp": undefined,
+          "title": undefined,
+          "url": undefined,
+        },
+      },
+    ],
+  ],
+}
+`;

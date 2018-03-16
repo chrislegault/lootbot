@@ -85,7 +85,7 @@ message - the message to be shown
 type - stage at when the message should be used (intro, draw, reward)
 delay - an optional delay until the next message is said, only used in intro and draw types
 tier - the tier a message belongs to, currently only used in draw type but will be added to reward type soon
-user - specific user to target a message at, currently does not work
+user - specific user to target a message at
 ```
 
 Messages can contain special tokens that will be replaced with user, tier and loot data if provided. The format is as follows:

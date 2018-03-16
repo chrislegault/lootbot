@@ -22,8 +22,12 @@ function sayReward(message, msg, reward, user, tier) {
   return msg.channel.send({ embed });
 }
 
-function randomMessage(messages, filter, defaultMessage) {
-  let filtered = messages.filter(message => filter(message));
+function randomMessage(messages, personalMessages, filter, defaultMessage) {
+  let filtered = personalMessages.filter(message => filter(message));
+
+  if (filtered.length === 0) {
+    filtered = messages.filter(message => filter(message));
+  }
 
   if (filtered.length === 0) {
     filtered = [defaultMessage];
@@ -126,24 +130,32 @@ module.exports = class LootOpen extends Command {
       await msg.client.settings.set(guild, "runningGames", runningGames);
 
       const reward = chance.pickone(tier.Loots);
-      const myMessages = await Message.findAll({
-        where: { guild }
+
+      const normalMessages = await Message.findAll({
+        where: { guild, user_id: null }
+      });
+
+      const personalMessages = await Message.findAll({
+        where: { guild, user_id: user.id }
       });
 
       const introMessage = randomMessage(
-        myMessages,
+        normalMessages,
+        personalMessages,
         myMessage => myMessage.type === "intro",
         DEFAULT_MESSAGES.intro
       );
 
       const tierMessage = randomMessage(
-        myMessages,
+        normalMessages,
+        personalMessages,
         myMessage => myMessage.tier_id === tier.id && myMessage.type === "draw",
         DEFAULT_MESSAGES.draw
       );
 
       const rewardMessage = randomMessage(
-        myMessages,
+        normalMessages,
+        personalMessages,
         myMessage => myMessage.type === "reward",
         DEFAULT_MESSAGES.reward
       );
