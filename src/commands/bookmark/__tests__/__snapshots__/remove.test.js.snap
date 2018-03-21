@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/bookmark/remove should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "bookmark-remove",
+      Object {
+        "aliases": Array [
+          "bookmark-remove",
+          "br",
+        ],
+        "args": Array [
+          Object {
+            "id": "role",
+            "prompt": Object {
+              "start": "What is the role to stop tracking?",
+            },
+            "type": "role",
+          },
+        ],
+        "category": "Bookmark",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Remove bookmark tracking from a role",
+          "examples": Array [
+            "bookmark-remove \\"Some Role\\"",
+          ],
+          "usage": "<role>",
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+        "split": "quoted",
+      },
+    ],
+  ],
+}
+`;

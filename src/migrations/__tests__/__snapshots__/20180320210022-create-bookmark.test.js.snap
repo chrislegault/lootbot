@@ -36,6 +36,18 @@ exports[`migrations/20180320210022-create-bookmark should apply migration on up 
           "type": "integer",
         },
       },
+      Object {
+        "uniqueKeys": Object {
+          "bookmark_unique": Object {
+            "customIndex": true,
+            "fields": Array [
+              "role",
+              "guild",
+              "deletedAt",
+            ],
+          },
+        },
+      },
     ],
   ],
 }

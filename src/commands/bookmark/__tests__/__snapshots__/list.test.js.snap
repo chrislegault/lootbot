@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/bookmark/list should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "bookmark-list",
+      Object {
+        "aliases": Array [
+          "bookmark-list",
+          "bl",
+        ],
+        "category": "Bookmark",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "List the tracked bookmark roles",
+          "examples": Array [
+            "bookmark-list",
+          ],
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`commands/bookmark/list should list the bookmarks 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "<@&1>: 2
+<@&3>: 4
+",
+    ],
+  ],
+}
+`;
