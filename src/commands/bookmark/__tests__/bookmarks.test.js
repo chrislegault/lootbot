@@ -57,6 +57,17 @@ describe("commands/bookmark/bookmarks", () => {
     expect(this.msg.channel.send).toHaveBeenCalledWith("You have 3 bookmarks");
   });
 
+  it("should notify a user of a single bookmark", async () => {
+    Bookmark.findAll.mockReturnValue([
+      { id: 1, weight: 1, role: "2" },
+      { id: 2, weight: 2, role: "3" }
+    ]);
+
+    this.msg.member.roles.set("2", { id: "2" });
+    await this.command.exec(this.msg);
+    expect(this.msg.channel.send).toHaveBeenCalledWith("You have 1 bookmark");
+  });
+
   it("should notify if any errors occur", async () => {
     Bookmark.findAll.mockImplementation(() => {
       throw new Error("test");

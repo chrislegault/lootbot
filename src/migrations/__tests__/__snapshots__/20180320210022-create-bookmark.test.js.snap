@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`migrations/20180320210022-create-bookmark should apply migration on up 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Bookmarks",
+      Object {
+        "createdAt": Object {
+          "allowNull": false,
+          "type": "date",
+        },
+        "deletedAt": Object {
+          "type": "date",
+        },
+        "guild": Object {
+          "allowNull": false,
+          "type": "string",
+        },
+        "id": Object {
+          "allowNull": false,
+          "autoIncrement": true,
+          "primaryKey": true,
+          "type": "integer",
+        },
+        "role": Object {
+          "allowNull": false,
+          "type": "string",
+        },
+        "updatedAt": Object {
+          "allowNull": false,
+          "type": "date",
+        },
+        "weight": Object {
+          "allowNull": false,
+          "type": "integer",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`migrations/20180320210022-create-bookmark should rollback migration on down 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Bookmarks",
+    ],
+  ],
+}
+`;
