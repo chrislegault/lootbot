@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/bookmarks/add should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "bookmark-add",
+      Object {
+        "aliases": Array [
+          "bookmark-add",
+          "ba",
+        ],
+        "args": Array [
+          Object {
+            "id": "role",
+            "prompt": Object {
+              "start": "What role should be tracked for bookmarks?",
+            },
+            "type": "role",
+          },
+          Object {
+            "default": 1,
+            "id": "weight",
+            "match": "prefix",
+            "prefix": "weight=",
+            "prompt": Object {
+              "optional": true,
+              "start": "What is the weight of the bookmark?",
+            },
+            "type": "number",
+          },
+        ],
+        "category": "Bookmark",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Add bookmark tracking for a role",
+          "examples": Array [
+            "bookmark-add \\"Some Role\\"",
+            "bookmark-add \\"Another Role\\" weight=3",
+          ],
+          "usage": "<role> weight=<weight>",
+        },
+        "options": Object {
+          "permissions": [Function],
+        },
+        "split": "quoted",
+      },
+    ],
+  ],
+}
+`;
