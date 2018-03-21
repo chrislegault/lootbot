@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/bookmark/bookmarks should configure properly 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "bookmarks",
+      Object {
+        "aliases": Array [
+          "bookmarks",
+        ],
+        "category": "Bookmarks",
+        "channelRestriction": "guild",
+        "description": Object {
+          "content": "Check the amount of bookmarks you have",
+          "examples": Array [
+            "bookmarks",
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
