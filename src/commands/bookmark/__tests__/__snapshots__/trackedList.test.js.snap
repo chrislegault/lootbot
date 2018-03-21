@@ -4,18 +4,18 @@ exports[`commands/bookmark/list should configure properly 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
-      "bookmark-list",
+      "track-list",
       Object {
         "aliases": Array [
-          "bookmark-list",
-          "bl",
+          "track-list",
+          "trl",
         ],
         "category": "Bookmark",
         "channelRestriction": "guild",
         "description": Object {
           "content": "List the tracked bookmark roles",
           "examples": Array [
-            "bookmark-list",
+            "track-list",
           ],
         },
         "options": Object {
@@ -27,7 +27,7 @@ exports[`commands/bookmark/list should configure properly 1`] = `
 }
 `;
 
-exports[`commands/bookmark/list should list the bookmarks 1`] = `
+exports[`commands/bookmark/list should list the tracked roles 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [

@@ -1,6 +1,6 @@
-const bookmark = require("../bookmark");
+const trackedRole = require("../trackedRole");
 
-describe("models/loot", () => {
+describe("models/trackedRole", () => {
   beforeEach(() => {
     this.model = {};
 
@@ -15,7 +15,7 @@ describe("models/loot", () => {
   });
 
   it("should create the model definition", () => {
-    bookmark(this.sequelize, this.dataTypes);
+    trackedRole(this.sequelize, this.dataTypes);
     expect(this.sequelize.define).toMatchSnapshot();
   });
 });

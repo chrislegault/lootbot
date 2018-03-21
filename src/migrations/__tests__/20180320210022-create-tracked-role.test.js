@@ -1,7 +1,7 @@
-const migration = require("../20180320210022-create-bookmark");
+const migration = require("../20180320210022-create-tracked-role");
 const Sequelize = require("../__mocks__/sequelize");
 
-describe("migrations/20180320210022-create-bookmark", () => {
+describe("migrations/20180320210022-create-tracked-role", () => {
   beforeEach(() => {
     this.queryInterface = {
       createTable: jest.fn("createTable").mockReturnValue(true),

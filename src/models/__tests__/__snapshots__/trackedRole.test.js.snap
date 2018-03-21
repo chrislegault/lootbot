@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`models/loot should create the model definition 1`] = `
+exports[`models/trackedRole should create the model definition 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
-      "Bookmark",
+      "TrackedRole",
       Object {
         "guild": "string",
         "role": "string",

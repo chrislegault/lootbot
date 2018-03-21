@@ -1,20 +1,17 @@
 const { Command } = require("discord-akairo");
-const { Bookmark } = require("../../models");
+const { TrackedRole } = require("../../models");
 const { checkManagePermissions } = require("../../support");
 const logger = require("../../logger");
 
-module.exports = class BookmarkAdd extends Command {
+module.exports = class RoleTrack extends Command {
   constructor() {
-    super("bookmark-add", {
-      aliases: ["bookmark-add", "ba"],
+    super("role-track", {
+      aliases: ["track", "role-track", "rt"],
       category: "Bookmark",
       channelRestriction: "guild",
       description: {
         content: "Add bookmark tracking for a role",
-        examples: [
-          `bookmark-add "Some Role"`,
-          `bookmark-add "Another Role" weight=3`
-        ],
+        examples: [`track "Some Role"`, `track "Another Role" weight=3`],
         usage: "<role> weight=<weight>"
       },
       split: "quoted",
@@ -48,7 +45,7 @@ module.exports = class BookmarkAdd extends Command {
     const guild = msg.guild.id;
 
     try {
-      const [, added] = await Bookmark.findOrCreate({
+      const [, added] = await TrackedRole.findOrCreate({
         where: { role: role.id, guild },
         defaults: { role: role.id, guild, weight }
       });

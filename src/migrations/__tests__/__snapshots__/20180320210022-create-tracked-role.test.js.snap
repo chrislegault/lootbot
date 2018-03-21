@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`migrations/20180320210022-create-bookmark should apply migration on up 1`] = `
+exports[`migrations/20180320210022-create-tracked-role should apply migration on up 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
-      "Bookmarks",
+      "TrackedRoles",
       Object {
         "createdAt": Object {
           "allowNull": false,
@@ -53,11 +53,11 @@ exports[`migrations/20180320210022-create-bookmark should apply migration on up 
 }
 `;
 
-exports[`migrations/20180320210022-create-bookmark should rollback migration on down 1`] = `
+exports[`migrations/20180320210022-create-tracked-role should rollback migration on down 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
-      "Bookmarks",
+      "TrackedRoles",
     ],
   ],
 }

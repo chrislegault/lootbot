@@ -1,7 +1,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable(
-      "Bookmarks",
+      "TrackedRoles",
       {
         id: {
           allowNull: false,
@@ -42,5 +42,5 @@ module.exports = {
         }
       }
     ),
-  down: queryInterface => queryInterface.dropTable("Bookmarks")
+  down: queryInterface => queryInterface.dropTable("TrackedRoles")
 };

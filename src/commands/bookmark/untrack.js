@@ -1,17 +1,17 @@
 const { Command } = require("discord-akairo");
-const { Bookmark } = require("../../models");
+const { TrackedRole } = require("../../models");
 const { checkManagePermissions } = require("../../support");
 const logger = require("../../logger");
 
-module.exports = class BookmarkRemove extends Command {
+module.exports = class RoleUntrack extends Command {
   constructor() {
-    super("bookmark-remove", {
-      aliases: ["bookmark-remove", "br"],
+    super("role-untrack", {
+      aliases: ["untrack", "role-untrack", "ru"],
       category: "Bookmark",
       channelRestriction: "guild",
       description: {
         content: "Remove bookmark tracking from a role",
-        examples: [`bookmark-remove "Some Role"`],
+        examples: [`untrack "Some Role"`],
         usage: "<role>"
       },
       options: {
@@ -34,7 +34,7 @@ module.exports = class BookmarkRemove extends Command {
     const guild = msg.guild.id;
 
     try {
-      const result = await Bookmark.destroy({
+      const result = await TrackedRole.destroy({
         where: { role: role.id, guild }
       });
 

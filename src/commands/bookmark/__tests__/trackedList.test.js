@@ -2,13 +2,13 @@ jest.mock("discord-akairo");
 jest.mock("../../../logger");
 
 jest.mock("../../../models", () => ({
-  Bookmark: { findAll: jest.fn("findAll") }
+  TrackedRole: { findAll: jest.fn("findAll") }
 }));
 
-const { Bookmark } = require("../../../models");
+const { TrackedRole } = require("../../../models");
 const logger = require("../../../logger");
 const { Command } = require("discord-akairo");
-const ListCommand = require("../list");
+const ListCommand = require("../trackedList");
 
 describe("commands/bookmark/list", () => {
   beforeEach(() => {
@@ -26,23 +26,25 @@ describe("commands/bookmark/list", () => {
     expect(Command).toMatchSnapshot();
   });
 
-  it("should fetch the bookmarks for the guild", () => {
-    Bookmark.findAll.mockReturnValue([]);
+  it("should fetch the tracked roles", () => {
+    TrackedRole.findAll.mockReturnValue([]);
     this.command.exec(this.msg);
 
-    expect(Bookmark.findAll).toHaveBeenCalledWith({
+    expect(TrackedRole.findAll).toHaveBeenCalledWith({
       where: { guild: this.msg.guild.id }
     });
   });
 
-  it("should notify when no bookmarks are found for the guild", async () => {
-    Bookmark.findAll.mockReturnValue([]);
+  it("should notify when no tracked roles are found", async () => {
+    TrackedRole.findAll.mockReturnValue([]);
     await this.command.exec(this.msg);
-    expect(this.msg.channel.send).toHaveBeenCalledWith("No bookmarks found");
+    expect(this.msg.channel.send).toHaveBeenCalledWith(
+      "No tracked roles found"
+    );
   });
 
-  it("should list the bookmarks", async () => {
-    Bookmark.findAll.mockReturnValue([
+  it("should list the tracked roles", async () => {
+    TrackedRole.findAll.mockReturnValue([
       {
         role: "1",
         weight: 2
@@ -58,7 +60,7 @@ describe("commands/bookmark/list", () => {
   });
 
   it("should notify if any errors occur", async () => {
-    Bookmark.findAll.mockImplementation(() => {
+    TrackedRole.findAll.mockImplementation(() => {
       throw new Error("test");
     });
 
@@ -66,7 +68,7 @@ describe("commands/bookmark/list", () => {
 
     expect(logger.error).toHaveBeenCalledWith("test");
     expect(this.msg.channel.send).toHaveBeenCalledWith(
-      "An error occurred listing bookmarks"
+      "An error occurred listing tracked roles"
     );
   });
 });

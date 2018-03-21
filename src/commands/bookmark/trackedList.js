@@ -1,17 +1,17 @@
 const { Command } = require("discord-akairo");
-const { Bookmark } = require("../../models");
+const { TrackedRole } = require("../../models");
 const { checkManagePermissions } = require("../../support");
 const logger = require("../../logger");
 
-module.exports = class BookmarkList extends Command {
+module.exports = class TrackedList extends Command {
   constructor() {
-    super("bookmark-list", {
-      aliases: ["bookmark-list", "bl"],
+    super("track-list", {
+      aliases: ["track-list", "trl"],
       category: "Bookmark",
       channelRestriction: "guild",
       description: {
         content: "List the tracked bookmark roles",
-        examples: ["bookmark-list"]
+        examples: ["track-list"]
       },
       options: {
         permissions: checkManagePermissions
@@ -23,24 +23,24 @@ module.exports = class BookmarkList extends Command {
     const guild = msg.guild.id;
 
     try {
-      let bookmarks = await Bookmark.findAll({
+      let trackedRoles = await TrackedRole.findAll({
         where: { guild }
       });
 
-      if (bookmarks.length === 0) {
-        return msg.channel.send("No bookmarks found");
+      if (trackedRoles.length === 0) {
+        return msg.channel.send("No tracked roles found");
       }
 
       let list = "";
 
-      bookmarks.forEach(bookmark => {
-        list += `<@&${bookmark.role}>: ${bookmark.weight}\n`;
+      trackedRoles.forEach(trackedRole => {
+        list += `<@&${trackedRole.role}>: ${trackedRole.weight}\n`;
       });
 
       return msg.channel.send(list);
     } catch (error) {
       logger.error(error.message);
-      return msg.channel.send("An error occurred listing bookmarks");
+      return msg.channel.send("An error occurred listing tracked roles");
     }
   }
 };

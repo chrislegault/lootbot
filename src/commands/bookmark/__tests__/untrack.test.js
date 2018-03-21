@@ -1,18 +1,18 @@
 jest.mock("discord-akairo");
 jest.mock("../../../logger");
 jest.mock("../../../models", () => ({
-  Bookmark: { destroy: jest.fn("destroy") }
+  TrackedRole: { destroy: jest.fn("destroy") }
 }));
 
 const logger = require("../../../logger");
-const { Bookmark } = require("../../../models");
+const { TrackedRole } = require("../../../models");
 const { Command } = require("discord-akairo");
 const { checkManagePermissions } = require("../../../support");
-const RemoveCommand = require("../remove");
+const UntrackCommand = require("../untrack");
 
-describe("commands/bookmark/remove", () => {
+describe("commands/bookmark/untrack", () => {
   beforeEach(() => {
-    this.command = new RemoveCommand();
+    this.command = new UntrackCommand();
 
     this.args = {
       role: { id: "1", name: "Test" }
@@ -36,11 +36,11 @@ describe("commands/bookmark/remove", () => {
     );
   });
 
-  it("should destroy the passed in role/bookmark", async () => {
-    Bookmark.destroy.mockReturnValue(1);
+  it("should destroy the passed in tracked role", async () => {
+    TrackedRole.destroy.mockReturnValue(1);
     await this.command.exec(this.msg, this.args);
 
-    expect(Bookmark.destroy).toHaveBeenCalledWith({
+    expect(TrackedRole.destroy).toHaveBeenCalledWith({
       where: { role: this.args.role.id, guild: this.msg.guild.id }
     });
 
@@ -49,8 +49,8 @@ describe("commands/bookmark/remove", () => {
     );
   });
 
-  it("should notify when the passed in role/bookmark does not exist", async () => {
-    Bookmark.destroy.mockReturnValue(0);
+  it("should notify when the passed in tracked role does not exist", async () => {
+    TrackedRole.destroy.mockReturnValue(0);
     await this.command.exec(this.msg, this.args);
 
     expect(this.msg.channel.send).toHaveBeenCalledWith(
@@ -59,7 +59,7 @@ describe("commands/bookmark/remove", () => {
   });
 
   it("should notify if any errors occur", async () => {
-    Bookmark.destroy.mockImplementation(() => {
+    TrackedRole.destroy.mockImplementation(() => {
       throw new Error("test");
     });
 
