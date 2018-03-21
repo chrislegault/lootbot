@@ -2,19 +2,19 @@ jest.mock("discord-akairo");
 jest.mock("../../../logger");
 jest.mock("../../../models", () => {
   return {
-    Bookmark: { findOrCreate: jest.fn("findOrCreate") }
+    TrackedRole: { findOrCreate: jest.fn("findOrCreate") }
   };
 });
 
 const { Command } = require("discord-akairo");
-const { Bookmark } = require("../../../models");
+const { TrackedRole } = require("../../../models");
 const logger = require("../../../logger");
 const { checkManagePermissions } = require("../../../support");
-const AddCommand = require("../add");
+const TrackCommand = require("../track");
 
-describe("commands/bookmarks/add", () => {
+describe("commands/bookmarks/track", () => {
   beforeEach(() => {
-    this.command = new AddCommand();
+    this.command = new TrackCommand();
 
     this.args = {
       role: { id: "1", name: "Test" },
@@ -39,11 +39,11 @@ describe("commands/bookmarks/add", () => {
     );
   });
 
-  it("should create the bookmark", async () => {
-    Bookmark.findOrCreate.mockReturnValue([{}, true]);
+  it("should create the tracked role", async () => {
+    TrackedRole.findOrCreate.mockReturnValue([{}, true]);
     await this.command.exec(this.msg, this.args);
 
-    expect(Bookmark.findOrCreate).toHaveBeenCalledWith({
+    expect(TrackedRole.findOrCreate).toHaveBeenCalledWith({
       where: { role: this.args.role.id, guild: this.msg.guild.id },
       defaults: {
         role: this.args.role.id,
@@ -57,11 +57,11 @@ describe("commands/bookmarks/add", () => {
     );
   });
 
-  it("should notify when the loot added already exists", async () => {
-    Bookmark.findOrCreate.mockReturnValue([{}, false]);
+  it("should notify when the tracked role added already exists", async () => {
+    TrackedRole.findOrCreate.mockReturnValue([{}, false]);
     await this.command.exec(this.msg, this.args);
 
-    expect(Bookmark.findOrCreate).toHaveBeenCalledWith({
+    expect(TrackedRole.findOrCreate).toHaveBeenCalledWith({
       where: { role: this.args.role.id, guild: this.msg.guild.id },
       defaults: {
         role: this.args.role.id,
@@ -76,7 +76,7 @@ describe("commands/bookmarks/add", () => {
   });
 
   it("should notify if any errors occur during the command", async () => {
-    Bookmark.findOrCreate.mockImplementation(() => {
+    TrackedRole.findOrCreate.mockImplementation(() => {
       throw new Error("test");
     });
 

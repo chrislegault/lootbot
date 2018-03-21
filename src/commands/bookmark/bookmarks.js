@@ -6,7 +6,7 @@ module.exports = class BookmarkBookmarks extends Command {
   constructor() {
     super("bookmarks", {
       aliases: ["bookmarks"],
-      category: "Bookmarks",
+      category: "Bookmark",
       channelRestriction: "guild",
       description: {
         content: "Check the amount of bookmarks you have",

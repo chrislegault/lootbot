@@ -1,14 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`commands/bookmarks/add should configure properly 1`] = `
+exports[`commands/bookmarks/track should configure properly 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
-      "bookmark-add",
+      "role-track",
       Object {
         "aliases": Array [
-          "bookmark-add",
-          "ba",
+          "track",
+          "role-track",
+          "rt",
         ],
         "args": Array [
           Object {
@@ -35,8 +36,8 @@ exports[`commands/bookmarks/add should configure properly 1`] = `
         "description": Object {
           "content": "Add bookmark tracking for a role",
           "examples": Array [
-            "bookmark-add \\"Some Role\\"",
-            "bookmark-add \\"Another Role\\" weight=3",
+            "track \\"Some Role\\"",
+            "track \\"Another Role\\" weight=3",
           ],
           "usage": "<role> weight=<weight>",
         },

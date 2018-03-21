@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  var Bookmark = sequelize.define(
-    "Bookmark",
+  var TrackedRole = sequelize.define(
+    "TrackedRole",
     {
       guild: DataTypes.STRING,
       role: DataTypes.STRING,
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Bookmark.associate = function() {};
+  TrackedRole.associate = function() {};
 
-  return Bookmark;
+  return TrackedRole;
 };
