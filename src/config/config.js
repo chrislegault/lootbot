@@ -2,8 +2,8 @@ const logger = require("../logger");
 
 module.exports = {
   development: {
-    dialect: "sqlite",
-    storage: "lootbot.sqlite",
+    dialect: "postgres",
+    database: "lootbot",
     operatorsAliases: false,
     seederStorage: "sequelize",
     logging: msg => logger.info(msg)

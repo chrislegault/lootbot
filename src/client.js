@@ -1,5 +1,9 @@
 const { AkairoClient, SequelizeProvider } = require("discord-akairo");
-const { CommandHandler, InhibitorHandler } = require("./handlers");
+const {
+  CommandHandler,
+  InhibitorHandler,
+  ListenerHandler
+} = require("./handlers");
 const { Settings } = require("./models");
 
 class CustomClient extends AkairoClient {
@@ -10,6 +14,7 @@ class CustomClient extends AkairoClient {
         prefix: ["!lootbot", "!lb"],
         commandDirectory: "./src/commands",
         inhibitorDirectory: "./src/inhibitors",
+        listenerDirectory: "./src/listeners",
         allowMention: true
       },
       {
@@ -25,6 +30,7 @@ class CustomClient extends AkairoClient {
   build() {
     this.commandHandler = new CommandHandler(this, this.akairoOptions);
     this.inhibitorHandler = new InhibitorHandler(this, this.akairoOptions);
+    this.listenerHandler = new ListenerHandler(this, this.akairoOptions);
     return super.build();
   }
 

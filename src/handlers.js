@@ -1,7 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 
-const { CommandHandler, InhibitorHandler } = require("discord-akairo");
+const {
+  CommandHandler,
+  InhibitorHandler,
+  ListenerHandler
+} = require("discord-akairo");
 
 function read(dir, result = []) {
   const files = fs.readdirSync(dir);
@@ -33,7 +37,14 @@ class CustomInhibitorHandler extends InhibitorHandler {
   }
 }
 
+class CustomListenerHandler extends ListenerHandler {
+  static readdirRecursive(directory) {
+    return read(directory);
+  }
+}
+
 module.exports = {
   CommandHandler: CustomCommandHandler,
-  InhibitorHandler: CustomInhibitorHandler
+  InhibitorHandler: CustomInhibitorHandler,
+  ListenerHandler: CustomListenerHandler
 };

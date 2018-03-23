@@ -4,7 +4,8 @@ jest.mock("discord-akairo");
 
 jest.mock("../handlers", () => ({
   CommandHandler: jest.fn("CommandHandler"),
-  InhibitorHandler: jest.fn("InhibtorHandler")
+  InhibitorHandler: jest.fn("InhibtorHandler"),
+  ListenerHandler: jest.fn("InhibtorHandler")
 }));
 
 jest.mock("../models", () => ({
@@ -12,7 +13,11 @@ jest.mock("../models", () => ({
 }));
 
 const { AkairoClient, SequelizeProvider } = require("discord-akairo");
-const { CommandHandler, InhibitorHandler } = require("../handlers");
+const {
+  CommandHandler,
+  InhibitorHandler,
+  ListenerHandler
+} = require("../handlers");
 const Client = require("../client");
 
 describe("client", () => {
@@ -43,6 +48,12 @@ describe("client", () => {
   it("should create custom inhibitor handler", () => {
     this.client.build();
     expect(InhibitorHandler).toMatchSnapshot();
+    expect(AkairoClient.prototype.build).toHaveBeenCalled();
+  });
+
+  it("should create custom listener handler", () => {
+    this.client.build();
+    expect(ListenerHandler).toMatchSnapshot();
     expect(AkairoClient.prototype.build).toHaveBeenCalled();
   });
 

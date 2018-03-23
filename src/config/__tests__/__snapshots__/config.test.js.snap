@@ -3,11 +3,11 @@
 exports[`config/config should have the proper database config 1`] = `
 Object {
   "development": Object {
-    "dialect": "sqlite",
+    "database": "lootbot",
+    "dialect": "postgres",
     "logging": [Function],
     "operatorsAliases": false,
     "seederStorage": "sequelize",
-    "storage": "lootbot.sqlite",
   },
   "production": Object {
     "dialect": "postgres",
