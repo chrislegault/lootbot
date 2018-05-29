@@ -17,7 +17,9 @@ module.exports = class BookmarkBookmarks extends Command {
 
   async exec(msg) {
     const guild = msg.guild.id;
-    const { member: { roles } } = msg;
+    const {
+      member: { roles }
+    } = msg;
 
     try {
       let bookmarkRoles = await Bookmark.findAll({
