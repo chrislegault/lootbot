@@ -18,7 +18,8 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.34.0",
     "sequelize-cli": "^4.0.0",
-    "winston": "^3.0.0-rc2"
+    "winston": "^3.0.0-rc2",
+    "x-ray": "^2.3.2"
   },
   "devDependencies": {
     "eslint": "^4.17.0",
