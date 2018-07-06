@@ -9,7 +9,7 @@ const logger = createLogger({
       handleExceptions: true
     })
   ],
-  exitOnError: false
+  exitOnError: true
 });
 
 module.exports = logger;

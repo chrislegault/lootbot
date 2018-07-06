@@ -8,6 +8,7 @@ exports[`client should configure properly 1`] = `
         "allowMention": true,
         "commandDirectory": "./src/commands",
         "inhibitorDirectory": "./src/inhibitors",
+        "listenerDirectory": "./src/listeners",
         "ownerID": undefined,
         "prefix": Array [
           "!lootbot",

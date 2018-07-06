@@ -10,6 +10,7 @@ class CustomClient extends AkairoClient {
         prefix: ["!lootbot", "!lb"],
         commandDirectory: "./src/commands",
         inhibitorDirectory: "./src/inhibitors",
+        listenerDirectory: "./src/listeners",
         allowMention: true
       },
       {
