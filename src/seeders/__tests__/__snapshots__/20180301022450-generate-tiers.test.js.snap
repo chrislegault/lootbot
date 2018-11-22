@@ -18,6 +18,12 @@ exports[`seeders/20180301022450-generate-tiers should rollback when a guild is p
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
+  ],
 }
 `;
 
@@ -69,6 +75,12 @@ exports[`seeders/20180301022450-generate-tiers should seed when a guild is provi
         },
       ],
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
   ],
 }
 `;

@@ -1,3 +1,4 @@
+//jest.mock("discord.js");
 jest.mock("discord-akairo");
 jest.mock("chance");
 
@@ -54,6 +55,42 @@ describe("commands/loot/open", () => {
         weight: 10,
         luckyWeight: 20,
         Loots: []
+      }
+    ];
+
+    this.messages = [
+      {
+        type: "intro",
+        message: "intro message",
+        delay: 10
+      },
+      {
+        type: "draw",
+        message: "draw message",
+        tier_id: this.tiers[0].id,
+        delay: 20
+      },
+      {
+        type: "reward",
+        message: "reward message"
+      }
+    ];
+
+    this.personalMessages = [
+      {
+        type: "intro",
+        message: "personal intro message",
+        delay: 10
+      },
+      {
+        type: "draw",
+        message: "personal draw message",
+        tier_id: this.tiers[0].id,
+        delay: 20
+      },
+      {
+        type: "reward",
+        message: "personal reward message"
       }
     ];
 
@@ -214,24 +251,7 @@ describe("commands/loot/open", () => {
     formatMessage.mockImplementation(message => message);
     Tier.findAll.mockReturnValue(this.tiers);
 
-    Message.findAll.mockReturnValueOnce([
-      {
-        type: "intro",
-        message: "intro message",
-        delay: 10
-      },
-      {
-        type: "draw",
-        message: "draw message",
-        tier_id: this.tiers[0].id,
-        delay: 20
-      },
-      {
-        type: "reward",
-        message: "reward message"
-      }
-    ]);
-
+    Message.findAll.mockReturnValueOnce(this.messages);
     Message.findAll.mockReturnValueOnce([]);
 
     chanceSpy.weighted.mockReturnValue(this.tiers[0]);
@@ -246,41 +266,8 @@ describe("commands/loot/open", () => {
     formatMessage.mockImplementation(message => message);
     Tier.findAll.mockReturnValue(this.tiers);
 
-    Message.findAll.mockReturnValueOnce([
-      {
-        type: "intro",
-        message: "intro message",
-        delay: 10
-      },
-      {
-        type: "draw",
-        message: "draw message",
-        tier_id: this.tiers[0].id,
-        delay: 20
-      },
-      {
-        type: "reward",
-        message: "reward message"
-      }
-    ]);
-
-    Message.findAll.mockReturnValueOnce([
-      {
-        type: "intro",
-        message: "personal intro message",
-        delay: 10
-      },
-      {
-        type: "draw",
-        message: "personal draw message",
-        tier_id: this.tiers[0].id,
-        delay: 20
-      },
-      {
-        type: "reward",
-        message: "personal reward message"
-      }
-    ]);
+    Message.findAll.mockReturnValueOnce(this.messages);
+    Message.findAll.mockReturnValueOnce(this.personalMessages);
 
     chanceSpy.weighted.mockReturnValue(this.tiers[0]);
     chanceSpy.pickone.mockImplementation(items => items[0]);
@@ -294,24 +281,7 @@ describe("commands/loot/open", () => {
     formatMessage.mockImplementation(message => message);
     Tier.findAll.mockReturnValue(this.tiers);
 
-    Message.findAll.mockReturnValueOnce([
-      {
-        type: "intro",
-        message: "intro message",
-        delay: 10
-      },
-      {
-        type: "draw",
-        message: "draw message",
-        tier_id: this.tiers[0].id,
-        delay: 20
-      },
-      {
-        type: "reward",
-        message: "reward message"
-      }
-    ]);
-
+    Message.findAll.mockReturnValueOnce(this.messages);
     Message.findAll.mockReturnValueOnce([]);
 
     chanceSpy.weighted.mockReturnValue(this.tiers[0]);
@@ -323,47 +293,91 @@ describe("commands/loot/open", () => {
     expect(delay.mock.calls[1][0]).toBe(20);
   });
 
-  it("should properly handle an error", async () => {
-    const expectedCalls = [
-      [this.msg.guild.id, "runningGames", [this.msg.channel.id]],
-      [this.msg.guild.id, "runningGames", []]
-    ];
+  describe("errors", () => {
+    beforeEach(() => {
+      this.expectedCalls = [
+        [this.msg.guild.id, "runningGames", [this.msg.channel.id]],
+        [this.msg.guild.id, "runningGames", []]
+      ];
 
-    expect.assertions(3);
+      this.runMessageTest = async function(messageToSend) {
+        this.msg.channel.send.mockClear();
+        this.msg.channel.send.mockImplementation(sentMessage => {
+          if (messageToSend === sentMessage) {
+            throw new Error();
+          }
 
-    this.msg.client.settings.set.mockImplementation((...args) => {
-      expect(args).toEqual(
-        expectedCalls[this.msg.client.settings.set.mock.calls.length - 1]
+          if (
+            sentMessage.embed &&
+            messageToSend === sentMessage.embed.description
+          ) {
+            throw new Error();
+          }
+
+          return Promise.resolve();
+        });
+
+        formatMessage.mockImplementation(message => message);
+        Tier.findAll.mockReturnValue(this.tiers);
+        Message.findAll.mockReturnValueOnce(this.messages);
+        Message.findAll.mockReturnValueOnce([]);
+
+        chanceSpy.weighted.mockReturnValue(this.tiers[0]);
+        chanceSpy.pickone.mockReturnValueOnce(this.tiers[0].Loots[0]);
+        chanceSpy.pickone.mockReturnValueOnce(this.messages[0]);
+        chanceSpy.pickone.mockReturnValueOnce(this.messages[1]);
+        chanceSpy.pickone.mockReturnValueOnce(this.messages[2]);
+
+        await this.command.exec(this.msg, this.args);
+
+        expect(this.msg.client.settings.set.mock.calls).toEqual(
+          this.expectedCalls
+        );
+
+        expect(this.msg.channel.send).toHaveBeenCalledWith(
+          "An error occurred opening a lootbox"
+        );
+      };
+    });
+
+    it("should properly handle an error", async () => {
+      Tier.findAll.mockReturnValue(this.tiers);
+
+      Message.findAll.mockImplementation(() => {
+        throw new Error("error!");
+      });
+
+      chanceSpy.weighted.mockReturnValue(this.tiers[0]);
+      chanceSpy.pickone.mockReturnValue(this.tiers[0].Loots[0]);
+      return await this.command.exec(this.msg, this.args);
+    });
+
+    it("should handle an immediate error", async () => {
+      this.msg.client.settings.get.mockImplementation(() => {
+        throw new Error("error!");
+      });
+
+      await this.command.exec(this.msg, this.args);
+
+      expect(this.msg.client.settings.set).toHaveBeenCalledTimes(0);
+      expect(this.msg.channel.send).toHaveBeenCalledWith(
+        "An error occurred opening a lootbox"
       );
-
-      return Promise.resolve();
     });
 
-    Tier.findAll.mockReturnValue(this.tiers);
-
-    Message.findAll.mockImplementation(() => {
-      throw new Error("error!");
+    it("should properly handle an error when sending intro", async () => {
+      expect.assertions(2);
+      await this.runMessageTest(this.messages[0].message);
     });
 
-    chanceSpy.weighted.mockReturnValue(this.tiers[0]);
-    chanceSpy.pickone.mockReturnValue(this.tiers[0].Loots[0]);
-    await this.command.exec(this.msg, this.args);
-
-    expect(this.msg.channel.send).toHaveBeenCalledWith(
-      "An error occurred opening a lootbox"
-    );
-  });
-
-  it("should handle an immediate error", async () => {
-    this.msg.client.settings.get.mockImplementation(() => {
-      throw new Error("error!");
+    it("should properly handle an error when sending tier", async () => {
+      expect.assertions(2);
+      await this.runMessageTest(this.messages[1].message);
     });
 
-    await this.command.exec(this.msg, this.args);
-
-    expect(this.msg.client.settings.set).toHaveBeenCalledTimes(0);
-    expect(this.msg.channel.send).toHaveBeenCalledWith(
-      "An error occurred opening a lootbox"
-    );
+    it("should properly handle an error when sending reward", async () => {
+      expect.assertions(2);
+      await this.runMessageTest(this.messages[2].message);
+    });
   });
 });

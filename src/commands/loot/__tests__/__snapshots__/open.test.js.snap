@@ -40,6 +40,12 @@ exports[`commands/loot/open should configure properly 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -113,6 +119,20 @@ exports[`commands/loot/open should have proper default messages 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": "Drawing loot...",
+    },
+    Object {
+      "isThrow": false,
+      "value": "<tier> prize won...",
+    },
+    Object {
+      "isThrow": false,
+      "value": "Congratulations <user>, you won <reward>",
+    },
+  ],
 }
 `;
 
@@ -133,6 +153,7 @@ exports[`commands/loot/open should have proper default messages 2`] = `
           "description": "Congratulations <user>, you won <reward>",
           "fields": Array [],
           "file": undefined,
+          "files": Array [],
           "footer": undefined,
           "image": Object {
             "url": "tier1.png",
@@ -144,6 +165,20 @@ exports[`commands/loot/open should have proper default messages 2`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
   ],
 }
 `;
@@ -218,6 +253,20 @@ exports[`commands/loot/open should use found matching messages 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": "intro message",
+    },
+    Object {
+      "isThrow": false,
+      "value": "draw message",
+    },
+    Object {
+      "isThrow": false,
+      "value": "reward message",
+    },
+  ],
 }
 `;
 
@@ -238,6 +287,7 @@ exports[`commands/loot/open should use found matching messages 2`] = `
           "description": "reward message",
           "fields": Array [],
           "file": undefined,
+          "files": Array [],
           "footer": undefined,
           "image": Object {
             "url": "tier1.png",
@@ -249,6 +299,20 @@ exports[`commands/loot/open should use found matching messages 2`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
   ],
 }
 `;
@@ -323,6 +387,20 @@ exports[`commands/loot/open should use personal messages if found 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": "personal intro message",
+    },
+    Object {
+      "isThrow": false,
+      "value": "personal draw message",
+    },
+    Object {
+      "isThrow": false,
+      "value": "personal reward message",
+    },
+  ],
 }
 `;
 
@@ -343,6 +421,7 @@ exports[`commands/loot/open should use personal messages if found 2`] = `
           "description": "personal reward message",
           "fields": Array [],
           "file": undefined,
+          "files": Array [],
           "footer": undefined,
           "image": Object {
             "url": "tier1.png",
@@ -354,6 +433,20 @@ exports[`commands/loot/open should use personal messages if found 2`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
   ],
 }
 `;

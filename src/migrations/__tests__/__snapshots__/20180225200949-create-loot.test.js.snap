@@ -54,6 +54,12 @@ exports[`migrations/20180225200949-create-loot should apply migration on up 1`] 
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
+  ],
 }
 `;
 
@@ -63,6 +69,12 @@ exports[`migrations/20180225200949-create-loot should rollback migration on down
     Array [
       "Loots",
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
   ],
 }
 `;

@@ -25,6 +25,12 @@ exports[`seeders/20180301024909-generate-messages should seed when a guild is pr
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
+  ],
 }
 `;
 
@@ -139,6 +145,12 @@ exports[`seeders/20180301024909-generate-messages should seed when guild is prov
         },
       ],
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
   ],
 }
 `;

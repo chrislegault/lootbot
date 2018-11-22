@@ -48,5 +48,11 @@ exports[`commands/bookmarks/track should configure properly 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;

@@ -24,6 +24,12 @@ exports[`commands/bookmark/list should configure properly 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -35,6 +41,12 @@ exports[`commands/bookmark/list should list the tracked roles 1`] = `
 <@&3>: 4
 ",
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
   ],
 }
 `;

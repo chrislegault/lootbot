@@ -15,5 +15,13 @@ exports[`models/trackedRole should create the model definition 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Object {
+        "associate": [Function],
+      },
+    },
+  ],
 }
 `;

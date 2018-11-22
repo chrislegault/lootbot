@@ -10,5 +10,11 @@ exports[`inhibitors should configure properly 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;

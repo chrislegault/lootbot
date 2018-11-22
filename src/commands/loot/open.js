@@ -9,11 +9,11 @@ const {
   checkManagePermissions
 } = require("../../support");
 
-function sayMessage(message, msg, reward, user, tier) {
+async function sayMessage(message, msg, reward, user, tier) {
   return msg.channel.send(formatMessage(message, reward, user, tier));
 }
 
-function sayReward(message, msg, reward, user, tier) {
+async function sayReward(message, msg, reward, user, tier) {
   var embed = new RichEmbed()
     .setColor(tier.color)
     .setDescription(formatMessage(message, reward, user, tier))
@@ -38,8 +38,9 @@ function randomMessage(messages, personalMessages, filter, defaultMessage) {
 
 function removeRunningGame(guild, msg, runningGames) {
   if (runningGames) {
-    runningGames.splice(runningGames.indexOf(msg.channel.id, 1));
-    return msg.client.settings.set(guild, "runningGames", runningGames);
+    const newRunningGames = [...runningGames];
+    newRunningGames.splice(runningGames.indexOf(msg.channel.id, 1));
+    return msg.client.settings.set(guild, "runningGames", newRunningGames);
   }
 
   return null;
@@ -99,7 +100,9 @@ module.exports = class LootOpen extends Command {
       runningGames = msg.client.settings.get(guild, "runningGames", []).slice();
 
       if (runningGames.includes(msg.channel.id)) {
-        return null;
+        return msg.channel.send(
+          "There is already a game running in this channel"
+        );
       }
 
       const tiers = await Tier.findAll({
@@ -115,8 +118,8 @@ module.exports = class LootOpen extends Command {
         return msg.channel.send("No loot in the lootbox");
       }
 
-      const weights = tiers.map(
-        tier => (lucky ? tier.luckyWeight : tier.weight)
+      const weights = tiers.map(tier =>
+        lucky ? tier.luckyWeight : tier.weight
       );
       const tier = chance.weighted(tiers, weights);
 
@@ -160,12 +163,12 @@ module.exports = class LootOpen extends Command {
         DEFAULT_MESSAGES.reward
       );
 
-      return sayMessage(introMessage.message, msg, reward, user, tier)
-        .then(() => delay(introMessage.delay))
-        .then(() => sayMessage(tierMessage.message, msg, reward, user, tier))
-        .then(() => delay(tierMessage.delay))
-        .then(() => sayReward(rewardMessage.message, msg, reward, user, tier))
-        .then(() => removeRunningGame(guild, msg, runningGames));
+      await sayMessage(introMessage.message, msg, reward, user, tier);
+      await delay(introMessage.delay);
+      await sayMessage(tierMessage.message, msg, reward, user, tier);
+      await delay(tierMessage.delay);
+      await sayReward(rewardMessage.message, msg, reward, user, tier);
+      await removeRunningGame(guild, msg, runningGames);
     } catch (error) {
       await removeRunningGame(guild, msg, runningGames);
       return msg.channel.send("An error occurred opening a lootbox");

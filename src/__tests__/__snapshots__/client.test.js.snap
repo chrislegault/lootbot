@@ -20,6 +20,12 @@ exports[`client should configure properly 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -40,6 +46,12 @@ exports[`client should create custom command handler 1`] = `
         "build": [MockFunction] {
           "calls": Array [
             Array [],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
           ],
         },
         "clearInterval": [MockFunction],
@@ -84,6 +96,12 @@ exports[`client should create custom command handler 1`] = `
         "test": true,
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -106,6 +124,12 @@ exports[`client should create custom inhibitor handler 1`] = `
           "calls": Array [
             Array [],
           ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
         },
         "clearInterval": [MockFunction],
         "clearTimeout": [MockFunction],
@@ -150,6 +174,12 @@ exports[`client should create custom inhibitor handler 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -162,6 +192,12 @@ exports[`client should register sequelize as settings provider 1`] = `
         "dataColumn": "settings",
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;

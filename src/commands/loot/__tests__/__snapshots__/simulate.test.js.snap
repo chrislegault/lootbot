@@ -42,6 +42,12 @@ exports[`commands/loot/simulate should configure properly 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -52,6 +58,12 @@ exports[`commands/loot/simulate should display the results 1`] = `
       "Tier 2: 10
 ",
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
   ],
 }
 `;

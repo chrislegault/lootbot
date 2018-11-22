@@ -24,6 +24,12 @@ exports[`commands/tier/list should configure properly 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -46,6 +52,12 @@ Lucky Weight: 50.00% (20 in 40)
 ",
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
 }
 `;
 
@@ -61,6 +73,12 @@ Weight: 100.00% (10 in 10)
 Lucky Weight: 100.00% (20 in 20)
 ",
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
   ],
 }
 `;

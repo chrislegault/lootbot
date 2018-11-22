@@ -58,8 +58,8 @@ module.exports = class LootAdd extends Command {
       let results = {};
       let message = "";
 
-      const weights = tiers.map(
-        tier => (lucky ? tier.luckyWeight : tier.weight)
+      const weights = tiers.map(tier =>
+        lucky ? tier.luckyWeight : tier.weight
       );
 
       times(draws, () => {

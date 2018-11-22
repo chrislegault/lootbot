@@ -70,6 +70,12 @@ exports[`migrations/20180228230928-create-message should apply migration on up 1
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
+  ],
 }
 `;
 
@@ -79,6 +85,12 @@ exports[`migrations/20180228230928-create-message should rollback migration on d
     Array [
       "Messages",
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
   ],
 }
 `;

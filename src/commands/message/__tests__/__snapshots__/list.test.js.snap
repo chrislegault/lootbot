@@ -24,6 +24,12 @@ exports[`commands/loot/list should configure properly 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -45,6 +51,12 @@ Tier: Common
 User: 1234
 ",
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
   ],
 }
 `;

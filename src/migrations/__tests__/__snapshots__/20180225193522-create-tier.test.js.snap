@@ -62,6 +62,12 @@ exports[`migrations/20180225193522-create-tier should apply migration on up 1`] 
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
+  ],
 }
 `;
 
@@ -71,6 +77,12 @@ exports[`migrations/20180225193522-create-tier should rollback migration on down
     Array [
       "Tiers",
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
   ],
 }
 `;

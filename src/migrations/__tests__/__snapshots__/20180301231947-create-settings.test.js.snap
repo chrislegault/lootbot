@@ -25,6 +25,12 @@ exports[`migrations/20180301231947-create-settings should apply migration on up 
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
+  ],
 }
 `;
 
@@ -34,6 +40,12 @@ exports[`migrations/20180301231947-create-settings should rollback migration on 
     Array [
       "Settings",
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
   ],
 }
 `;

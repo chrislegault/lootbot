@@ -21,6 +21,12 @@ exports[`commands/loot/list should configure properly 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -37,6 +43,12 @@ Test Loot 2
 
 ",
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
   ],
 }
 `;

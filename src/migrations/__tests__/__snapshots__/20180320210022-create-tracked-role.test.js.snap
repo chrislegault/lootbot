@@ -50,6 +50,12 @@ exports[`migrations/20180320210022-create-tracked-role should apply migration on
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
+  ],
 }
 `;
 
@@ -59,6 +65,12 @@ exports[`migrations/20180320210022-create-tracked-role should rollback migration
     Array [
       "TrackedRoles",
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": true,
+    },
   ],
 }
 `;
