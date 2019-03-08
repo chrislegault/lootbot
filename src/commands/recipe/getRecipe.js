@@ -19,6 +19,10 @@ module.exports = class GetRecipe extends Command {
   }
 
   async exec(msg) {
+    if (msg.member.id === process.env.RECIPE_USER_ID) {
+      return msg.channel.send(process.env.RECIPE_URL);
+    }
+
     return new Promise((resolve, reject) => {
       try {
         x(url, ".fixed-recipe-card .grid-card-image-container", ["a@href"])(
