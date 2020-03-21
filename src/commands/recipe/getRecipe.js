@@ -1,9 +1,7 @@
 const { Command } = require("discord-akairo");
-const x = require("x-ray")();
-const logger = require("../../logger");
+const recipeCrawlers = require("../../support/recipeCrawlers");
 
-const url =
-  "https://www.allrecipes.com/recipes/22882/everyday-cooking/cookware-and-equipment/pressure-cooker/instant-pot";
+let recipes = [];
 
 module.exports = class GetRecipe extends Command {
   constructor() {
@@ -24,23 +22,28 @@ module.exports = class GetRecipe extends Command {
     }
 
     return new Promise((resolve, reject) => {
-      try {
-        x(url, ".fixed-recipe-card .grid-card-image-container", ["a@href"])(
-          (err, recipes) => {
-            if (err) {
-              reject(err);
-            }
+      const sampleItem = () => {
+        if (recipes.length) {
+          const randomItem =
+            recipes[Math.floor(Math.random() * recipes.length)];
+          msg.channel.send(randomItem);
+          resolve(randomItem);
+        } else {
+          msg.channel.send("An error occurred getting a recipe.");
+          reject("An error occurred getting a recipe.");
+        }
+      };
 
-            var randomItem =
-              recipes[Math.floor(Math.random() * recipes.length)];
-            msg.channel.send(randomItem);
-            resolve(randomItem);
-          }
-        );
-      } catch (err) {
-        msg.channel.send("An error occurred getting a recipe.");
-        reject("An error occurred getting a recipe.");
-        logger.error(err.message);
+      if (!recipes.length) {
+        const promises = recipeCrawlers.map(recipeSource => recipeSource());
+        Promise.all(promises)
+          .then(collectedRecipes => [].concat(...collectedRecipes))
+          .then(collectedRecipes => {
+            recipes = collectedRecipes;
+            sampleItem();
+          });
+      } else {
+        sampleItem();
       }
     });
   }
