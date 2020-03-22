@@ -1,5 +1,5 @@
 const x = require("x-ray")();
-const logger = require("../../logger");
+const logger = require("../../../logger");
 
 const url = "https://instantpot3.wordpress.com/2016/08/09/one-pot-meals";
 
