@@ -1,5 +1,5 @@
 const x = require("x-ray")();
-const logger = require("../../logger");
+const logger = require("../../../logger");
 
 const url =
   "https://www.allrecipes.com/recipes/22882/everyday-cooking/cookware-and-equipment/pressure-cooker/instant-pot";
