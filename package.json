@@ -36,6 +36,7 @@
     "db:migrate": "sequelize db:migrate",
     "db:prep": "yarn db:migrate && yarn db:seed",
     "db:seed": "sequelize db:seed:all",
+    "generate:recipes": "node ./src/support/recipeCrawlers/generateJSON.js",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:fix": "yarn lint --fix",
     "start": "node ./src/index.js",
