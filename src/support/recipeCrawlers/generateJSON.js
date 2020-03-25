@@ -1,33 +1,30 @@
 const fs = require("fs");
 const x = require("x-ray")();
 const logger = require("../../logger");
-const sites = require("./sites.json");
+const sites = require("./sites");
 
 const currentRecipes = require("./recipes.json");
 
-const crawlRecipes = ({ url, selector }) => {
+const crawlRecipes = ({ url, scope, selector = "a@href" }) => {
   return new Promise(resolve => {
-    logger.debug(`Crawling ${url} with selector ${selector}`);
-    x(url, selector, ["a@href"])((err, recipes) => {
+    logger.debug("Crawling", { url, scope, selector });
+    x(url, scope, [selector])((err, recipes) => {
       if (err) {
-        logger.error(
-          `An error occurred getting a recipe from ${url}, error = ${
-            err.message
-          }`
-        );
+        logger.error("An error occurred getting a recipe", {
+          url,
+          error: err.message
+        });
         resolve([]);
       }
 
-      logger.debug(
-        `Crawling ${url} complete, found ${recipes.length} recipe(s)`
-      );
+      logger.debug("Crawling complete", { url, recipes: recipes.length });
 
       resolve(recipes);
     });
   });
 };
 
-Promise.all(sites.map(site => crawlRecipes(site)))
+Promise.all(sites.map(crawlRecipes))
   .then(collectedRecipes => [].concat(...currentRecipes, ...collectedRecipes))
   .then(collectedRecipes => {
     collectedRecipes = [...new Set(collectedRecipes)].sort();

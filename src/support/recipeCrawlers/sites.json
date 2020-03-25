@@ -2,14 +2,15 @@
   {
     "url":
       "https://www.allrecipes.com/recipes/22882/everyday-cooking/cookware-and-equipment/pressure-cooker/instant-pot",
-    "selector": ".fixed-recipe-card .grid-card-image-container"
+    "scope": ".fixed-recipe-card .grid-card-image-container"
   },
   {
     "url": "https://instantpot3.wordpress.com/2016/08/09/one-pot-meals",
-    "selector": ".entry-content h5"
+    "scope": ".entry-content h5"
   },
   {
-    "url": "https://www.pressurecookrecipes.com/easy-instant-pot-recipes/",
-    "selector": "h3"
+    "url": "https://www.sidetrackedsarah.com/150-instant-pot-recipes/",
+    "scope": ".entry-content",
+    "selector": "h1 ~ p a:not(.broken_link)@href"
   }
 ]
